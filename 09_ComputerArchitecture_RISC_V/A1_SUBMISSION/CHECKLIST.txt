@@ -1,0 +1,16 @@
+============================================================
+  SUBMISSION CHECKLIST
+============================================================
+[ ] t1a.asm top pe naam + ID likha
+[ ] RARS mein Assemble OK
+[ ] Bitmap pe image dikhti hai
+[ ] DEFENSE_NOTES ek baar zor se padh li
+[ ] ZIP banaya aur inforestudante pe upload
+
+ZIP contents (recommended):
+  t1a.asm
+  README_RUN.txt
+  DEFENSE_NOTES.txt   (optional for you; upload only if allowed)
+
+Agar sirf code chahiye: sirf t1a.asm ZIP karo.
+============================================================

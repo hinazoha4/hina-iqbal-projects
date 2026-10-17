@@ -1,0 +1,19 @@
+element,id,first_callout_ok,notes
+Figure,1,PASS,Evaluation pipelines
+Figure,2,PASS,Reported false-alarm rates
+Figure,3,PASS,CICIoT2023 operating points
+Figure,4,PASS,Projected precision
+Figure,5,PASS,Expected-cost regions
+Figure,6,PASS,BoT-IoT subset experiment
+Table,1,PASS,Related-study comparison
+Table,2,PASS,Dataset characteristics
+Table,3,PASS,CICDDoS2019 reconstructed metrics
+Table,4,PASS,Training times
+Table,5,PASS,CICIoT2023 performance
+Table,6,PASS,Evaluated confusion counts
+Table,7,PASS,Prevalence-sensitive precision
+Table,8,PASS,Cost crossover
+Table,9,PASS,BoT-IoT repeated-seed results
+Table,10,PASS,BoT-IoT feature and threshold comparison
+Table,11,PASS,CICDDoS2019 subset ablation
+Table,12,NEW_CSV_ONLY,Multi-attack paired matched-FAR CSV added; Word manuscript not yet updated to cite Table 12

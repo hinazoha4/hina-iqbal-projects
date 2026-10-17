@@ -1,0 +1,5 @@
+Cost ratio r,Crossover prevalence (%),Cheaper learned detector below,Cheaper learned detector above,Never alert cheaper below (%),Always alert cheaper above (%)
+0.1,97.82,CNN–LSTM hybrid,random forest,0.170,99.98
+1.0,81.75,CNN–LSTM hybrid,random forest,0.017,99.82
+10.0,30.93,CNN–LSTM hybrid,random forest,0.0017,98.23
+100.0,4.29,CNN–LSTM hybrid,random forest,0.0002,84.72

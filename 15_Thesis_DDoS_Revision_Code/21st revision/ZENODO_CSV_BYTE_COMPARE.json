@@ -1,0 +1,94 @@
+{
+  "csv_total": 11,
+  "byte_identical": 11,
+  "details": [
+    {
+      "file": "Table10_BoTIoT_features.csv",
+      "src_bytes": 290,
+      "gen_bytes": 290,
+      "byte_identical": true,
+      "src_sha256": "80f308c9be9149ee31bfd46df1d647ac83b99249c8afb4e7b05f5133edd666d1",
+      "gen_sha256": "80f308c9be9149ee31bfd46df1d647ac83b99249c8afb4e7b05f5133edd666d1"
+    },
+    {
+      "file": "Table11_CICDDoS_subset_ablation.csv",
+      "src_bytes": 134,
+      "gen_bytes": 134,
+      "byte_identical": true,
+      "src_sha256": "a0666a54a11c755acbefeffb8b5bbbf33d4bbf8ee2ca1faa2a99a36a43b48e98",
+      "gen_sha256": "a0666a54a11c755acbefeffb8b5bbbf33d4bbf8ee2ca1faa2a99a36a43b48e98"
+    },
+    {
+      "file": "Table1_JISA_positioning.csv",
+      "src_bytes": 1431,
+      "gen_bytes": 1431,
+      "byte_identical": true,
+      "src_sha256": "a3f948b857503762012f855c11d322a9e91f18d2c710381bfca55ce1dded592f",
+      "gen_sha256": "a3f948b857503762012f855c11d322a9e91f18d2c710381bfca55ce1dded592f"
+    },
+    {
+      "file": "Table2_Datasets.csv",
+      "src_bytes": 609,
+      "gen_bytes": 609,
+      "byte_identical": true,
+      "src_sha256": "4cedad99d1a52ab3b29f8f35f3d0e128ccc4352b65bedc06794dd6b8f179f66a",
+      "gen_sha256": "4cedad99d1a52ab3b29f8f35f3d0e128ccc4352b65bedc06794dd6b8f179f66a"
+    },
+    {
+      "file": "Table3_CICDDoS2019_metrics.csv",
+      "src_bytes": 673,
+      "gen_bytes": 673,
+      "byte_identical": true,
+      "src_sha256": "30d7cc98df398499f4bd23b725bc798e1d3a30a33bd96dd5c013e2675692fbf4",
+      "gen_sha256": "30d7cc98df398499f4bd23b725bc798e1d3a30a33bd96dd5c013e2675692fbf4"
+    },
+    {
+      "file": "Table4_Training_times.csv",
+      "src_bytes": 590,
+      "gen_bytes": 590,
+      "byte_identical": true,
+      "src_sha256": "73054c5c9212039abf9cdfa48a463f94de8868d4042831f2bc4cdb1a668b065b",
+      "gen_sha256": "73054c5c9212039abf9cdfa48a463f94de8868d4042831f2bc4cdb1a668b065b"
+    },
+    {
+      "file": "Table5_CICIoT2023_metrics.csv",
+      "src_bytes": 598,
+      "gen_bytes": 598,
+      "byte_identical": true,
+      "src_sha256": "a8e5e52da792182293f1dd5d8aba1c16e3d5cbfa6dc43f1409606fe71359c200",
+      "gen_sha256": "a8e5e52da792182293f1dd5d8aba1c16e3d5cbfa6dc43f1409606fe71359c200"
+    },
+    {
+      "file": "Table6_Evaluated_counts.csv",
+      "src_bytes": 828,
+      "gen_bytes": 828,
+      "byte_identical": true,
+      "src_sha256": "89d4383aa63f95a8bde4525e3ab24dc9c8aa980c75a9694bdbb3ef3e888e1ac8",
+      "gen_sha256": "89d4383aa63f95a8bde4525e3ab24dc9c8aa980c75a9694bdbb3ef3e888e1ac8"
+    },
+    {
+      "file": "Table7_Prevalence_precision.csv",
+      "src_bytes": 432,
+      "gen_bytes": 432,
+      "byte_identical": true,
+      "src_sha256": "326141dba462195496a861418b45a4f8f3ce4583e75c84ae0a1b26be6f2510c0",
+      "gen_sha256": "326141dba462195496a861418b45a4f8f3ce4583e75c84ae0a1b26be6f2510c0"
+    },
+    {
+      "file": "Table8_Crossover_prevalence.csv",
+      "src_bytes": 381,
+      "gen_bytes": 381,
+      "byte_identical": true,
+      "src_sha256": "01f2d66a115782892ce0ce32a909cf471b38914cf4be9b6b513303b27fd25c88",
+      "gen_sha256": "01f2d66a115782892ce0ce32a909cf471b38914cf4be9b6b513303b27fd25c88"
+    },
+    {
+      "file": "Table9_BoTIoT_seeds.csv",
+      "src_bytes": 268,
+      "gen_bytes": 268,
+      "byte_identical": true,
+      "src_sha256": "f3dd9d815fbdb14f5f8fb530b1a41bc33e7a80a87f2054fe907c296a9fd75adc",
+      "gen_sha256": "f3dd9d815fbdb14f5f8fb530b1a41bc33e7a80a87f2054fe907c296a9fd75adc"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+Dataset,Model,Training_time_s,Inference_time_s
+CICDDoS2019,Decision Tree,4.27,not recorded
+CICDDoS2019,Extra Trees,15.54,not recorded
+CICDDoS2019,Random Forest,21.16,not recorded
+CICDDoS2019,Logistic Regression,5.70,not recorded
+CICDDoS2019,Gaussian Naive Bayes,0.22,not recorded
+CICIoT2023,CNN Only,262.89,4.58
+CICIoT2023,LSTM Only,472.76,8.56
+CICIoT2023,TPE-tuned CNN–LSTM,1642.82,15.02
+CICIoT2023,Logistic Regression,7.30,0.03
+CICIoT2023,Gaussian Naive Bayes,0.21,0.17
+CICIoT2023,Decision Tree,4.60,0.02
+CICIoT2023,Random Forest,25.65,0.39
+CICIoT2023,Hist. Gradient Boosting,6.47,1.97

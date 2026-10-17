@@ -1,0 +1,69 @@
+{
+  "created": "2026-10-17",
+  "host": {
+    "gpu": "Intel(R) Iris(R) Xe Graphics",
+    "nvidia_smi": "not found",
+    "torch": "2.13.0+cpu",
+    "cuda_available": false,
+    "note": "No NVIDIA CUDA device on this machine; CNN-LSTM pilot ran on CPU."
+  },
+  "ciciot2023": {
+    "original_notebook_expectation": {
+      "path": "/kaggle/working/CICIOT23/{train,validation,test}/*.csv",
+      "google_drive_id": "16ncVe5ud8PdMUXzve-O1VI08DeTJpzIh",
+      "status": "UNAVAILABLE_404_OR_HTML"
+    },
+    "recovered_source": {
+      "provider": "Hugging Face baalajimaestro/DDoS-CICIoT2023",
+      "files": [
+        "BenignTraffic.pcap.csv",
+        "BenignTraffic1.pcap.csv",
+        "BenignTraffic2.pcap.csv",
+        "BenignTraffic3.pcap.csv",
+        "DDoS-ICMP_Flood*.pcap.csv (8 files)"
+      ],
+      "labeling": "filename-derived (Benign=0, otherwise attack)",
+      "local_dir": "data/ciciot2023/hf_ciciot"
+    },
+    "missing_artifacts": [
+      "original prepared train/validation/test split archive",
+      "original CNN-LSTM checkpoints",
+      "original validation/test prediction scores from thesis notebooks"
+    ]
+  },
+  "cicddos2019": {
+    "original_notebook_expectation": {
+      "file": "all-data.csv",
+      "google_drive_id": "1NcHRdcrLpHLILKxf7nMBawR3EPz1IMf0",
+      "official_zip": "http://cicresearch.ca/CICDataset/CICDDoS2019/Dataset/CSVs/CSV-01-12.zip",
+      "status": "Drive HTML virus-scan page; official ZIP HTML redirect"
+    },
+    "recovered_source": {
+      "provider": "Hugging Face baalajimaestro/CICDDoS2019",
+      "raw_day": "01-12",
+      "built_all_data": "data/cicddos2019/all-data.csv",
+      "bytes": 61295129,
+      "rows": 120444,
+      "files_used": ["UDPLag.csv", "Syn.csv", "DrDoS_NTP.csv", "DrDoS_LDAP.csv"],
+      "excluded": ["TFTP.csv (~8.8GB) and other large day files deferred for memory"],
+      "downsample": "thesis rule MULT=5 attack:benign, random_state=42"
+    }
+  },
+  "botiot": {
+    "historical_path_missing": "D:\\Research\\Articles\\MSc research\\14th revision\\_data",
+    "recovered_source": {
+      "provider": "Kaggle vigneshvenkateswaran/bot-iot-5-data",
+      "local_dir": "data/botiot",
+      "files": {
+        "UNSW_2018_IoT_Botnet_Full5pc_1.csv": 277543651,
+        "UNSW_2018_IoT_Botnet_Full5pc_2.csv": 278451723,
+        "UNSW_2018_IoT_Botnet_Full5pc_3.csv": 285316035,
+        "UNSW_2018_IoT_Botnet_Full5pc_4.csv": 191754639
+      },
+      "official_published_bytes_file3": 282131555,
+      "truncated_refused_bytes_file3": 268435456,
+      "note": "Kaggle mirror is complete (file 3 not truncated). Byte sizes differ from CloudStor published lengths; schema matches Full5pc all-features (46 columns).",
+      "benign_total_in_complete_source": 477
+    }
+  }
+}

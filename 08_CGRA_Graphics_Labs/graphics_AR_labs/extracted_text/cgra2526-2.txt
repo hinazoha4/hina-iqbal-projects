@@ -1,0 +1,154 @@
+FILE: cgra2526-2.pdf
+PAGES: 4
+
+
+===== PAGE 1 =====
+2
+2D Shapes and Time
+Graphics viewed on a computer screen are always made of pixels with dif-
+ferent colours (images). Any shape to be displayed always undergoes a
+ﬁnal stage where it is converted from coordinates of its vertices (and edges)
+to images. As previously said, the shapes are modelled by the relative
+positions of their vertices, that in turn are grouped for form polygons (tri-
+angles in most cases). A solid is then a set of polygons where the edges are
+not drawn but instead the inner region corresponding pixels are ﬁlled with
+colours, according to some colour/lighting model. The exercises below are
+related with modelling simple shapes and the application of some simple
+geometric transformations.
+2.1 2D Shapes and Transformations
+On the given triangle example notebook you can ﬁnd an example that
+draw a triangle whose color varies from red to blue to green. In fact this
+is an automatic GL behaviour for interpolating information. Notice that
+the corner coordinates are in the range [→1, 1], and as you can see on the
+second example when these coordinates are outside this range the result is
+a clipped image. Thus, you may retain this rule only vertices with (ﬁnal)
+coordinates x,y,z in the [→1, 1] range are going to be drawn . We will come
+to this subject later.
+Exercises
+For the following exercises you may just add cells copying the code and
+renaming the class name and canvas id, so that each exercise will be added
+bellow the previous ones.
+Exercise 2.1
+15
+
+===== PAGE 2 =====
+2. 2D SHAPES
+Readjust the vertices coordinates to form a vertical isosceles triangle, fully
+contained inside the canvas (or viewport).
+Exercise 2.2
+Add a red rectangle of side 0.8 and will be draw bellow the previous object.
+Use separate data structures for the vertices, and colours of the new object.
+How can we make one object to be drawn below another?
+Here we have two answers: 1) the last one to be drawn appears on top;
+2) One object is made closer to the viewer than the other by adding a third
+Z coordinate to their vertices.
+Show these possibilities and try the use of
+— JavaScript —
+1 this . gl . enable ( this . gl .DEPTH_TEST);
+and
+— JavaScript —
+1 this . gl . disable ( this . gl .DEPTH_TEST);
+2.2 Time
+The introduction of time-dependent movements brings always a new dimen-
+sion in the attractiveness of computer graphics. Frequently for the purpose
+of producing movement, programmers use counters that increase distances,
+angles, or other parameters. Despite that, the achieved results depend on
+how fast the computer is, or how heavy are the remaining computations.
+Thus, and depending on the computer speed, the increments may be done
+faster or slower and consequently the same happens to the afected move-
+ments (or evolutions).
+To avoid this, it is important to use real time measures from the under-
+lying operating system via some function available. Consider the use of the
+following pseudocode
+— C++ —
+1o l d T i m e = g e t T i m e ( ) ;
+2. . .
+3n e w t i m e = g e t T i m e ( ) ;
+4d e l t a T = n e w t i m e − oldtime ;
+5o l d t i m e = n e w t i m e ;
+6
+7n e w p o s i t i o n . x = S P E E D ∗deltaT ;
+8. . .
+CGRA & VC 16 Paulo Menezes - 2025
+
+===== PAGE 3 =====
+2. 2D SHAPES
+Now you can replace getTime() by some function provided by your pre-
+ferred programming environment. For example in GLUT and SDL you can
+use respectively the number of milliseconds that passed since the initialisa-
+tion of these toolkits
+— C++ —
+1 // in C/C++ + GLUT
+2 int currentTime = glutGet (G L U T _ E L A P S E D _ T I M E);
+3
+4 // in C/C++ + SDL
+5 int currentTime = SDL_GetTicks ( ) ;
+6
+7 // in JavaScript
+8v a r c u r r e n t T i m e = D a t e . n o w ( ) ;
+Exercises
+Exercise 2.3
+Using the current time information make the top vertice of the triangle
+move down till the middle of the window and up till the top at a rate of
+0.5Hz.
+Suggestion: Use the Math.sin(x) function.
+Exercise 2.4
+Make the triangle rotate by computing each vertex location by the appli-
+cation of
+x→ =xinitial cos ω(t) → yinitial sin ω(t)
+y→ =xinitial sin ω(t)+ yinitial cos ω(t)
+for each of them.
+Exercise 2.5
+Make the previous triangle rotate over a static rectangle/square as deﬁned
+in exercise 2.2.
+Exercise 2.6
+Make the triangle also move up and down according to a sinus function of
+time by translating its vertices.
+Exercise 2.7
+What happens if you do the same but on the Z coordinates?
+CGRA & VC 17 Paulo Menezes - 2025
+
+===== PAGE 4 =====
+2. 2D SHAPES
+Note:
+To solve this you must add a third coordinate to every vertex of the rect-
+angles or triangles and add use the following:
+Create a new shader
+Create a new cell on the notebook and add the following code to it. Notice
+that it is basically equal to what is on one of the ﬁrst cells of the triangles
+notebook with small di !erences. Can you spot and interpret the di !erences?
+— JavaScript —
+1% % html
+2< script id =" my - vertex - shader3D " type ="x - shader /x - vertex ">
+3 precision highp float ;
+4
+5 attribute vec3 in_Position ;
+6 attribute vec3 in_Color ;
+7
+8 varying vec3 ex_Color ;
+9
+10 void main ( void ){
+11 // Since we are using flat lines , our input only had two points : x and y .
+12 // Set the Z coordinate to 0 and W coordinate to 1
+13
+14 gl_Position = vec4 ( in_Position . x , in_Position . y , in_Position . z ,1 . 0 ) ;
+15
+16 // GLSL allows shorthand use of vectors too , the following is also valid :
+17 // gl_Position = vec4 ( in_Position , 0.0, 1.0);
+18
+19 ex_Color = in_Color ;
+20 }
+21 </ script >
+Initialization changes
+Add the following code to the initialization of your class.
+— JavaScript —
+1 var fragsrc = document . getElementById ( " my - fragment - shader " ). text ;
+2 var vertsrc = document . getElementById ( " my - vertex - shader3D " ). text ;
+3 if (! fragsrc )
+4 console . log ( ’ Error : you forgot to define my - fragment - shader ’ );
+5 if (! vertsrc )
+6 console . log ( ’ Error : you forgot to define my - vertex - shader ’ );
+7
+8 this . shaderprog = new DEECshader ( this . gl );
+9 this . shaderprog . srcShaders ( vertsrc , fragsrc );
+CGRA & VC 18 Paulo Menezes - 2025

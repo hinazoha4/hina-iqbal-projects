@@ -1,0 +1,23 @@
+﻿# secrets / junk
+*.ovpn
+*.pem
+*.key
+*.exe
+*.msi
+*.iso
+*.zip
+*.rar
+*.mp4
+__MACOSX/
+.ipynb_checkpoints/
+jdk17/
+data/
+*.pkt
+.DS_Store
+Thumbs.db
+
+serviceAccountKey.json
+*credentials*
+*firebase*adminsdk*
+.env
+.env.*

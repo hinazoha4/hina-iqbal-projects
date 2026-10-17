@@ -1,0 +1,13 @@
+UPLOAD TO JUPYTERHUB
+====================
+1. VPN ON
+2. https://seeds.deec.uc.pt/CGRA/
+3. Upload these 4 notebooks from folder SOLUTIONS:
+   - CGRA_SOL_Ch1_Ex1.ipynb   (Ex 1.1-1.4)
+   - CGRA_SOL_Ch2_Ex2.ipynb   (Ex 2.1-2.7)
+   - CGRA_SOL_Ch3_Ex3.ipynb   (Ex 3.1-3.7)
+   - CGRA_SOL_Ch4_Ex4.ipynb   (Ex 4.1-4.4)
+4. Open one → Voilà (NOT Run)
+5. Scroll to see each exercise canvas
+
+ALSO copy official examples from Jupyter examples/ folder for reference.

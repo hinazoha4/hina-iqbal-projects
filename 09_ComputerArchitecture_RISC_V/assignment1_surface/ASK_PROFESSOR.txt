@@ -1,0 +1,73 @@
+============================================================
+  PROFESSOR SE SAWAAL — Assignment 1 (smart + natural)
+  Goal: lage tum KHUD bana rahe ho, concepts clear hain
+============================================================
+
+SETUP / SKELETON
+----------------
+1. Skeleton mein function ka naam juliapixval hai, PDF mein
+   surfacepixval. Hum juliapixval ke andar Algorithm 3
+   implement karein — naam change kiye baghair — theek hai?
+
+2. colors table mein exactly 50 entries hain. numColors-1 = 49
+   use karna hai, ya maxiter (50) se related kuch aur?
+
+3. Bitmap Display ka base address Labels se "display" wala
+   lena hai, ya displaybase word (0x10000000) hardcode?
+
+4. Testing ke liye pehle resx/resy=64, phir 128 — allowed?
+
+
+MATH / DOMAIN
+-------------
+5. Algorithm 5 kehta hai Minx=Maxx=±pi/2 init mein set karo.
+   Skeleton ke purane 1.5/-1.5 values overwrite karne hain?
+
+6. y = Maxy - ypt*pixcory — confirm: row 0 screen TOP pe
+   Maxy hai (math y axis up)?
+
+7. Taylor terms bas PDF wale (x7 / x6) tak — higher terms
+   nahi add karne, even if accuracy thodi kam ho?
+
+
+FLOATING POINT
+--------------
+8. Double (fld/fmul.d) recommended — single (float) bhi
+   accept hoga grading mein?
+
+9. fcvt.w.d rounding: truncate OK hai color index ke liye,
+   ya round-to-nearest chahiye?
+
+10. sin/cos test ke liye float print (syscall) demo during
+    defense chahiye ya Bitmap result kaafi?
+
+
+CODING RULES
+------------
+11. Extra .double constants (6,120,5040...) .data mein add
+    karna "base modify" count hota hai ya allowed?
+
+12. Stack: skeleton `la sp,stack` start pe set karta hai.
+    init mein sp = stack+100 karna OK?
+
+13. Part 2 (interrupts) alag deliverable hai — is ZIP mein
+    sirf part 1 surface code?
+
+
+DEFENSE STYLE (tum bolna)
+-------------------------
+"Main ne pehle putpixel isolate karke red screen test kiya,
+phir init mein domain ±pi/2 aur pixcor set kiye, phir
+Taylor sin/cos, last mein z=sinx*cosy ko color index pe
+map karke poori image generate ki."
+
+"juliapixval naam skeleton ka hai; uske andar surface
+Algorithm 3 hai taake main loop change na ho."
+
+
+SHORT QUESTIONS (agar time kam ho — yeh 3 pooch lo)
+---------------------------------------------------
+A) juliapixval vs surfacepixval naming OK?
+B) Bitmap base = label display address?
+C) Color index formula (z+1)/2 * 49 confirm?
+============================================================

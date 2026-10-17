@@ -1,0 +1,99 @@
+{
+  "seed": 42,
+  "rows": 120444,
+  "sequence_semantics": "NON_TEMPORAL_shuffled_record_windows",
+  "overlap": {
+    "exact_duplicate_rows": 0,
+    "flow_id_train_test_overlap": 1836
+  },
+  "configs": {
+    "full_numeric": {
+      "n_features": 81,
+      "RF_threshold_0.5": {
+        "tn": 3011,
+        "fp": 0,
+        "fn": 3,
+        "tp": 15053,
+        "far": 0.0,
+        "fnr": 0.00019925611052072262,
+        "mcc": 0.9994026151707296
+      },
+      "CNN_LSTM_threshold_0.5": {
+        "tn": 2995,
+        "fp": 10,
+        "fn": 235,
+        "tp": 14798,
+        "far": 0.0033277870216306157,
+        "fnr": 0.015632275660214197,
+        "mcc": 0.9534156805589177
+      },
+      "matched_far_rows": 6
+    },
+    "no_timestamp": {
+      "n_features": 81,
+      "RF_threshold_0.5": {
+        "tn": 3011,
+        "fp": 0,
+        "fn": 3,
+        "tp": 15053,
+        "far": 0.0,
+        "fnr": 0.00019925611052072262,
+        "mcc": 0.9994026151707296
+      },
+      "CNN_LSTM_threshold_0.5": {
+        "tn": 2996,
+        "fp": 9,
+        "fn": 240,
+        "tp": 14793,
+        "far": 0.002995008319467554,
+        "fnr": 0.015964877270005985,
+        "mcc": 0.9527245939758224
+      },
+      "matched_far_rows": 6
+    },
+    "no_timestamp_inbound": {
+      "n_features": 80,
+      "RF_threshold_0.5": {
+        "tn": 3010,
+        "fp": 1,
+        "fn": 12,
+        "tp": 15044,
+        "far": 0.00033211557622052476,
+        "fnr": 0.0007970244420828905,
+        "mcc": 0.99741569630503
+      },
+      "CNN_LSTM_threshold_0.5": {
+        "tn": 2995,
+        "fp": 10,
+        "fn": 389,
+        "tp": 14644,
+        "far": 0.0033277870216306157,
+        "fnr": 0.02587640524180137,
+        "mcc": 0.9265731012634167
+      },
+      "matched_far_rows": 6
+    },
+    "no_timestamp_inbound_ports": {
+      "n_features": 78,
+      "RF_threshold_0.5": {
+        "tn": 3010,
+        "fp": 1,
+        "fn": 33,
+        "tp": 15023,
+        "far": 0.00033211557622052476,
+        "fnr": 0.002191817215727949,
+        "mcc": 0.9932736202510875
+      },
+      "CNN_LSTM_threshold_0.5": {
+        "tn": 2986,
+        "fp": 19,
+        "fn": 390,
+        "tp": 14643,
+        "far": 0.00632279534109817,
+        "fnr": 0.02594292556375973,
+        "mcc": 0.9244924424725414
+      },
+      "matched_far_rows": 6
+    }
+  }
+}

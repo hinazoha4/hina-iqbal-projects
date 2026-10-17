@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>CGRA Ex1 — Basic Triangle (local practice)</title>
+</head>
+<body>
+  <h2>CGRA local practice — Triangle</h2>
+  <p>
+    VPN/Jupyter se pehle yahan practice karo.
+    Colours / vertices change karke page reload karo (Ctrl+R).
+    Console: F12
+  </p>
+
+  <!-- 1) Drawing area (professor ke notebook jaisa canvas) -->
+  <canvas id="myCanvas" width="400" height="400"
+          style="border:2px solid #000;"></canvas>
+
+  <!-- 2) Professor ki libraries (local copy) -->
+  <script src="deecshader.js"></script>
+  <script src="deecapp.js"></script>
+
+  <!-- 3) VERTEX SHADER = har corner (vertex) pe chalega -->
+  <script id="my-vertex-shader" type="x-shader/x-vertex">
+    precision highp float;
+    attribute vec2 in_Position;   /* x,y from our array */
+    attribute vec3 in_Color;      /* r,g,b from our array */
+    varying vec3 ex_Color;        /* pass colour to fragment shader */
+
+    void main(void) {
+      /* clip space: x,y must stay in [-1, 1] to be visible */
+      gl_Position = vec4(in_Position, 0.0, 1.0);
+      ex_Color = in_Color;
+    }
+  </script>
+
+  <!-- 4) FRAGMENT SHADER = har pixel ka final colour -->
+  <script id="my-fragment-shader" type="x-shader/x-fragment">
+    precision highp float;
+    varying vec3 ex_Color;
+
+    void main(void) {
+      gl_FragColor = vec4(ex_Color, 1.0);
+    }
+  </script>
+
+  <script>
+    /*
+      HOW THIS WORKS (lab mein yahi samjhana):
+
+      1. vertices[] = triangle ke 3 corners (x,y)  → range [-1 .. 1]
+      2. colors[]   = har corner ka RGB colour
+      3. initialize() = data GPU (VBO) mein bhejo + attributes link
+      4. render()     = clear screen + drawArrays
+
+      drawArrays modes (Exercise 1.4):
+        LINE_LOOP, POINTS, LINE_STRIP, LINES,
+        TRIANGLE_STRIP, TRIANGLE_FAN, TRIANGLES
+    */
+
+    class myapp extends DEECapp {
+      counter = 0;
+
+      // --- CHANGE THESE for Exercise 1.1 ---
+      vertices = [
+        //   x      y
+         0.0,   0.8,   // top
+        -0.7,  -0.6,   // bottom-left
+         0.7,  -0.6    // bottom-right
+      ];
+
+      colors = [
+        //   R    G    B
+         1.0, 0.0, 0.0,   // top = RED
+         0.0, 1.0, 0.0,   // left = GREEN
+         0.0, 0.0, 1.0    // right = BLUE
+      ];
+
+      // how many vertices? 3 points * 2 floats = 6 numbers → 3 verts
+      nverts = 3;
+
+      // try: this.gl.LINE_LOOP / POINTS / TRIANGLES / ...
+      drawMode = null; // set in initialize after gl exists
+
+      initialize() {
+        super.initialize();
+
+        // white background (professor example uses clearColor)
+        this.gl.clearColor(1.0, 1.0, 1.0, 1.0);
+
+        // default draw mode for Ex1 explore: outline of triangle
+        this.drawMode = this.gl.LINE_LOOP;
+        // later try: this.gl.TRIANGLES  (filled)
+
+        // --- upload vertices to GPU ---
+        this.vertexbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+        this.gl.bufferData(
+          this.gl.ARRAY_BUFFER,
+          new Float32Array(this.vertices),
+          this.gl.STATIC_DRAW
+        );
+
+        // --- upload colours to GPU ---
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+        this.gl.bufferData(
+          this.gl.ARRAY_BUFFER,
+          new Float32Array(this.colors),
+          this.gl.STATIC_DRAW
+        );
+      }
+
+      render() {
+        // Exercise 1.2: console message ~50 times/sec while animating
+        console.log("draw " + this.counter);
+        this.counter++;
+
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        this.shaderprog.startUsing();
+
+        // link position attribute
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+        var locPos = this.gl.getAttribLocation(
+          this.shaderprog.shaderProgram, "in_Position"
+        );
+        this.gl.enableVertexAttribArray(locPos);
+        this.gl.vertexAttribPointer(locPos, 2, this.gl.FLOAT, false, 0, 0);
+
+        // link colour attribute
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+        var locCol = this.gl.getAttribLocation(
+          this.shaderprog.shaderProgram, "in_Color"
+        );
+        this.gl.enableVertexAttribArray(locCol);
+        this.gl.vertexAttribPointer(locCol, 3, this.gl.FLOAT, false, 0, 0);
+
+        // DRAW
+        this.gl.drawArrays(this.drawMode, 0, this.nverts);
+      }
+    }
+
+    var app = new myapp("myCanvas");
+    app.run();
+  </script>
+</body>
+</html>

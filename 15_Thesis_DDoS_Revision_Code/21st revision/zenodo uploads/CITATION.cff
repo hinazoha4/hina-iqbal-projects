@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: Historical derived calculations are also deposited at https://doi.org/10.5281/zenodo.23435601. Tables 9-11 in this package supersede the BoT-IoT tables in that interim record.
+title: "Supporting material for: High F1, Costly Alerts: Dataset- and Prevalence-Dependent Rankings of Deep and Tree-Based DDoS Detectors"
+version: 1.0.0
+authors:
+  - family-names: Iqbal
+    given-names: Hina
+    orcid: https://orcid.org/0009-0002-2378-9414
+  - family-names: Premebida
+    given-names: Cristiano
+    orcid: https://orcid.org/0000-0002-2168-2077
+  - family-names: Haider
+    given-names: Usman
+    orcid: https://orcid.org/0000-0002-0125-0912
+date-released: 2026-10-17
+license: CC-BY-4.0
+type: software

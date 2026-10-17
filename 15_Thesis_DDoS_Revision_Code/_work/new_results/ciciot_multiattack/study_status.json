@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "study": "CICIoT2023 paired multi-attack matched-FAR",
+  "seeds": [
+    42,
+    7
+  ],
+  "sequence_semantics": "NON_TEMPORAL_shuffled_record_windows",
+  "families": [
+    "BenignTraffic",
+    "DDoS-ICMP_Flood",
+    "DDoS-ICMP_Fragmentation",
+    "DDoS-PSHACK_Flood",
+    "DDoS-RSTFINFlood",
+    "DDoS-SYN_Flood",
+    "DDoS-SlowLoris",
+    "DDoS-SynonymousIP_Flood",
+    "DDoS-TCP_Flood",
+    "DDoS-UDP_Flood",
+    "DDoS-UDP_Fragmentation"
+  ],
+  "caveat": "Not original private split; filename labels; non-temporal windows; CPU."
+}

@@ -1,0 +1,270 @@
+{
+  "n_files": 53,
+  "files": [
+    {
+      "path": "CITATION.cff",
+      "bytes": 740,
+      "sha256": "098f975542b4fd0ccb5cb79c19cb87b0bb12a426fd2643325debb662e9ccee5b"
+    },
+    {
+      "path": "code\\derived_metrics.py",
+      "bytes": 15084,
+      "sha256": "1874969fb6d188a97d1759bed6ad76490eca5a646df9af59e43b34868b88cc26"
+    },
+    {
+      "path": "code\\evaluate_saved_predictions.py",
+      "bytes": 7015,
+      "sha256": "618b242524d18800d419df1193d01c932de9f14fbaddd8fd6e821709870ba5d4"
+    },
+    {
+      "path": "code\\README.md",
+      "bytes": 762,
+      "sha256": "306ce3f0ddb43033aad89f6a93d5825a526101d264bb58114b555dd8895289a1"
+    },
+    {
+      "path": "code\\reproduce_derived_analyses.py",
+      "bytes": 32372,
+      "sha256": "51e2d54aeaa81aae92e63f7a631fa5fb6321e24c744ebcba33db5bcb4fa3392a"
+    },
+    {
+      "path": "code\\requirements.txt",
+      "bytes": 50,
+      "sha256": "eed79ca439b7c3b2311ce624fef0621458d0cd8c6deb324e95022a20e0619317"
+    },
+    {
+      "path": "code\\run_botiot_audit.py",
+      "bytes": 14901,
+      "sha256": "f9d5509c0cedb155f3176833696652b4e9d936e17e150d3e66efe0092479bfa7"
+    },
+    {
+      "path": "figures\\Figure_01_protocol.pdf",
+      "bytes": 70299,
+      "sha256": "0170885d665938662d656bb3250f0b30109099ee843f8fc5e3c034067113824c"
+    },
+    {
+      "path": "figures\\Figure_01_protocol.png",
+      "bytes": 153613,
+      "sha256": "1166079244b7013415403a3cf12737432af8d4bdeeb026341e4d017695c3b7d7"
+    },
+    {
+      "path": "figures\\Figure_01_protocol.tif",
+      "bytes": 292368,
+      "sha256": "c7a13d995fb07537e22c2804faded0fe3ef97dc29f94d275cd475fc1fe60af8d"
+    },
+    {
+      "path": "figures\\Figure_02_reversal.pdf",
+      "bytes": 65056,
+      "sha256": "b65612f94f3a6aeef5342def524e4e456c84627af156def648e35bfe09fcc827"
+    },
+    {
+      "path": "figures\\Figure_02_reversal.png",
+      "bytes": 116914,
+      "sha256": "2a984f4c65dcb62395511bb5b4918637d97c6fb0e83374ae8fcdfd17a40093e7"
+    },
+    {
+      "path": "figures\\Figure_02_reversal.tif",
+      "bytes": 174658,
+      "sha256": "1abde64182efc770542f30761ed718e2dde677331fa73c2b1462e88c772178d3"
+    },
+    {
+      "path": "figures\\Figure_03_operating_points.pdf",
+      "bytes": 33383,
+      "sha256": "59c5585b2e7d3fb642b078d1e19fa9f2c7446e696d991eb91fbbf9252a678360"
+    },
+    {
+      "path": "figures\\Figure_03_operating_points.png",
+      "bytes": 126642,
+      "sha256": "220a56050e58e943ceead0a231ce9357547bca28329a76d30846c033a78e8d6e"
+    },
+    {
+      "path": "figures\\Figure_03_operating_points.tif",
+      "bytes": 309618,
+      "sha256": "3be152a123b3ec57539d637e57e6f605ea73cbb20222860d88dfc27285561ff0"
+    },
+    {
+      "path": "figures\\Figure_04_prevalence.pdf",
+      "bytes": 34415,
+      "sha256": "ca7ea08e899ef69043ebba440f53ddc795ab57bad9dbf7d9cf077c2142940c55"
+    },
+    {
+      "path": "figures\\Figure_04_prevalence.png",
+      "bytes": 249548,
+      "sha256": "05cea638f8d135d88884b9b752087322e5c851ba9018a1ef4a2052ebd2f389c2"
+    },
+    {
+      "path": "figures\\Figure_04_prevalence.tif",
+      "bytes": 368288,
+      "sha256": "0b3e935955c7f2086f75b46ae542d02236ec427bde844f3c1bb0f56c9c57293c"
+    },
+    {
+      "path": "figures\\Figure_05_crossover.pdf",
+      "bytes": 78262,
+      "sha256": "c5685db46515b4b12f3f382cef4fd2f3eadfdfce3381a03e867155a673da3048"
+    },
+    {
+      "path": "figures\\Figure_05_crossover.png",
+      "bytes": 186648,
+      "sha256": "606981b480f2de3a96b922e11da07e1eb4c46b5341d609ae6cb8558fc10f8fef"
+    },
+    {
+      "path": "figures\\Figure_05_crossover.tif",
+      "bytes": 333740,
+      "sha256": "997335af2111966328a8291e78766c0a15aaa2709b70843a3187a33b9d40ace3"
+    },
+    {
+      "path": "figures\\Figure_06_botiot.pdf",
+      "bytes": 63349,
+      "sha256": "e38fecc76020329e164695b0cc959ba5c16609ef4ae6843d0bc1222339f29071"
+    },
+    {
+      "path": "figures\\Figure_06_botiot.png",
+      "bytes": 108411,
+      "sha256": "77f03e1eef200d54e133b30e6949345c8116cd53d4bcde988cbe653845929504"
+    },
+    {
+      "path": "figures\\Figure_06_botiot.tif",
+      "bytes": 208712,
+      "sha256": "0bb74ab72c8bb66fa3a4ad330660b2f6a07bec49fca8cd314c9e0772f07b4efe"
+    },
+    {
+      "path": "figures\\Graphical_Abstract.png",
+      "bytes": 164116,
+      "sha256": "012d1ecfdd00b31f6de0bbfbfeba8df09ab8af945d54d9cffdf2b4801d1ea658"
+    },
+    {
+      "path": "figures\\Graphical_Abstract.tif",
+      "bytes": 204344,
+      "sha256": "97e99333ba59d534ebb6a2665363816b3522149cccd99b1778d4cf2652872955"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 310,
+      "sha256": "14227210d2610372fe53ceec7e1410acc1deb2f95b70b1c386068827245fa3bf"
+    },
+    {
+      "path": "metadata\\botiot_results.json",
+      "bytes": 78633,
+      "sha256": "a0e1fa1faa3f29be8816c0314a1b67f134bc5f83de3012b50012789c1cb34ecc"
+    },
+    {
+      "path": "metadata\\botiot_source.md",
+      "bytes": 1084,
+      "sha256": "123c5720ae88a8ece3e64335d0d0fcff554f36f7627a01a089e36b0a9bdae7bb"
+    },
+    {
+      "path": "metadata\\cicddos_rf_cnn_ablation_report.json",
+      "bytes": 2420,
+      "sha256": "ed6c0201bed32fb265ab5129207800980c4aecaaffcc0994991533ab13c9716a"
+    },
+    {
+      "path": "metadata\\cicddos_subset_report.json",
+      "bytes": 12300,
+      "sha256": "c2e55d33efd8154966f3fb07392f270cae81e368aedcf61763ccb38af572ba2e"
+    },
+    {
+      "path": "metadata\\ciciot_multiattack_study_status.json",
+      "bytes": 577,
+      "sha256": "cf6e5d306a0d29b1aa6c74e848fcc72d040f46f144f257d46052f4c5d1919cec"
+    },
+    {
+      "path": "metadata\\environment.md",
+      "bytes": 528,
+      "sha256": "e9b8cb016a4328b34f4b13debb834fce4bcc9c2eb43c1566c82d2c19e4a50b1e"
+    },
+    {
+      "path": "metadata\\S1_Literature_screen.md",
+      "bytes": 4866,
+      "sha256": "1296360ba2555b52f720334a4e846844e3034c181e8ad71cc5cb3ee1a4f966a8"
+    },
+    {
+      "path": "metadata\\S2_Protocol_pilot.md",
+      "bytes": 1392,
+      "sha256": "27be3b9f75acaaf083219576867defdba7c1e3ab0cf770c43e008d6a05859675"
+    },
+    {
+      "path": "metadata\\source_and_licensing.md",
+      "bytes": 1173,
+      "sha256": "00062085b16830e669b31daef49783dc12bc30661ae5fc5819eddf19237bab0f"
+    },
+    {
+      "path": "metadata\\variable_dictionary.csv",
+      "bytes": 509,
+      "sha256": "15fc48a1125b909d8c060be31939a19e927d07e688b73cea4094fb6600a80dab"
+    },
+    {
+      "path": "predictions\\README.md",
+      "bytes": 239,
+      "sha256": "8309b650a82558c2574a9f5432e9affa9f80761e9f55ea7d7fe42f07f8a2e0b9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1554,
+      "sha256": "d6939cf5627c120d79ff4613540452a63552e730bec09066a93b125a659ec734"
+    },
+    {
+      "path": "tables\\Table10_BoTIoT_features.csv",
+      "bytes": 290,
+      "sha256": "80f308c9be9149ee31bfd46df1d647ac83b99249c8afb4e7b05f5133edd666d1"
+    },
+    {
+      "path": "tables\\Table11_CICDDoS_subset_ablation.csv",
+      "bytes": 134,
+      "sha256": "a0666a54a11c755acbefeffb8b5bbbf33d4bbf8ee2ca1faa2a99a36a43b48e98"
+    },
+    {
+      "path": "tables\\Table12_CICIoT_multiattack_matched_FAR.csv",
+      "bytes": 1386,
+      "sha256": "8cb8d4f7ae28aa4b843231ffefe82a20c0e618996eb4a6144c138c178fcd4d47"
+    },
+    {
+      "path": "tables\\Table1_JISA_positioning.csv",
+      "bytes": 1431,
+      "sha256": "a3f948b857503762012f855c11d322a9e91f18d2c710381bfca55ce1dded592f"
+    },
+    {
+      "path": "tables\\Table2_Datasets.csv",
+      "bytes": 609,
+      "sha256": "4cedad99d1a52ab3b29f8f35f3d0e128ccc4352b65bedc06794dd6b8f179f66a"
+    },
+    {
+      "path": "tables\\Table3_CICDDoS2019_metrics.csv",
+      "bytes": 673,
+      "sha256": "30d7cc98df398499f4bd23b725bc798e1d3a30a33bd96dd5c013e2675692fbf4"
+    },
+    {
+      "path": "tables\\Table4_Training_times.csv",
+      "bytes": 590,
+      "sha256": "73054c5c9212039abf9cdfa48a463f94de8868d4042831f2bc4cdb1a668b065b"
+    },
+    {
+      "path": "tables\\Table5_CICIoT2023_metrics.csv",
+      "bytes": 598,
+      "sha256": "a8e5e52da792182293f1dd5d8aba1c16e3d5cbfa6dc43f1409606fe71359c200"
+    },
+    {
+      "path": "tables\\Table6_Evaluated_counts.csv",
+      "bytes": 828,
+      "sha256": "89d4383aa63f95a8bde4525e3ab24dc9c8aa980c75a9694bdbb3ef3e888e1ac8"
+    },
+    {
+      "path": "tables\\Table7_Prevalence_precision.csv",
+      "bytes": 432,
+      "sha256": "326141dba462195496a861418b45a4f8f3ce4583e75c84ae0a1b26be6f2510c0"
+    },
+    {
+      "path": "tables\\Table8_Crossover_prevalence.csv",
+      "bytes": 381,
+      "sha256": "01f2d66a115782892ce0ce32a909cf471b38914cf4be9b6b513303b27fd25c88"
+    },
+    {
+      "path": "tables\\Table9_BoTIoT_seeds.csv",
+      "bytes": 268,
+      "sha256": "f3dd9d815fbdb14f5f8fb530b1a41bc33e7a80a87f2054fe907c296a9fd75adc"
+    },
+    {
+      "path": "zenodo_metadata.json",
+      "bytes": 1300,
+      "sha256": "641d3090ef8f3f591d9a3b864f74aadebf523292c841b18acabb30943d7a99f9"
+    }
+  ]
+}

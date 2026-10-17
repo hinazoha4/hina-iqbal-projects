@@ -1,0 +1,160 @@
+{
+  "source": "hf_baalajimaestro_DDoS-CICIoT2023",
+  "labeling": "filename-derived",
+  "sequence_semantics": "NON_TEMPORAL_shuffled_record_windows",
+  "feature_cols": [
+    "Header_Length",
+    "Protocol Type",
+    "Time_To_Live",
+    "Rate",
+    "fin_flag_number",
+    "syn_flag_number",
+    "rst_flag_number",
+    "psh_flag_number",
+    "ack_flag_number",
+    "ece_flag_number",
+    "cwr_flag_number",
+    "ack_count",
+    "syn_count",
+    "fin_count",
+    "rst_count",
+    "HTTP",
+    "HTTPS",
+    "DNS",
+    "Telnet",
+    "SMTP",
+    "SSH",
+    "IRC",
+    "TCP",
+    "UDP",
+    "DHCP",
+    "ARP",
+    "ICMP",
+    "IGMP",
+    "IPv",
+    "LLC",
+    "Tot sum",
+    "Min",
+    "Max",
+    "AVG",
+    "Std",
+    "Tot size",
+    "IAT",
+    "Number",
+    "Variance"
+  ],
+  "inventory": [
+    {
+      "file": "BenignTraffic.pcap.csv",
+      "family": "BenignTraffic",
+      "label": 0,
+      "rows_used": 3500
+    },
+    {
+      "file": "BenignTraffic1.pcap.csv",
+      "family": "BenignTraffic",
+      "label": 0,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-ICMP_Flood.pcap.csv",
+      "family": "DDoS-ICMP_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-ICMP_Fragmentation.pcap.csv",
+      "family": "DDoS-ICMP_Fragmentation",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-PSHACK_Flood.pcap.csv",
+      "family": "DDoS-PSHACK_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-RSTFINFlood.pcap.csv",
+      "family": "DDoS-RSTFINFlood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-SlowLoris.pcap.csv",
+      "family": "DDoS-SlowLoris",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-SYN_Flood.pcap.csv",
+      "family": "DDoS-SYN_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-SynonymousIP_Flood.pcap.csv",
+      "family": "DDoS-SynonymousIP_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-TCP_Flood.pcap.csv",
+      "family": "DDoS-TCP_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-UDP_Flood.pcap.csv",
+      "family": "DDoS-UDP_Flood",
+      "label": 1,
+      "rows_used": 3500
+    },
+    {
+      "file": "DDoS-UDP_Fragmentation.pcap.csv",
+      "family": "DDoS-UDP_Fragmentation",
+      "label": 1,
+      "rows_used": 3500
+    }
+  ],
+  "families": [
+    "BenignTraffic",
+    "DDoS-ICMP_Flood",
+    "DDoS-ICMP_Fragmentation",
+    "DDoS-PSHACK_Flood",
+    "DDoS-RSTFINFlood",
+    "DDoS-SYN_Flood",
+    "DDoS-SlowLoris",
+    "DDoS-SynonymousIP_Flood",
+    "DDoS-TCP_Flood",
+    "DDoS-UDP_Flood",
+    "DDoS-UDP_Fragmentation"
+  ],
+  "rows": 42000,
+  "counts": {
+    "train": {
+      "n": 29400,
+      "benign": 4900,
+      "attack": 24500
+    },
+    "val": {
+      "n": 6300,
+      "benign": 1050,
+      "attack": 5250
+    },
+    "test": {
+      "n": 6300,
+      "benign": 1050,
+      "attack": 5250
+    }
+  },
+  "seed": 42,
+  "device": "cpu",
+  "torch": "2.13.0+cpu",
+  "cuda_available": false,
+  "seq_len": 40,
+  "epochs": 2,
+  "rf_seconds": 1.39,
+  "cnn_lstm_seconds": 18.4,
+  "n_features": 39
+}

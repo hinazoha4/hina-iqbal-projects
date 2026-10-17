@@ -1,0 +1,86 @@
+============================================================
+CGRA & VC — VPN + JupyterHub SETUP (Paulo Menezes)
+============================================================
+
+Tumhein 2 cheezein chahiye:
+  1) OpenVPN (university network)
+  2) JupyterHub: https://seeds.deec.uc.pt/CGRA/
+
+------------------------------------------------------------
+STEP A — OpenVPN install (Windows)
+------------------------------------------------------------
+1. Browser kholo:
+   https://helpdesk.deec.uc.pt/help/pt-pt/19-vpn
+
+2. DEEC / English section se Windows OpenVPN guide +
+   .ovpn config file download karo (student account se).
+
+3. OpenVPN Connect YA OpenVPN GUI install karo:
+   https://openvpn.net/client/
+
+4. Downloaded .ovpn file import karo → Connect.
+5. Login: Inforestudante email + password
+   (agar MEEC nahi ho to DEEC mail check karo — credentials alag aa sakte hain)
+
+Connected dikhe to Step B.
+
+Agar VPN fail:
+- University WiFi pe bhi try (kabhi VPN ke baghair seeds chal jata hai)
+- Helpdesk ticket / professor email
+
+------------------------------------------------------------
+STEP B — JupyterHub open
+------------------------------------------------------------
+1. VPN ON rakho
+2. Chrome/Edge:
+   https://seeds.deec.uc.pt/CGRA/
+3. Login: Inforestudante mail + password
+4. Workspace dikhega → folder "examples" hoga
+
+------------------------------------------------------------
+STEP C — Example copy (IMPORTANT)
+------------------------------------------------------------
+examples folder HAR login pe refresh hota hai.
+Is liye:
+
+1. examples → Lines (ya pehla triangle/lines notebook) COPY karo
+2. Apni folder banao, e.g. my_labs/
+3. Copied notebook WAHAN paste karo
+4. Wahi open karke edit karo
+
+Warna changes LOST ho jayenge.
+
+------------------------------------------------------------
+STEP D — Code RUN kaise (Voilà)
+------------------------------------------------------------
+1. Notebook open karo
+2. RUN button MAT dabao  ← professor ne mana kiya
+3. Upar / toolbar pe Voilà button click
+4. Naya tab khulega → neeche canvas dikhega
+5. Code change → Save → Voilà tab RELOAD
+
+Browser console (debug):
+  F12 → Console  (errors / "draw" messages yahan)
+
+------------------------------------------------------------
+STEP E — Notebook cells ka rule
+------------------------------------------------------------
+Har HTML/JS cell ki PEHLI line:
+  %%html
+
+Libraries (example mein pehle se hoti hain):
+  deecshader.js + deecapp.js
+
+------------------------------------------------------------
+LOCAL PRACTICE (VPN wait ke baghair)
+------------------------------------------------------------
+Folder:
+  graphics_AR_labs\local_practice\
+
+File double-click / browser mein kholo:
+  01_triangle_basic.html
+
+Yahan colours / vertices change karke seekho.
+Jab VPN connect ho, SAME ideas Jupyter pe apply karo.
+
+============================================================

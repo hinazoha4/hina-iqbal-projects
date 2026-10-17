@@ -1,0 +1,177 @@
+CELL 0 markdown
+# Computação Gráfica e Realidade Aumentada 
+# Visualização Computacional 
+## &copy; 2020 - 202X
+<author>Author: Paulo Menezes</author>
+<h1>Object definition Example</h1>
+
+
+You should review the previous examples if you do not understand some of the scripts included here. 
+
+Note that here we have a new shader that includes the use of an uniform matrix. 
+
+====
+
+CELL 1 code
+%%html               
+<script src="http://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+<script src="http://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+<script src="http://is3l.isr.uc.pt/~pm/CGRA/JS/cgraobject.js"></script>
+<script src='https://git.io/glm-js.min.js'></script>
+
+====
+
+CELL 2 code
+%%html
+<script id="my-vertex-shader" type="x-shader/x-vertex">
+precision mediump float;
+
+attribute  vec3 in_Position;
+attribute  vec3 in_Color;
+uniform mat4 MVP;
+
+varying  vec3 ex_Color;
+
+void main(void) {
+  
+    gl_Position = MVP * vec4(in_Position.x, in_Position.y, in_Position.z, 1.0);
+
+    ex_Color = in_Color;
+}
+</script>
+
+====
+
+CELL 3 code
+%%html
+<script id="my-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+varying  vec3 ex_Color;
+
+void main(void) {
+  
+    gl_FragColor = vec4(ex_Color,1.0);
+}
+</script>
+
+====
+
+CELL 4 markdown
+<h2>Example app code</h2>
+
+Another extension of the previous examples.
+
+Do not forget to open the javascript console and watch what happens when you press eht "a" or another key.
+
+====
+
+CELL 5 code
+%%html
+<canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;">
+      Error: Your browser does not support the HTML canvas tag.
+</canvas>
+    
+<script id="myapp">
+
+class triangle extends CGRAobject{
+    constructor(glcontext){
+        super(glcontext); // initialize the parent class
+        
+        this.numvertices = 3;
+        var vertices =
+            [ -0.90, -0.90, 0 ,
+              0.90, -0.90, 0 ,
+              -0.90,  0.90, 0]; 
+        
+        var colors = [
+            1.0, 0.0, 0.0, 
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0];
+        
+        this.vertexbuffer=this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertices), this.gl.STATIC_DRAW);
+
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(colors), this.gl.STATIC_DRAW);
+    }
+}
+
+class myapp extends DEECapp{
+    counter=0;
+    key=0;
+    initialize(){
+        // no call to super.initialize() this time because
+        // in this case we don't want to use the default shader.
+        // So we need to explicitly prepare it... and we may indeed prepare 
+        // as many shaderprograms as we want.
+        
+        var fragsrc = document.getElementById("my-fragment-shader").text;
+        var vertsrc = document.getElementById("my-vertex-shader").text;
+        
+        this.shaderprog = new DEECshader(this.gl);
+        this.shaderprog.srcShaders(vertsrc,fragsrc);
+        
+        // perform other initializations
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.clearColor(1.0,1.0,1.0,1.0);
+        
+        // Lets create two triangle objects
+        
+        this.mytriangle = new triangle(this.gl);
+        this.mytriangle.setShader(this.shaderprog);
+        
+        this.mytriangle2 = new triangle(this.gl);
+        this.mytriangle2.setShader(this.shaderprog);
+        window.addEventListener("keypress",(evt) => app.keyprocess(evt),false);
+    }
+    
+    keyprocess(evt){
+        console.log('Key pressed. Keycode:'+evt.keyCode + ' Char: \'' + String.fromCharCode(evt.charCode)+'\'');
+        if(evt.keyCode == 27){
+            alert("You pressed the \"Escape\" key.");
+        }
+        console.log('key='+ this.key)
+        this.key = evt.keyCode;
+    }
+    
+    render(){
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
+        this.counter++;
+        
+        // define the model tranformation for the first
+        var rotation = glm.toMat4(glm.angleAxis(glm.radians(this.counter),glm.vec3(0.0,0.0,1.0)));
+        rotation = glm.mat4(0.1)['*'](rotation);
+        this.mytriangle.setModelTransformation(rotation);
+       
+        // define the model tranformation for the second
+        var scale = glm.mat4(glm.mat3(0.2));
+        rotation = glm.rotate(glm.mat4(1.0),glm.radians(-this.counter),glm.vec3(0.0,0.0,1.0));
+        var transl = glm.translate(glm.mat4(1.0),glm.vec3(-0.5,0.5,-0.5));
+        var transformation = transl['*'](rotation['*'](scale));
+        this.mytriangle2.setModelTransformation(transformation);
+        
+        // draw both triangles
+        
+        if (this.key == 97)
+            this.mytriangle.drawit();
+        else
+         console.log('app key='+ this.key)
+        this.mytriangle2.drawit();
+    }
+    
+}
+
+
+var app = new myapp('myCanvas');
+
+app.run();
+
+</script>
+
+====

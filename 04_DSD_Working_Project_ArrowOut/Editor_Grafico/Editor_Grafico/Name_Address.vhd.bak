@@ -1,0 +1,69 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+ENTITY Name_Address IS
+    PORT(   
+        px_row: IN STD_LOGIC_VECTOR(9 DOWNTO 0); 
+        px_col: IN STD_LOGIC_VECTOR(9 DOWNTO 0); 
+        character_address: OUT STD_LOGIC_VECTOR(5 DOWNTO 0) -- Assuming this is the output for the character address
+    );
+END Name_Address;
+
+ARCHITECTURE Behavior OF Name_Address IS
+BEGIN
+    PROCESS (px_row, px_col) 
+    variable px_row_int : integer; 
+    variable px_col_int : integer; 
+    BEGIN
+		px_row_int := TO_INTEGER(unsigned(px_row)); 
+		px_col_int := TO_INTEGER(unsigned(px_col)); 
+		
+        if ((px_col_int >= 240) AND (px_col_int <= 248)) then          
+				case px_row_int is
+					when 240 to 243 =>
+						character_address <= O"14"; -- 'L'
+					when 244 to 247 =>
+						character_address <= O"05"; -- 'E'
+					when 248 to 251 =>
+						character_address <= O"17"; -- 'O'
+					when 252 to 255 =>
+						character_address <= O"16"; -- 'N'
+					when 256 to 259 =>
+						character_address <= O"01"; -- 'A'
+					when 260 to 263 =>
+						character_address <= O"22"; -- 'R'
+					when 264 to 267 =>
+						character_address <= O"04"; -- 'D'
+					when 268 to 271 =>
+						character_address <= O"17"; -- 'O'
+					when 272 to 275 =>
+						character_address <= O"40"; -- ' '
+					when 276 to 279 =>
+						character_address <= O"07"; -- 'G'
+					when 280 to 283 =>
+						character_address <= O"17"; -- 'O'
+					when 284 to 287 =>
+						character_address <= O"16"; -- 'N'
+					when 288 to 291 =>
+						character_address <= O"03"; -- 'C'
+					when 292 to 295 =>
+						character_address <= O"01"; -- 'A'
+					when 296 to 299 =>
+						character_address <= O"14"; -- 'L'
+					when 300 to 303 =>
+						character_address <= O"26"; -- 'V'
+					when 304 to 307 =>
+						character_address <= O"05"; -- 'E'
+					when 308 to 311 =>
+						character_address <= O"23"; -- 'S'
+					when others =>
+						character_address <= O"40"; -- default value
+				end case;
+        else 
+            character_address <= O"40";
+        end if; 
+
+    END PROCESS;
+
+END Behavior;

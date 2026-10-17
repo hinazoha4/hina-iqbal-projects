@@ -1,0 +1,34 @@
+{
+  "title": "Supporting material for: High F1, Costly Alerts: Dataset- and Prevalence-Dependent Rankings of Deep and Tree-Based DDoS Detectors",
+  "version": "1.0.0",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "Iqbal, Hina",
+      "affiliation": "University of Coimbra",
+      "orcid": "0009-0002-2378-9414"
+    },
+    {
+      "name": "Premebida, Cristiano",
+      "affiliation": "University of Coimbra",
+      "orcid": "0000-0002-2168-2077"
+    },
+    {
+      "name": "Haider, Usman",
+      "affiliation": "Czech Technical University in Prague",
+      "orcid": "0000-0002-0125-0912"
+    }
+  ],
+  "keywords": [
+    "DDoS detection",
+    "IoT security",
+    "false alarm rate",
+    "attack prevalence",
+    "cost-sensitive evaluation",
+    "shortcut learning",
+    "base-rate fallacy"
+  ],
+  "description": "Tables and scripts that rebuild a prevalence and expected-cost reading of executed DDoS detector counts, including the ROC convex hull and the never-alert and always-alert bounds. The scripts rebuild the derived tables, including the BoT-IoT subsample counts in metadata/botiot_results.json. The interim public deposit is https://doi.org/10.5281/zenodo.23435601. Licence: CC BY 4.0."
+}

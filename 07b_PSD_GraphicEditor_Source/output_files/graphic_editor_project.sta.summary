@@ -1,0 +1,77 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow Model Setup 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -5.992
+TNS   : -259.423
+
+Type  : Slow Model Setup 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -2.048
+TNS   : -161.442
+
+Type  : Slow Model Hold 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.768
+TNS   : -2.402
+
+Type  : Slow Model Hold 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -0.173
+TNS   : -0.173
+
+Type  : Slow Model Recovery 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : 1.063
+TNS   : 0.000
+
+Type  : Slow Model Removal 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.467
+TNS   : -5.558
+
+Type  : Slow Model Minimum Pulse Width 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.500
+TNS   : -92.000
+
+Type  : Slow Model Minimum Pulse Width 'CLOCK_50'
+Slack : 10.000
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 17.873
+TNS   : 0.000
+
+Type  : Fast Model Setup 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -2.503
+TNS   : -107.687
+
+Type  : Fast Model Setup 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.444
+TNS   : -29.827
+
+Type  : Fast Model Hold 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.677
+TNS   : -10.422
+
+Type  : Fast Model Hold 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 0.006
+TNS   : 0.000
+
+Type  : Fast Model Recovery 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : 1.059
+TNS   : 0.000
+
+Type  : Fast Model Removal 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.255
+TNS   : -3.244
+
+Type  : Fast Model Minimum Pulse Width 'MOUSE:mouse_inst|MOUSE_CLK_FILTER'
+Slack : -0.500
+TNS   : -92.000
+
+Type  : Fast Model Minimum Pulse Width 'CLOCK_50'
+Slack : 10.000
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 17.873
+TNS   : 0.000
+
+------------------------------------------------------------

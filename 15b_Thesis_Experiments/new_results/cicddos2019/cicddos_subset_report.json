@@ -1,0 +1,49 @@
+﻿{
+  "report": "cicddos_subset_report",
+  "status": "PASS",
+  "built_all_data": {
+    "path": "data/cicddos2019/all-data.csv",
+    "bytes": 61295129,
+    "rows": 120444,
+    "downsample": {
+      "mult_attack_to_benign": 5,
+      "random_state": 42
+    },
+    "source": "Hugging Face baalajimaestro/CICDDoS2019 day 01-12"
+  },
+  "files_used": [
+    "UDPLag.csv",
+    "Syn.csv",
+    "DrDoS_NTP.csv",
+    "DrDoS_LDAP.csv"
+  ],
+  "files_excluded": [
+    "DrDoS_DNS.csv",
+    "DrDoS_MSSQL.csv",
+    "DrDoS_NetBIOS.csv",
+    "DrDoS_SNMP.csv",
+    "DrDoS_SSDP.csv",
+    "DrDoS_UDP.csv",
+    "TFTP.csv"
+  ],
+  "exclusion_reason": "Multi-GB day files deferred to avoid out-of-memory while building all-data.csv on this host; TFTP.csv alone is ~8.8 GB.",
+  "day_01_12_inventory": [
+    {"name": "DrDoS_DNS.csv", "bytes": 2133307948, "used_in_all_data": false},
+    {"name": "DrDoS_LDAP.csv", "bytes": 917302277, "used_in_all_data": true},
+    {"name": "DrDoS_MSSQL.csv", "bytes": 1889181756, "used_in_all_data": false},
+    {"name": "DrDoS_NTP.csv", "bytes": 645008606, "used_in_all_data": true},
+    {"name": "DrDoS_NetBIOS.csv", "bytes": 1697479829, "used_in_all_data": false},
+    {"name": "DrDoS_SNMP.csv", "bytes": 2172579815, "used_in_all_data": false},
+    {"name": "DrDoS_SSDP.csv", "bytes": 1252686219, "used_in_all_data": false},
+    {"name": "DrDoS_UDP.csv", "bytes": 1506039371, "used_in_all_data": false},
+    {"name": "Syn.csv", "bytes": 637312127, "used_in_all_data": true},
+    {"name": "TFTP.csv", "bytes": 9302011115, "used_in_all_data": false},
+    {"name": "UDPLag.csv", "bytes": 157968770, "used_in_all_data": true}
+  ],
+  "html_rejected": {
+    "path_attempted": "data/cicddos2019/all-data.csv (Google Drive id 1NcHRdcrLpHLILKxf7nMBawR3EPz1IMf0)",
+    "bytes": 2460,
+    "handling": "Deleted; virus-scan HTML page, not a CSV"
+  },
+  "official_zip_status": "http://cicresearch.ca/.../CSV-01-12.zip returned HTML redirect, not a ZIP"
+}

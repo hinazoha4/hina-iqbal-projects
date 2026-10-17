@@ -1,0 +1,10 @@
+topic,earlier_work,this_manuscript,limit
+False-alarm operating points,Cogranne et al. 2026 study sequential detection of attacks on low-latency services,Reports false-alarm counts at stated cuts and a validation-chosen BoT-IoT cut,Main CICIoT2023 cuts are unpaired
+DDoS false positives in a stated domain,Singha et al. 2025 study a tenant-aware detector,Separates benchmark false alarms from projected precision,No deployment trace
+Emulated versus hardware data,Wolf et al. 2026 compare emulated and hardware captures,Cites that gap as a reason not to treat one benchmark point as deployment performance,This paper does not repeat their hardware comparison
+Shortcut features,Engelen et al. 2021 and Flood et al. 2024,Table 11 removes Inbound and ports on a four-file subset,Random forest only; hybrid not refit
+Prevalence and cost,Axelsson 2000; Provost and Fawcett 2001,Projects precision and expected cost from the CICIoT counts,Rates are held fixed; costs are assumed
+
+Paired multi-attack matched-FAR (this work R21),Identical targets + val-only FAR budgets across 10 DDoS families + Benign,Evaluation protocol / detector selection under matched FAR,CPU pilot; non-temporal windows; not original prepared split
+
+Paired multi-attack matched-FAR (this work R21),Identical targets + val-only FAR budgets across 10 DDoS families + Benign,Evaluation protocol / detector selection under matched FAR,CPU pilot; non-temporal windows; not original prepared split

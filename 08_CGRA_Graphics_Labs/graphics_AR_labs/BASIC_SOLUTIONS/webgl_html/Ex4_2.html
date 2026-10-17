@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Ex 4.2 - WebGL</title>
+</head>
+<body>
+  <h3>Exercise 4.2 - rotate while moving</h3>
+  <canvas id="myCanvas" width="400" height="400" style="border:2px solid #000;"></canvas>
+
+  <script src="https://git.io/glm-js.min.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+  <script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+attribute vec2 in_Position;
+attribute vec3 in_Color;
+varying vec3 ex_Color;
+void main(void){
+  gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+  ex_Color = in_Color;
+}
+  </script>
+
+  <script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+varying vec3 ex_Color;
+void main(void){
+  gl_FragColor = vec4(ex_Color, 1.0);
+}
+  </script>
+
+  <script>
+class myapp extends DEECapp{
+  counter=0;
+  initialize(){
+    super.initialize();
+    this.gl.clearColor(1.0,1.0,1.0,1.0);
+    this.v1 = glm.vec4(-0.05,  0.06, 0, 1);
+    this.v2 = glm.vec4(-0.05, -0.06, 0, 1);
+    this.v3 = glm.vec4( 0.05, -0.06, 0, 1);
+    this.numvertices = 3;
+    this.vertices = [0,0, 0,0, 0,0];
+    this.colors = [0,0,1, 0,0,1, 0,0,1];
+    this.vertexbuffer=this.gl.createBuffer();
+    this.colorbuffer=this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+    this.starttime = Date.now();
+  }
+  render(){
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    this.counter++;
+    var t = (Date.now() - this.starttime) * 0.001;
+    var x = -1.0 + (t * 0.25) % 2.0;
+    var y = 0.4 * Math.sin(3.1416 * x);
+    var q = glm.angleAxis(this.counter/180*Math.PI, glm.vec3(0,0,1));
+    var R = glm.toMat4(q);
+    var T = glm.translate(glm.mat4(1.0), glm.vec3(x, y, 0.0));
+    var M = T['*'](R);
+    var p1 = M['*'](this.v1);
+    var p2 = M['*'](this.v2);
+    var p3 = M['*'](this.v3);
+    this.vertices[0]=p1.x; this.vertices[1]=p1.y;
+    this.vertices[2]=p2.x; this.vertices[3]=p2.y;
+    this.vertices[4]=p3.x; this.vertices[5]=p3.y;
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.vertexbuffer);
+    this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Position");
+    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, this.gl.FALSE, 2*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.positionLocation);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.colorbuffer);
+    this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Color");
+    this.gl.vertexAttribPointer(this.colorLocation, 3, this.gl.FLOAT, this.gl.FALSE, 3*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.colorLocation);
+    this.shaderprog.startUsing();
+    this.gl.drawArrays(this.gl.TRIANGLES,0,this.numvertices);
+    this.shaderprog.stopUsing();
+  }
+}
+var app = new myapp('myCanvas');
+app.run();
+  </script>
+</body>
+</html>

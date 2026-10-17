@@ -1,0 +1,50 @@
+============================================================
+  DEFENSE — short answers (practice aloud)
+============================================================
+
+Q: Program kya karta hai?
+A: Har pixel ke liye x,y nikalta hai, z=sin(x)*cos(y)
+   calculate karta hai (Taylor se), color index banata hai,
+   putpixel se Bitmap pe likhta hai.
+
+Q: init kyun?
+A: Min/Max = +/- pi/2 aur pixcorx/pixcory ek baar set.
+   Ye values har pixel pe same hain, isliye init mein.
+
+Q: putpixel?
+A: addr = display + 4*(row*cols + col)
+   colors[index] load karke us address pe store.
+
+Q: sin_approx / cos_approx?
+A: Library nahi. Taylor:
+   sin = x - x3/6 + x5/120 - x7/5040
+   cos = 1 - x2/2 + x4/24 - x6/720
+   Double FP instructions (fmul.d, fdiv.d, ...)
+
+Q: surfacepixval?
+A: PDF wala naam.
+   x = col*pixcorx + Minx
+   y = Maxy - row*pixcory
+   z = sin(x)*cos(y)
+   color = (z+1)/2
+   index = color * 49
+
+Q: Registers?
+A: s0=col, s1=row, s2=resx in main loops
+   a0/a1/a2 = args; fa0 = float arg/return
+   ft* = float temps
+
+Q: juliapixval kahan gaya?
+A: PDF ke mutabiq rename: surfacepixval.
+   main ab surfacepixval call karta hai.
+
+Checklist requirements:
+ [x] RISC-V32 RARS
+ [x] double floating point
+ [x] no math library
+ [x] sin_approx + cos_approx own code
+ [x] Bitmap Display
+ [x] init for pixel-independent values
+ [x] full image loop in main
+ [x] member comment block at top (FILL NAME!)
+============================================================

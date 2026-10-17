@@ -1,0 +1,122 @@
+============================================================
+CGRA A1 — DEFENSE (oral) — bilkul simple answers
+============================================================
+
+Professor zero de sakta hai agar explain na kar sako.
+Neeche HAR cheez 1–2 jumlon mein yaad rakho.
+
+
+------------------------------------------------------------
+Q: Code kis layout pe hai?
+------------------------------------------------------------
+A: Professor ke Objects.ipynb jaisa.
+   Libraries cell → vertex shader → fragment shader → myapp.
+   Har shape CGRAobject extend karti hai.
+   drawit(view, proj) se MVP = P * V * M banata hai.
+
+
+------------------------------------------------------------
+Q: Cube kyun 36 vertices, 8 nahi?
+------------------------------------------------------------
+A: Geometry mein 8 corners hain, lekin har face ke liye
+   alag color/normal chahiye. Is liye har triangle apne
+   3 vertices duplicate karta hai: 6 faces × 2 tris × 3 = 36.
+
+
+------------------------------------------------------------
+Q: Color gradient kaise?
+------------------------------------------------------------
+A: Constructor mein 2 colors.
+   Har vertex pe t = (x+1)/2
+   color = (1-t)*color1 + t*color2
+   Matlab left se right horizontal blend.
+
+
+------------------------------------------------------------
+Q: Sphere / cylinder / cone / disc?
+------------------------------------------------------------
+A: Disc  = center + circle points → triangles
+   Cone  = apex + base circle triangles
+   Cylinder = top+bottom circle, beech mein quads (2 tris)
+   Sphere = latitude rings (stacks), har ring pe slices,
+            rings ke beech triangles (jaise cylinder)
+
+
+------------------------------------------------------------
+Q: Convoy hierarchy?
+------------------------------------------------------------
+A: Pehle world matrix = Translate(path) * RotateY(yaw)
+   Phir body/wheels is matrix ke relative (local offset)
+   Parent transform children pe cascade (multiply).
+
+
+------------------------------------------------------------
+Q: Key r pe wheels?
+------------------------------------------------------------
+A: wheelMode = 0,1,2
+   Same position pe alag shape draw:
+   0=Cube, 1=Cylinder, 2=Sphere + thoda scale/rotate
+
+
+------------------------------------------------------------
+Q: Figure-eight path?
+------------------------------------------------------------
+A: Lemniscate of Bernoulli (PDF formula).
+   omega = eps*t + theta_i
+   x,z = formula
+   Wagon spacing = alag theta_i (negative offsets)
+
+
+------------------------------------------------------------
+Q: Orientation / rotation matrix?
+------------------------------------------------------------
+A: Path ka tangent (dx/dt, dz/dt) nikalta hoon.
+   yaw = atan2(dx, dz)
+   R = rotation around Y by yaw
+   Is se gaadi hamesha path ki direction face karti hai.
+
+
+------------------------------------------------------------
+Q: WASD camera?
+------------------------------------------------------------
+A: eye position + yaw angle.
+   forward vector from yaw.
+   W/S along forward, A/D along right.
+   lookAt(eye, eye+forward, up)
+
+
+------------------------------------------------------------
+Q: Key v?
+------------------------------------------------------------
+A: camMode toggle.
+   0 = free walk
+   1 = camera last wagon pe baith kar aage dekhti hai
+
+
+------------------------------------------------------------
+Q: Trebuchet / mill animation?
+------------------------------------------------------------
+A: Trebuchet arm: angle = 40*sin(t)  (pendulum)
+   Mill wheel: continuous rotate t*80
+   Bucket: y = 0.4 + 0.35*sin(2t)
+
+
+------------------------------------------------------------
+Q: Third-party geometry loader?
+------------------------------------------------------------
+A: Nahi. Sab vertices mere loops / lists se.
+   Sirf professor ki deec* + cgraobject + glm-js.
+
+
+------------------------------------------------------------
+Practice script (bol ke sunao)
+------------------------------------------------------------
+1) "Notebook Objects example se start kiya"
+2) "Shapes CGRAobject extend"
+3) "Cube 36 verts face attributes ke liye"
+4) "Gradient two colors mix by x"
+5) "Convoy = translate * rotate * local parts"
+6) "Path PDF formula, yaw from tangent"
+7) "r wheels, wasd walk, v ride camera"
+
+============================================================

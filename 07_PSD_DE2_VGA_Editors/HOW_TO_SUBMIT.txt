@@ -1,0 +1,34 @@
+DE2 VGA Editors — submission package (folder layout)
+
+What to zip
+-------------
+Zip this entire folder so the grader sees normal Quartus project structure:
+
+  DE2_VGA_Editors_Quartus13\
+    text_editor_project\     (open text_editor_project.qpf here)
+    graphic_editor_project\  (open graphic_editor_project.qpf here)
+    (any other files in this root)
+
+Do NOT zip only shortcuts from Desktop\DE2_RUN_THIS — that folder is optional help.
+The real project files live inside DE2_VGA_Editors_Quartus13.
+
+Before zipping (recommended)
+-----------------------------
+Delete large build folders inside each project to keep the zip small:
+  text_editor_project\db
+  text_editor_project\incremental_db
+  text_editor_project\output_files   (optional: keep if you must include .sof)
+
+Same for graphic_editor_project.
+
+Open in Quartus
+---------------
+1. Extract the zip anywhere on disk.
+2. In Quartus: File -> Open Project
+3. Choose:
+   ...\text_editor_project\text_editor_project.qpf
+   or
+   ...\graphic_editor_project\graphic_editor_project.qpf
+
+Top-level design for compile is VHDL (text_editor_top / graphic_editor_top).
+BDF files are included for schematic/block diagram; open them from the same project folder in Quartus.

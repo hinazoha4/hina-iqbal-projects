@@ -1,0 +1,150 @@
+FILE: cgra-a1.pdf
+PAGES: 5
+
+===== PAGE 1 =====
+A1st Assignment
+In this assignment, you will start by deﬁning a set of fundamental 3D ge-
+ometric shapes: cubes, discs, open cylinders, closed cylinders, cones, and
+spheres. Using these basic primitives, you will assemble and animate a rich
+interactive scenario.
+These shapes may undergo several geometric transformations studied in
+class: isometric and anisometric scaling, shear, rotation, translation, and
+naturally, hierarchical compositions of these operations.
+A.1 Development
+For your implementation, you will use Jupyter Notebooks and must include
+the following client scripts in your notebook:
+—HTML—
+1< s c r i p t s r c = " h t t p s : / / i s 3 l . i s r . u c . p t / ~ p m / C G R A / J S / d e e c s h a d e r . j s " > < / s c r i p t >
+2< s c r i p t s r c = " h t t p s : / / i s 3 l . i s r . u c . p t / ~ p m / C G R A / J S / d e e c a p p . j s " > < / s c r i p t >
+3< s c r i p t s r c = " h t t p s : / / i s 3 l . i s r . u c . p t / ~ p m / C G R A / J S / c g r a o b j e c t . j s " > < / s c r i p t >
+4< s c r i p t s r c = ’ h t t p s : / / g i t . i o / g l m−js .m i n. js ’ > < /script>
+Your developmentmustrely on these classes, particularlyCGRAobject,
+from which every custom object class you build must inherit. You may
+take theObjects.ipynbnotebook provided on UCStudent as your starting
+point.
+A.2 Shapes
+A cube consists of 6 faces corresponding to 12 triangles and 36 ver-
+tices. Although a cube has only 8 distinct geometric corners, vertices
+must be duplicated per triangle face to deﬁne proper independent face
+attributes.
+89
+===== PAGE 2 =====
+A. 1ST ASSIGNMENT
+A cone is modeled by a set of vertices uniformly distributed along a
+base circle, where consecutive vertex pairs connect to a single apex
+vertex to create triangular lateral faces.
+A cylinder is constructed from two parallel circles where consecutive
+pairs of base and top vertices form a quad face, tessellated into two
+triangles.
+A sphere is modeled as a stack of circular cross-sections whose radius
+varies with the cosine of the elevation angle. Adjacent circular rings
+are linked into triangular strips similar to cylinders, with the polar
+caps degenerating into cones at radius 0.
+Exercise A.1
+Create classes for the following geometric primitives:
+•Cube deﬁned explicitly by its vertices.5%
+•Sphere of radius 1 composed of at least 10 triangle latitude strips,
+each ring sampled with at least 10 vertices.10%
+•Cylinder formed by two circles of at least 10 vertices each.5%
+•Cone formed by a base circle of at least 10 vertices and an apex vertex.5%
+•Disc formed by a circular perimeter of at least 10 vertices connected
+to a central vertex.5%
+All shapes must take two color vectors in their constructor. Vertex colors
+should produce a smooth horizontal color gradient spanning from the ﬁrst
+color to the second.
+A.3 Compound Shapes
+By combining the basic primitives above through local coordinate trans-
+formations, you can create hierarchical compound objects. For instance,
+a siege engine might combine scaled cubes for chassis beams, cylinders for
+axles and rollers, and cones or discs for structural ﬁttings. Transformations
+applied to the root entity must cascade down to all constituent child parts.
+CGRA & VC 90 Paulo Menezes - 2025
+===== PAGE 3 =====
+A. 1ST ASSIGNMENT
+A.4 Creating the Interactive Scenario:
+Medieval Castle
+You will model an active medieval camp positioned outside or intersecting a
+fortiﬁed castle gatehouse. The centerpiece of the scene is an armored siege
+convoy—consisting of a lead battering ram vehicle followed by supply and
+ammunition wagons—advancing along a continuous ﬁgure-eight patrol road
+that loops between the siege front lines and the rear armory depot.
+Exercise A.2
+Create a compound object representing an armoredSiege Convoyusing
+your basic shapes. The convoy must consist of a lead battering ram ve-
+hicle followed by 3 linked supply wagons. The wagons must be spaced at
+appropriate o!sets behind the engine and vary in size or load proﬁle.
+By pressing a key of your choice, the wheel/roller assemblies of the
+convoy vehicles must toggle betweencubes, cylinders, and spheres,10%
+updating their geometry and local coordinate transformations accordingly.
+Exercise A.3
+The convoy advances along a patrol route governed by a Lemniscate of
+Bernoulli (ﬁgure-eight path). 10%
+Lettingωi(t)=εt+ϑi, the coordinates of the lead ram (i=0) and
+trailing wagons (i=1,2,3) are given by:
+xi(t)=acos(ωi(t))
+1 + sin2(ωi(t))
+yi(t)=bsin(ωi(t)) cos(ωi(t))
+1 + sin2(ωi(t))
+The orientation of each vehicle must remain aligned with the instantaneous
+tangent vector of the trajectory at all times:
+dxi(t)
+dt=→aεsin(ωi(t))2+c o s2(ωi(t))
+(1 + sin2(ωi(t)))2
+dyi(t)
+dt=bεcos(2ωi(t))→sin4(ωi(t))
+(1 + sin2(ωi(t)))2
+Here,εscales the movement speed along the route, andϑirepresents the
+spacing o!set of wagoni. You must compute the rotation matrix of each
+convoy vehicle directly from its tangent heading vector and explain the
+derivation in your report. 10%
+CGRA & VC 91 Paulo Menezes - 2025
+===== PAGE 4 =====
+A. 1ST ASSIGNMENT
+Exercise A.4
+Along the perimeter of the patrol path, construct decorative siege-camp
+props: place torches/braziers and trees.10%
+Additionally, add two distinct compound objects exhibiting active local
+animations. These are suggestions that can be replaced with your creativity:10%
+•Atrebuchet / catapultwith a swinging counterweight or throwing
+arm (pendular motion).
+•AMill / camp well bucketthat rotates continuously or translates
+up and down.
+Exercise A.5
+Model theCastlestructure. It must include ﬂooring, fortress walls, at10%
+least one archway/portcullis passage, and windows.
+Furnish the surrounding fortiﬁcation with repeated compound props
+such as wooden barricades, trees, supply crates, weapon racks, or camp
+tables (2 min).10%
+Exercise A.6
+Implement an interactive visitor camera mode (‘W ASD‘ keys) that allows
+a soldier/scout to walk through the courtyard and encampment. Keys “w,10%
+s, a, d” translate the camera forward, backward, left, and right, respec-
+tively, accumulating displacement vectors along the current horizontal view
+direction.10%
+Exercise A.7
+Implement a camera toggle by pressing the key“v”. This must alternate10%
+the view between the free visitor scout camera and a dynamic ride-along
+camera positioned aboard one of the moving siege wagons (e.g., inside the
+rear supply wagon), viewing the advancing convoy and fortress as the train
+travels along the trajectory.10%
+A.5 Mandatory
+Development must be implemented entirely using WebGL 1.0 with custom
+vertex and fragment shaders. All 3D geometric primitives must be gener-
+ated through your own procedural algorithms without third-party geometry
+loading libraries.
+CGRA & VC 92 Paulo Menezes - 2025
+===== PAGE 5 =====
+A. 1ST ASSIGNMENT
+A.6 Deliverable
+You must submit a fully functional Jupyter Notebook to Inforestudante.
+HTML standalone exports will not be accepted. The project report must
+be embedded directly within markdown cells in the notebook.
+A.7 Plagiarism
+Plagiarism detection tools will be applied to all submissions. If duplicate
+or plagiarized code is detected across submissions, the ﬁnal grade will be
+divided proportionally among all involved groups.
+A.8 Presentation and Discussion
+All student groups must present and defend their implementation. Each
+group member must be capable of explaining every segment of the submit-
+ted codebase; failure to do so will result in a zero grade.
+CGRA & VC 93 Paulo Menezes - 2025

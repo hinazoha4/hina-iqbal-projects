@@ -1,0 +1,20 @@
+Text editor — PS/2 keyboard (English lab note)
+==============================================
+
+This file replaces the old Portuguese report. It describes the same ideas in English only.
+
+PS/2 scan codes
+---------------
+After reviewing PS/2 keyboard signalling, each key uses a unique 8-bit scan code when pressed, called the **make code**. If the key is held, the make code is repeated at the keyboard’s **typematic (auto-repeat) rate**. If several keys are held, typically only the most recently pressed key repeats.
+
+When a key is released, a different sequence, the **break code**, is sent so the host knows the key is no longer down. For many keys the break sequence is prefix **0xF0** followed by the same make code.
+
+Extended keys (e.g. some navigation or modifier combinations) and exceptions such as **PAUSE** use different rules. This design only needs a small subset (including **Space**, **Enter**, and **Backspace**), so additional extended-key cases were not required for the lab goal.
+
+The **keyboard** entity (DE2 reference) reads scan codes from the PS/2 bus.
+
+Handshake with the keyboard block
+---------------------------------
+The system waits for a key event. When a key is pressed, software logic drives **read = '1'** to request a byte from the PS/2 interface. While the byte is being assembled, **scan_ready** is cleared to **'0'** to show the receiver is busy and a new complete code is not yet valid.
+
+When a full byte is available, **scan_ready = '1'** and **scan_code** holds the 8-bit value. Additional logic watches **read** edges so each new code is captured once: a small finite-state machine distinguishes **make** bytes from **break** sequences (after **0xF0** / **0xE0** prefixes) so only intended press events update the text buffer.

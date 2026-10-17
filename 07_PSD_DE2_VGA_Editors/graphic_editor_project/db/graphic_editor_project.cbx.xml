@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="graphic_editor_project">
+		<CBX_INST_ENTRY INSTANCE_NAME="|graphic_editor_top|pixel_canvas:canvas_inst|altsyncram:mem_rtl_0" CBX_FILE_NAME="altsyncram_0kn1.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

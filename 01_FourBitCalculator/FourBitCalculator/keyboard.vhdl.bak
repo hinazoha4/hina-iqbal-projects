@@ -1,0 +1,38 @@
+-- keyboard.vhdl: PS/2 Keyboard Decoder Module for DE2
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity keyboard is
+    Port (
+        clk       : in  STD_LOGIC;
+        ps2_clk   : in  STD_LOGIC;
+        ps2_data  : in  STD_LOGIC;
+        key_code  : out STD_LOGIC_VECTOR(7 downto 0);
+        key_ready : out STD_LOGIC
+    );
+end keyboard;
+
+architecture Behavioral of keyboard is
+    signal buffer : STD_LOGIC_VECTOR(10 downto 0);
+    signal count  : INTEGER range 0 to 10 := 0;
+    signal clk_prev : STD_LOGIC := '1';
+begin
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if clk_prev = '1' and ps2_clk = '0' then
+                buffer(count) <= ps2_data;
+                count <= count + 1;
+                if count = 10 then
+                    key_code <= buffer(8 downto 1);
+                    key_ready <= '1';
+                    count <= 0;
+                else
+                    key_ready <= '0';
+                end if;
+            end if;
+            clk_prev <= ps2_clk;
+        end if;
+    end process;
+end Behavioral;

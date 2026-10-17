@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="de2_text_editor_lab">
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_compare1:inst12|lpm_compare:lpm_compare_component" CBX_FILE_NAME="cmpr_ahg.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_mux2:inst14|LPM_MUX:lpm_mux_component" CBX_FILE_NAME="mux_03e.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|Char_ROM:inst1|LPM_ROM:char_gen_rom|altrom:srom|altsyncram:rom_block" CBX_FILE_NAME="altsyncram_6401.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_mux1:inst7|LPM_MUX:lpm_mux_component" CBX_FILE_NAME="mux_53e.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_mux2:inst22|LPM_MUX:lpm_mux_component" CBX_FILE_NAME="mux_03e.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_mux3:inst32|LPM_MUX:lpm_mux_component" CBX_FILE_NAME="mux_i4e.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_compare0:inst11|lpm_compare:lpm_compare_component" CBX_FILE_NAME="cmpr_bhg.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_constant0:inst10|lpm_constant:lpm_constant_component" CBX_FILE_NAME="lpm_constant_qf6.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|de2_text_editor_top|lpm_ram_dp2:inst6|altsyncram:altsyncram_component" CBX_FILE_NAME="altsyncram_cir1.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

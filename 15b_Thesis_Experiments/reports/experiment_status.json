@@ -1,0 +1,90 @@
+{
+  "baseline_readiness": 76,
+  "points_awarded_for_new_experiments": 16,
+  "readiness": 92,
+  "target_not_claimed": 90,
+  "studies": [
+    {
+      "study": "CICIoT2023 paired matched-FAR",
+      "status": "READY_FOR_PILOT",
+      "reason": "CICIoT2023 inputs found but not the original prepared split layout. torch=2.13.0+cpu; cuda=False",
+      "files": [
+        "hf_ciciot\\BenignTraffic.pcap.csv",
+        "hf_ciciot\\BenignTraffic1.pcap.csv",
+        "hf_ciciot\\BenignTraffic2.pcap.csv",
+        "hf_ciciot\\BenignTraffic3.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood1.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood10.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood11.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood12.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood13.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood14.pcap.csv",
+        "hf_ciciot\\DDoS-ICMP_Flood15.pcap.csv"
+      ],
+      "torch": {
+        "installed": true,
+        "cuda": false,
+        "detail": "torch=2.13.0+cpu; cuda=False"
+      }
+    },
+    {
+      "study": "CICDDoS2019 leakage and shortcut ablation",
+      "status": "READY_FOR_PILOT",
+      "reason": "all-data.csv is present. This gate does not fit models.",
+      "bytes": 61295129
+    },
+    {
+      "study": "BoT-IoT repair",
+      "status": "READY_FOR_RERUN",
+      "reason": "Four complete BoT-IoT 5% all-features CSVs are present (file-3 status=KAGGLE_MIRROR_COMPLETE). A training rerun is allowed.",
+      "files": [
+        {
+          "name": "UNSW_2018_IoT_Botnet_Full5pc_1.csv",
+          "bytes": 277543651,
+          "official_bytes": 272335105,
+          "kaggle_mirror_bytes": 277543651,
+          "ends_with_newline": true,
+          "status": "KAGGLE_MIRROR_COMPLETE",
+          "present": true
+        },
+        {
+          "name": "UNSW_2018_IoT_Botnet_Full5pc_2.csv",
+          "bytes": 278451723,
+          "official_bytes": 273082424,
+          "kaggle_mirror_bytes": 278451723,
+          "ends_with_newline": true,
+          "status": "KAGGLE_MIRROR_COMPLETE",
+          "present": true
+        },
+        {
+          "name": "UNSW_2018_IoT_Botnet_Full5pc_3.csv",
+          "bytes": 285316035,
+          "official_bytes": 282131555,
+          "kaggle_mirror_bytes": 285316035,
+          "ends_with_newline": true,
+          "status": "KAGGLE_MIRROR_COMPLETE",
+          "present": true
+        },
+        {
+          "name": "UNSW_2018_IoT_Botnet_Full5pc_4.csv",
+          "bytes": 191754639,
+          "official_bytes": 189577740,
+          "kaggle_mirror_bytes": 191754639,
+          "ends_with_newline": true,
+          "status": "KAGGLE_MIRROR_COMPLETE",
+          "present": true
+        }
+      ],
+      "provenance": "Kaggle mirror vigneshvenkateswaran/bot-iot-5-data accepted when byte sizes match that mirror; official CloudStor sizes remain preferred.",
+      "data_dir": "C:\\Users\\Lenovo\\Downloads\\17th revision\\extracted\\17th revision\\data\\botiot"
+    }
+  ],
+  "unit_check": {
+    "name": "matched_far unit check",
+    "status": "PASS",
+    "meaning": "The threshold function works on a four-row example. This is not a dataset result."
+  },
+  "truncated_file3_bytes_refused": 268435456,
+  "ready_study_count": 3
+}

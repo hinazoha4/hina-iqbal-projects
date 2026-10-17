@@ -1,0 +1,85 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow Model Setup 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -7.964
+TNS   : -842.145
+
+Type  : Slow Model Setup 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -1.952
+TNS   : -36.469
+
+Type  : Slow Model Hold 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -1.323
+TNS   : -1.323
+
+Type  : Slow Model Hold 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -0.173
+TNS   : -0.173
+
+Type  : Slow Model Recovery 'keyboard:keyboard_inst|ready_set'
+Slack : 0.762
+TNS   : 0.000
+
+Type  : Slow Model Removal 'keyboard:keyboard_inst|ready_set'
+Slack : 0.008
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -0.500
+TNS   : -23.000
+
+Type  : Slow Model Minimum Pulse Width 'keyboard:keyboard_inst|ready_set'
+Slack : -0.500
+TNS   : -1.000
+
+Type  : Slow Model Minimum Pulse Width 'CLOCK_50'
+Slack : 10.000
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 17.873
+TNS   : 0.000
+
+Type  : Fast Model Setup 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : -3.432
+TNS   : -357.564
+
+Type  : Fast Model Setup 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -0.397
+TNS   : -6.065
+
+Type  : Fast Model Hold 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -0.978
+TNS   : -0.978
+
+Type  : Fast Model Hold 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 0.006
+TNS   : 0.000
+
+Type  : Fast Model Recovery 'keyboard:keyboard_inst|ready_set'
+Slack : 0.953
+TNS   : 0.000
+
+Type  : Fast Model Removal 'keyboard:keyboard_inst|ready_set'
+Slack : -0.073
+TNS   : -0.073
+
+Type  : Fast Model Minimum Pulse Width 'keyboard:keyboard_inst|keyboard_clk_filtered'
+Slack : -0.500
+TNS   : -23.000
+
+Type  : Fast Model Minimum Pulse Width 'keyboard:keyboard_inst|ready_set'
+Slack : -0.500
+TNS   : -1.000
+
+Type  : Fast Model Minimum Pulse Width 'CLOCK_50'
+Slack : 10.000
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'vga_sync_inst|video_PLL_inst|altpll_component|pll|clk[0]'
+Slack : 17.873
+TNS   : 0.000
+
+------------------------------------------------------------

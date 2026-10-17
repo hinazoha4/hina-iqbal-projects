@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Ex 4.3 - WebGL</title>
+</head>
+<body>
+  <h3>Exercise 4.3 - rectangle under triangle</h3>
+  <canvas id="myCanvas" width="400" height="400" style="border:2px solid #000;"></canvas>
+
+  <script src="https://git.io/glm-js.min.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+  <script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+attribute vec2 in_Position;
+attribute vec3 in_Color;
+varying vec3 ex_Color;
+void main(void){
+  gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+  ex_Color = in_Color;
+}
+  </script>
+
+  <script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+varying vec3 ex_Color;
+void main(void){
+  gl_FragColor = vec4(ex_Color, 1.0);
+}
+  </script>
+
+  <script>
+class myapp extends DEECapp{
+  counter=0;
+  initialize(){
+    super.initialize();
+    this.gl.clearColor(1.0,1.0,1.0,1.0);
+    this.gl.disable(this.gl.DEPTH_TEST);
+    this.tv1 = glm.vec4(-0.05, 0.06, 0, 1);
+    this.tv2 = glm.vec4(-0.05,-0.06, 0, 1);
+    this.tv3 = glm.vec4( 0.05,-0.06, 0, 1);
+    this.tri_vertices = [0,0,0,0,0,0];
+    this.tri_colors = [0,0,1, 0,0,1, 0,0,1];
+    this.rv = [
+      glm.vec4(-0.12,-0.06,0,1), glm.vec4(0.12,-0.06,0,1), glm.vec4(0.12,0.06,0,1),
+      glm.vec4(-0.12,-0.06,0,1), glm.vec4(0.12,0.06,0,1), glm.vec4(-0.12,0.06,0,1)
+    ];
+    this.rect_vertices = [0,0,0,0,0,0,0,0,0,0,0,0];
+    this.rect_colors = [1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0];
+    this.tri_vbuf=this.gl.createBuffer();
+    this.tri_cbuf=this.gl.createBuffer();
+    this.rect_vbuf=this.gl.createBuffer();
+    this.rect_cbuf=this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.tri_cbuf);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.tri_colors), this.gl.STATIC_DRAW);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.rect_cbuf);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.rect_colors), this.gl.STATIC_DRAW);
+    this.starttime = Date.now();
+  }
+  drawObj(vbuf, cbuf, verts, n){
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vbuf);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(verts), this.gl.STATIC_DRAW);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vbuf);
+    this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Position");
+    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, this.gl.FALSE, 2*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.positionLocation);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, cbuf);
+    this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Color");
+    this.gl.vertexAttribPointer(this.colorLocation, 3, this.gl.FLOAT, this.gl.FALSE, 3*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.colorLocation);
+    this.shaderprog.startUsing();
+    this.gl.drawArrays(this.gl.TRIANGLES,0,n);
+    this.shaderprog.stopUsing();
+  }
+  render(){
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    this.counter++;
+    var t = (Date.now() - this.starttime) * 0.001;
+    var x = -1.0 + (t * 0.25) % 2.0;
+    var y = 0.4 * Math.sin(3.1416 * x);
+    var RR = glm.toMat4(glm.angleAxis(-this.counter/180*Math.PI, glm.vec3(0,0,1)));
+    var TR = glm.translate(glm.mat4(1.0), glm.vec3(0.0, -0.55, 0.0));
+    var MR = TR['*'](RR);
+    for(var i=0;i<6;i++){
+      var p = MR['*'](this.rv[i]);
+      this.rect_vertices[2*i]=p.x; this.rect_vertices[2*i+1]=p.y;
+    }
+    this.drawObj(this.rect_vbuf, this.rect_cbuf, this.rect_vertices, 6);
+    var RT = glm.toMat4(glm.angleAxis(this.counter/180*Math.PI, glm.vec3(0,0,1)));
+    var TT = glm.translate(glm.mat4(1.0), glm.vec3(x, y, 0.0));
+    var MT = TT['*'](RT);
+    var p1 = MT['*'](this.tv1), p2 = MT['*'](this.tv2), p3 = MT['*'](this.tv3);
+    this.tri_vertices = [p1.x,p1.y, p2.x,p2.y, p3.x,p3.y];
+    this.drawObj(this.tri_vbuf, this.tri_cbuf, this.tri_vertices, 3);
+  }
+}
+var app = new myapp('myCanvas');
+app.run();
+  </script>
+</body>
+</html>

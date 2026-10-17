@@ -1,0 +1,24 @@
+Professor se / viva mein yeh bolo (basic changes only):
+
+I copied 04Objects from examples.
+Same libraries: deecshader, deecapp, cgraobject, glm.
+Same MVP vertex shader.
+
+Ex 4.1:
+- only one triangle
+- smaller + blue
+- only glm.translate, x/y follow a sinusoid
+
+Ex 4.2:
+- same as example: scale * rotate * translate
+- I changed translate to the sinusoid position
+
+Ex 4.3:
+- second object is a red rectangle (6 vertices) instead of second triangle
+- rectangle stays below and rotates
+- triangle still moves on the sinusoid
+
+Ex 4.4:
+- three rectangle hands
+- angles from Date() hours/minutes/seconds
+- same setModelTransformation + drawit

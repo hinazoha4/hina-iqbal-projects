@@ -1,0 +1,14 @@
+Study,Focus,Relation
+Ko et al. (2020),Threshold moving for DDoS flood detection,Moves a threshold inside one detector
+Layeghy et al. (2024),Synthetic versus operational NIDS benchmarks,Questions whether benchmark mixes match deployment
+Coscia et al. (2024),Decision-tree rules for DoS and DDoS,Trees remain a deployable detector family
+Mittal et al. (2023),Deep DDoS detection on CICDDoS2019,Architecture-centred use of the same benchmark
+Zhao et al. (2026),Threshold-free anomaly detection,Avoids a fixed cut; this paper analyses the cut at 0.5
+González-Ramos et al. (2026),Adversarial robustness of a hybrid NIDS,Evaluates evasion on CICIoT2023
+Wang et al. (2026a),Imbalance-aware graph IDS,Changes the model rather than the operating-point reading
+Wang et al. (2026b),Generative rebalancing for IIoT botnets,A different remedy for imbalance
+Lara-Gutierrez et al. (2026),Class-specific GAN rebalancing,A different remedy for imbalance
+Hormozi et al. (2026),Federated defence against multi-rate DDoS,"A distributed defence, not an offline cost reading"
+Javadpour et al. (2025),Moving-target defence for edge IoT,Mitigation policy rather than detector scoring
+Rustam and Jurcut (2025),Data drift in multi-environment networks,Distribution shift beyond a fixed prevalence
+This paper,Prevalence and cost reading of two executed operating points,Closed-form crossover of unequal slices; not a matched-threshold or alert-budget study

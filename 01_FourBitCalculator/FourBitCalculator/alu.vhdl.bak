@@ -1,0 +1,67 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity alu_4bit is
+    Port (
+        A      : in  std_logic_vector(3 downto 0);
+        B      : in  std_logic_vector(3 downto 0);
+        opcode : in  std_logic_vector(2 downto 0);
+        result : out std_logic_vector(3 downto 0);
+        Z      : out std_logic;  -- Zero flag
+        C      : out std_logic;  -- Carry out
+        N      : out std_logic;  -- Negative flag
+        V      : out std_logic   -- Overflow flag
+    );
+end alu_4bit;
+
+architecture Behavioral of alu_4bit is
+    signal res       : std_logic_vector(4 downto 0);  -- 5 bits to catch carry
+    signal signed_A  : signed(3 downto 0);
+    signal signed_B  : signed(3 downto 0);
+    signal signed_R  : signed(4 downto 0);
+begin
+    -- Set flags
+	Z <= '1' when res(3 downto 0) = "0000" else '0';   -- Zero
+	C <= res(4);                                       -- Carry
+	N <= res(3);                                       -- Negative (MSB of result)
+    
+    process(A, B, opcode)
+    begin
+        signed_A <= signed(A);
+        signed_B <= signed(B);
+
+        case opcode is
+            when "000" =>  -- A + B
+                res <= ('0' & A) + ('0' & B);
+            when "001" =>  -- A - B
+                res <= ('0' & A) - ('0' & B);
+            when "010" =>  -- A AND B
+                res <= '0' & (A and B);
+            when "011" =>  -- A OR B
+                res <= '0' & (A or B);
+            when "100" =>  -- A XOR B
+                res <= '0' & (A xor B);
+            when others =>
+                res <= "00000";  -- Default: zero output
+        end case;
+
+        result(3 downto 0) <= res(3 downto 0);
+
+        
+        
+        -- Overflow: Only valid for ADD and SUB
+        if (opcode = "000") then
+            -- Signed overflow for ADD
+            signed_R <= signed(('0' & A)) + signed(('0' & B));
+            --V <= '1' when (A(3) = B(3)) and (signed_R(4) /= A(3)) else '0';
+        elsif (opcode = "001") then
+            -- Signed overflow for SUB
+            signed_R <= signed(('0' & A)) - signed(('0' & B));
+            --V <= '1' when (A(3) /= B(3)) and (signed_R(4) /= A(3)) else '0';
+        else
+            V <= '0';
+        end if;
+    end process;
+end Behavioral;

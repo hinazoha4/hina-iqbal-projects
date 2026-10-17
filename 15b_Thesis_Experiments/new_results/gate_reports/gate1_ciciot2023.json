@@ -1,0 +1,32 @@
+{
+  "gate": "Gate 1 — CICIoT2023 paired matched-FAR",
+  "status": "PASS",
+  "evidence": {
+    "predictions_validation": "_experiments/new_results/ciciot2023/predictions_validation.csv",
+    "predictions_test": "_experiments/new_results/ciciot2023/predictions_test.csv",
+    "matched_far_table": "_experiments/new_results/ciciot2023/matched_far_results.csv",
+    "pilot_meta": "_experiments/new_results/ciciot2023/pilot_meta.json",
+    "checkpoint": "_experiments/new_results/ciciot2023/cnn_lstm_pilot.pt"
+  },
+  "protocol": {
+    "identical_target_ids": true,
+    "threshold_selected_on": "validation only",
+    "test_labels_used_for_thresholding": false,
+    "seed": 42,
+    "device": "cpu",
+    "models": ["RandomForest", "CNN-LSTM"]
+  },
+  "key_finding": {
+    "summary": "Under matched FAR budgets on identical targets, Random Forest can match or beat the CNN-LSTM false-alarm count at tight budgets (0.001 and 0.0005) while both achieve FNR=0 on this ICMP-Flood vs Benign pilot subset.",
+    "caveat": "Pilot uses Hugging Face raw CICIoT files with filename labels, not the private Google Drive prepared split from the thesis notebook. Attack class limited to ICMP Flood files. CPU 2-epoch CNN-LSTM pilot."
+  },
+  "required_inputs_resolved": [
+    "HF CICIoT Benign + ICMP Flood CSVs",
+    "PyTorch CPU"
+  ],
+  "still_missing_for_full_replication": [
+    "Original CICIOT23.zip prepared train/val/test split (Drive id 16ncVe5ud8PdMUXzve-O1VI08DeTJpzIh)",
+    "CUDA GPU for full-budget CNN-LSTM training",
+    "Original thesis checkpoints and saved scores"
+  ]
+}

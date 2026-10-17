@@ -1,0 +1,31 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity alu_4bits is
+  Port (
+    A, B     : in  std_logic_vector(3 downto 0);
+    Op       : in  std_logic; -- 0 = ADD, 1 = SUB
+    Result   : out std_logic_vector(3 downto 0);
+    Overflow : out std_logic
+  );
+end alu_4bits;
+
+architecture Behavioral of alu_4bits is
+  signal B_internal : std_logic_vector(3 downto 0);
+  signal Temp       : std_logic_vector(4 downto 0);
+begin
+  process(A, B, Op)
+  begin
+    if Op = '0' then
+      Temp <= ('0' & A) + ('0' & B);
+    else
+      B_internal <= not B + 1;
+      Temp <= ('0' & A) + ('0' & B_internal);
+    end if;
+
+    Result   <= Temp(3 downto 0);
+    Overflow <= Temp(4);  -- Detect overflow bit
+  end process;
+end Behavioral;

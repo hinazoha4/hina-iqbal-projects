@@ -1,0 +1,2166 @@
+{
+  "source": "UNSW Canberra BoT-IoT 5% extract, stratified benign-preserving subsample",
+  "provenance": "kaggle_mirror_bot-iot-5-data",
+  "files": [
+    "UNSW_2018_IoT_Botnet_Full5pc_1.csv",
+    "UNSW_2018_IoT_Botnet_Full5pc_2.csv",
+    "UNSW_2018_IoT_Botnet_Full5pc_3.csv",
+    "UNSW_2018_IoT_Botnet_Full5pc_4.csv"
+  ],
+  "file_shortfalls": [],
+  "rows": 350000,
+  "max_rows": 350000,
+  "attack_rate": 0.9986371397972107,
+  "categories": {
+    "DDoS": 183869,
+    "DoS": 157034,
+    "Reconnaissance": 8610,
+    "Normal": 477,
+    "Theft": 10
+  },
+  "dropped_identifiers": [
+    "pkSeqID",
+    "stime",
+    "ltime",
+    "seq",
+    "saddr",
+    "daddr"
+  ],
+  "note": "Every benign/Normal row from the four complete CSVs is retained; attack rows are subsampled to the max-rows budget. False-alarm claims remain limited by benign support.",
+  "populations": {
+    "all": {
+      "rows": 350000,
+      "configs": {
+        "audited_flow": {
+          "features": [
+            "flgs_number",
+            "proto_number",
+            "pkts",
+            "bytes",
+            "state_number",
+            "dur",
+            "mean",
+            "stddev",
+            "sum",
+            "min",
+            "max",
+            "spkts",
+            "dpkts",
+            "sbytes",
+            "dbytes",
+            "rate",
+            "srate",
+            "drate"
+          ],
+          "seeds": {
+            "42": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 0.9999331093224146,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 175,
+                    "tp": 52253,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.003337911039902342,
+                    "mcc": 0.5390036933057838,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 175,
+                    "tp": 52253,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.003337911039902342,
+                    "mcc": 0.5390036933057838,
+                    "threshold": 0.1251592953389216,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52428,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52428,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.005618655135119666,
+                    0.07485226380771978,
+                    0.0,
+                    6.110323470820083e-06,
+                    0.0,
+                    0.2139917913386949,
+                    0.0,
+                    0.0,
+                    0.005339471054041753,
+                    0.0012472854569350101,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.6417948392757081,
+                    0.05342609546404542,
+                    0.00022497631697369962,
+                    0.0034985118272907612,
+                    0.0
+                  ],
+                  "importance_pairs": [
+                    [
+                      "sbytes",
+                      0.641795
+                    ],
+                    [
+                      "dur",
+                      0.213992
+                    ],
+                    [
+                      "proto_number",
+                      0.074852
+                    ],
+                    [
+                      "dbytes",
+                      0.053426
+                    ],
+                    [
+                      "flgs_number",
+                      0.005619
+                    ],
+                    [
+                      "sum",
+                      0.005339
+                    ],
+                    [
+                      "srate",
+                      0.003499
+                    ],
+                    [
+                      "min",
+                      0.001247
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 0.9998625098547851,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 168,
+                    "tp": 52260,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0032043945983062485,
+                    "mcc": 0.5468442937624092,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 49,
+                    "tp": 52379,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0009346150911726559,
+                    "mcc": 0.7634640038807143,
+                    "threshold": 0.22637724122494504,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 176,
+                    "tp": 52252,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.003356984817273213,
+                    "mcc": 0.5379107473827084,
+                    "threshold": 0.8128358439237925,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 176,
+                    "tp": 52252,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.003356984817273213,
+                    "mcc": 0.5379107473827084,
+                    "threshold": 0.8128358439237925,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.026489293785506216,
+                    0.06962149773765393,
+                    0.13058170757995194,
+                    0.05727274761895403,
+                    0.03825995579769647,
+                    0.17416264992792263,
+                    0.029117210399907025,
+                    0.05377440183055222,
+                    0.038039182858912744,
+                    0.00496233642956879,
+                    0.02695443253526405,
+                    0.09093688741983998,
+                    0.012799280508778467,
+                    0.20006459657912087,
+                    0.021311936433515765,
+                    0.013216026498252936,
+                    0.011239710762926942,
+                    0.0011961452956751077
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 0.9999687401981978,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 48,
+                    "tp": 52380,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0009155413138017853,
+                    "mcc": 0.7666726497464262,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 47,
+                    "tp": 52381,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0008964675364309147,
+                    "mcc": 0.769921965660073,
+                    "threshold": 0.04123468301573709,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 218,
+                    "tp": 52210,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.004158083466849775,
+                    "mcc": 0.49723586989644936,
+                    "threshold": 0.9966632281680453,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 218,
+                    "tp": 52210,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.004158083466849775,
+                    "mcc": 0.49723586989644936,
+                    "threshold": 0.9966632281680453,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9973990785246223,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 288,
+                    "tp": 52140,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.005493247882810712,
+                    "mcc": 0.44598357640549713,
+                    "threshold": 0.5,
+                    "validation_far": 0.07042253521126761,
+                    "validation_fp": 5,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 34380,
+                    "tp": 18048,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.6557564660105287,
+                    "mcc": 0.026822047341570728,
+                    "threshold": 0.9992499947547914,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 35290,
+                    "tp": 17138,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.673113603418021,
+                    "mcc": 0.025798607319750144,
+                    "threshold": 0.9993939862976075,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 35290,
+                    "tp": 17138,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.673113603418021,
+                    "mcc": 0.025798607319750144,
+                    "threshold": 0.9993939862976075,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                }
+              }
+            },
+            "7": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 0.9998961707838824,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 201,
+                    "tp": 52228,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.003833756127334109,
+                    "mcc": 0.5099300821268917,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 69,
+                    "fp": 2,
+                    "fn": 75,
+                    "tp": 52354,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.028169014084507043,
+                    "fnr": 0.001430506017661981,
+                    "mcc": 0.6818698511968523,
+                    "threshold": 0.040286502717343284,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.1pct": {
+                    "tn": 69,
+                    "fp": 2,
+                    "fn": 75,
+                    "tp": 52354,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.028169014084507043,
+                    "fnr": 0.001430506017661981,
+                    "mcc": 0.6818698511968523,
+                    "threshold": 0.04028750271734328,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.02pct": {
+                    "tn": 69,
+                    "fp": 2,
+                    "fn": 75,
+                    "tp": 52354,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.028169014084507043,
+                    "fnr": 0.001430506017661981,
+                    "mcc": 0.6818698511968523,
+                    "threshold": 0.04028750271734328,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "importances": [
+                    0.005636496865265755,
+                    0.07371083623843994,
+                    0.0,
+                    0.0005709513990607812,
+                    0.0005647072121057439,
+                    0.19912031586065668,
+                    0.0005216443782743437,
+                    0.0,
+                    0.0,
+                    0.005437770729088572,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.6463424880753625,
+                    0.06479165046240562,
+                    4.39765827042118e-14,
+                    0.003303138779296203,
+                    0.0
+                  ],
+                  "importance_pairs": [
+                    [
+                      "sbytes",
+                      0.646342
+                    ],
+                    [
+                      "dur",
+                      0.19912
+                    ],
+                    [
+                      "proto_number",
+                      0.073711
+                    ],
+                    [
+                      "dbytes",
+                      0.064792
+                    ],
+                    [
+                      "flgs_number",
+                      0.005636
+                    ],
+                    [
+                      "min",
+                      0.005438
+                    ],
+                    [
+                      "srate",
+                      0.003303
+                    ],
+                    [
+                      "bytes",
+                      0.000571
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 0.9997701787984771,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 186,
+                    "tp": 52243,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.003547654923801713,
+                    "mcc": 0.5246756140717764,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 182,
+                    "tp": 52247,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0034713612695264073,
+                    "mcc": 0.528827225645996,
+                    "threshold": 0.3275946358669749,
+                    "validation_far": 0.013888888888888888,
+                    "validation_fp": 1,
+                    "validation_benign": 72
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 182,
+                    "tp": 52247,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0034713612695264073,
+                    "mcc": 0.528827225645996,
+                    "threshold": 0.41991346096495213,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 182,
+                    "tp": 52247,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0034713612695264073,
+                    "mcc": 0.528827225645996,
+                    "threshold": 0.41991346096495213,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "importances": [
+                    0.022410723780490974,
+                    0.07954961064660084,
+                    0.0793351384723752,
+                    0.04436950695404503,
+                    0.02910399603521661,
+                    0.20474628225989927,
+                    0.037178807546503226,
+                    0.07585352749742333,
+                    0.03551164091867952,
+                    0.007641012912356328,
+                    0.05345779926532253,
+                    0.09182092772597025,
+                    0.016931378551270505,
+                    0.1434821672029629,
+                    0.029089346620350835,
+                    0.034498408219859784,
+                    0.010908646498197415,
+                    0.00411107889247551
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 0.9999147069181957,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 191,
+                    "tp": 52238,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.003643021991645845,
+                    "mcc": 0.5196201836551443,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 185,
+                    "tp": 52244,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0035285815102328866,
+                    "mcc": 0.5257044036069808,
+                    "threshold": 0.2528583077004213,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 185,
+                    "tp": 52244,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0035285815102328866,
+                    "mcc": 0.5257044036069808,
+                    "threshold": 0.2528593077004212,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 185,
+                    "tp": 52244,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.0035285815102328866,
+                    "mcc": 0.5257044036069808,
+                    "threshold": 0.2528593077004212,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9971743140757227,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 309,
+                    "tp": 52120,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.005893684792767362,
+                    "mcc": 0.4309767009812941,
+                    "threshold": 0.5,
+                    "validation_far": 0.05555555555555555,
+                    "validation_fp": 4,
+                    "validation_benign": 72
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 3599,
+                    "tp": 48830,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.06864521543420626,
+                    "mcc": 0.13423127557218573,
+                    "threshold": 0.8264124393463136,
+                    "validation_far": 0.027777777777777776,
+                    "validation_fp": 2,
+                    "validation_benign": 72
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 6771,
+                    "tp": 45658,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.12914608327452365,
+                    "mcc": 0.09506273262790277,
+                    "threshold": 0.8807673321495056,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 0,
+                    "fn": 6771,
+                    "tp": 45658,
+                    "benign": 71,
+                    "attack": 52429,
+                    "far": 0.0,
+                    "fnr": 0.12914608327452365,
+                    "mcc": 0.09506273262790277,
+                    "threshold": 0.8807673321495056,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 72
+                  }
+                }
+              }
+            },
+            "123": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 0.9929764788535388,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 188,
+                    "tp": 52240,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.003585870145723659,
+                    "mcc": 0.5189625117689801,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 73,
+                    "tp": 52355,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0013923857480735485,
+                    "mcc": 0.6967799007324001,
+                    "threshold": 0.040914765967538555,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 188,
+                    "tp": 52240,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.003585870145723659,
+                    "mcc": 0.5189625117689801,
+                    "threshold": 0.09575585843896417,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 188,
+                    "tp": 52240,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.003585870145723659,
+                    "mcc": 0.5189625117689801,
+                    "threshold": 0.09575585843896417,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.005567612976730909,
+                    0.07432519752078909,
+                    0.0,
+                    0.0006643642387752545,
+                    0.005340036712181334,
+                    0.23812506110599335,
+                    4.4796646274773525e-14,
+                    0.0,
+                    0.0,
+                    0.0012542198765830746,
+                    2.0802508302559969e-07,
+                    2.357144037995255e-15,
+                    0.0,
+                    0.607120239960202,
+                    0.06464013596450402,
+                    0.0,
+                    0.002962923619110771,
+                    0.0
+                  ],
+                  "importance_pairs": [
+                    [
+                      "sbytes",
+                      0.60712
+                    ],
+                    [
+                      "dur",
+                      0.238125
+                    ],
+                    [
+                      "proto_number",
+                      0.074325
+                    ],
+                    [
+                      "dbytes",
+                      0.06464
+                    ],
+                    [
+                      "flgs_number",
+                      0.005568
+                    ],
+                    [
+                      "state_number",
+                      0.00534
+                    ],
+                    [
+                      "srate",
+                      0.002963
+                    ],
+                    [
+                      "min",
+                      0.001254
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 0.9997835656095555,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 177,
+                    "tp": 52251,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0033760585946440835,
+                    "mcc": 0.5304043057798372,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 56,
+                    "tp": 52372,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0010681315327687496,
+                    "mcc": 0.7420744646397863,
+                    "threshold": 0.24065031172908824,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 58,
+                    "tp": 52370,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0011062790875104906,
+                    "mcc": 0.7362850224066301,
+                    "threshold": 0.26077539903511443,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 58,
+                    "tp": 52370,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0011062790875104906,
+                    "mcc": 0.7362850224066301,
+                    "threshold": 0.26077539903511443,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.0170694599422054,
+                    0.08504670127814337,
+                    0.13326728358881768,
+                    0.06046429574703237,
+                    0.021848818925985412,
+                    0.1461934074557109,
+                    0.03568586290957169,
+                    0.06021371937123694,
+                    0.020897801154705777,
+                    0.0030087849570496527,
+                    0.030788110607605328,
+                    0.08868864249039102,
+                    0.024391882027496696,
+                    0.20502061701601898,
+                    0.032481682375327434,
+                    0.02824976887838477,
+                    0.003579885390577935,
+                    0.003103275883738731
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 0.9998564168425693,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 61,
+                    "tp": 52367,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0011635004196231021,
+                    "mcc": 0.7278486235246975,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 59,
+                    "tp": 52369,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.001125352864881361,
+                    "mcc": 0.7334404897922867,
+                    "threshold": 0.04133955138985263,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 61,
+                    "tp": 52367,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0011635004196231021,
+                    "mcc": 0.7278486235246975,
+                    "threshold": 0.22024267827275787,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 61,
+                    "tp": 52367,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.0011635004196231021,
+                    "mcc": 0.7278486235246975,
+                    "threshold": 0.22024267827275787,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9938317523291201,
+                  "threshold_0.5": {
+                    "tn": 70,
+                    "fp": 2,
+                    "fn": 296,
+                    "tp": 52132,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.027777777777777776,
+                    "fnr": 0.005645838101777676,
+                    "mcc": 0.4299154048175795,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 70,
+                    "fp": 2,
+                    "fn": 292,
+                    "tp": 52136,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.027777777777777776,
+                    "fnr": 0.005569542992294194,
+                    "mcc": 0.43230164036031943,
+                    "threshold": 0.4518943130970002,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 6931,
+                    "tp": 45497,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.13220035095750363,
+                    "mcc": 0.09295080885532012,
+                    "threshold": 0.8961697088012696,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 6931,
+                    "tp": 45497,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.13220035095750363,
+                    "mcc": 0.09295080885532012,
+                    "threshold": 0.8961697088012696,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                }
+              }
+            }
+          }
+        },
+        "audited_plus_ports": {
+          "features": [
+            "flgs_number",
+            "proto_number",
+            "pkts",
+            "bytes",
+            "state_number",
+            "dur",
+            "mean",
+            "stddev",
+            "sum",
+            "min",
+            "max",
+            "spkts",
+            "dpkts",
+            "sbytes",
+            "dbytes",
+            "rate",
+            "srate",
+            "drate",
+            "sport",
+            "dport"
+          ],
+          "seeds": {
+            "42": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 0.999944368149335,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 135,
+                    "tp": 52293,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.002574959945067521,
+                    "mcc": 0.589008020925657,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 135,
+                    "tp": 52293,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.002574959945067521,
+                    "mcc": 0.589008020925657,
+                    "threshold": 0.12515929533891906,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52428,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52428,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.001458881924298344,
+                    0.07471900655109825,
+                    0.0,
+                    9.54670286922101e-10,
+                    0.0,
+                    0.2135863596609888,
+                    5.6839150357019976e-14,
+                    0.0,
+                    0.0,
+                    0.0012449218036977912,
+                    8.997932826434668e-19,
+                    0.0,
+                    2.551033207058728e-16,
+                    0.6405631863987401,
+                    0.05332493224184715,
+                    0.00017103945221301627,
+                    0.002977074373030885,
+                    0.0,
+                    5.601381003658007e-07,
+                    0.01195403650125804
+                  ],
+                  "importance_pairs": [
+                    [
+                      "sbytes",
+                      0.640563
+                    ],
+                    [
+                      "dur",
+                      0.213586
+                    ],
+                    [
+                      "proto_number",
+                      0.074719
+                    ],
+                    [
+                      "dbytes",
+                      0.053325
+                    ],
+                    [
+                      "dport",
+                      0.011954
+                    ],
+                    [
+                      "srate",
+                      0.002977
+                    ],
+                    [
+                      "flgs_number",
+                      0.001459
+                    ],
+                    [
+                      "min",
+                      0.001245
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 0.9999912578520384,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 126,
+                    "tp": 52302,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0024032959487296866,
+                    "mcc": 0.602297632268985,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 6,
+                    "tp": 52422,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 0.00011444266422522316,
+                    "mcc": 0.9534919772827524,
+                    "threshold": 0.26895707311195155,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 141,
+                    "tp": 52287,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0026894026092927443,
+                    "mcc": 0.580619561480944,
+                    "threshold": 0.7629877076049455,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 141,
+                    "tp": 52287,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0026894026092927443,
+                    "mcc": 0.580619561480944,
+                    "threshold": 0.7629877076049455,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.010570104794078428,
+                    0.05692485731612238,
+                    0.09715678270216796,
+                    0.03759386966249973,
+                    0.02111115457100291,
+                    0.17780798938491463,
+                    0.032029075406408224,
+                    0.036365707035513915,
+                    0.014700515163913417,
+                    0.003192442628143372,
+                    0.03197046194603941,
+                    0.11822905157697847,
+                    0.01142933704553314,
+                    0.17786776025063886,
+                    0.022133905411642535,
+                    0.0185412701700959,
+                    0.006942913498767765,
+                    0.0010157383775376465,
+                    0.0338051980178839,
+                    0.09061186504011742
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 0.9999757604079246,
+                  "threshold_0.5": {
+                    "tn": 70,
+                    "fp": 2,
+                    "fn": 8,
+                    "tp": 52420,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.027777777777777776,
+                    "fnr": 0.00015259021896696422,
+                    "mcc": 0.9339877388077783,
+                    "threshold": 0.5,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 18,
+                    "tp": 52410,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0003433279926756695,
+                    "mcc": 0.8942736368728867,
+                    "threshold": 0.8468714219110182,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52398,
+                    "tp": 30,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.9994277866788739,
+                    "mcc": 0.0008861142038892576,
+                    "threshold": 0.999937000816233,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 52398,
+                    "tp": 30,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.9994277866788739,
+                    "mcc": 0.0008861142038892576,
+                    "threshold": 0.999937000816233,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9976605482227476,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 358,
+                    "tp": 52070,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.006828412298771649,
+                    "mcc": 0.4077971289817856,
+                    "threshold": 0.5,
+                    "validation_far": 0.07042253521126761,
+                    "validation_fp": 5,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 35306,
+                    "tp": 17122,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.6734187838559549,
+                    "mcc": 0.025780729990599365,
+                    "threshold": 0.9993389248847963,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 36658,
+                    "tp": 15770,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.6992065308613717,
+                    "mcc": 0.024282309222806112,
+                    "threshold": 0.999581204486847,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 36658,
+                    "tp": 15770,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.6992065308613717,
+                    "mcc": 0.024282309222806112,
+                    "threshold": 0.999581204486847,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                }
+              }
+            }
+          }
+        },
+        "flow_plus_ip_aggregates": {
+          "features": [
+            "flgs_number",
+            "proto_number",
+            "pkts",
+            "bytes",
+            "state_number",
+            "dur",
+            "mean",
+            "stddev",
+            "sum",
+            "min",
+            "max",
+            "spkts",
+            "dpkts",
+            "sbytes",
+            "dbytes",
+            "rate",
+            "srate",
+            "drate",
+            "TnBPSrcIP",
+            "TnBPDstIP",
+            "TnP_PSrcIP",
+            "TnP_PDstIP",
+            "TnP_PerProto",
+            "TnP_Per_Dport",
+            "AR_P_Proto_P_SrcIP",
+            "AR_P_Proto_P_DstIP",
+            "N_IN_Conn_P_DstIP",
+            "N_IN_Conn_P_SrcIP",
+            "AR_P_Proto_P_Sport",
+            "AR_P_Proto_P_Dport",
+            "Pkts_P_State_P_Protocol_P_DestIP",
+            "Pkts_P_State_P_Protocol_P_SrcIP"
+          ],
+          "seeds": {
+            "42": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 0.9999503287047633,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 38,
+                    "tp": 52390,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0007248035400930801,
+                    "mcc": 0.8087465843407614,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 38,
+                    "tp": 52390,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0007248035400930801,
+                    "mcc": 0.8087465843407614,
+                    "threshold": 0.02528165984096379,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 38,
+                    "tp": 52390,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0007248035400930801,
+                    "mcc": 0.8087465843407614,
+                    "threshold": 0.025282659840963787,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 38,
+                    "tp": 52390,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0007248035400930801,
+                    "mcc": 0.8087465843407614,
+                    "threshold": 0.025282659840963787,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.0020077002101362745,
+                    1.7300200795602686e-05,
+                    0.0,
+                    0.0,
+                    4.867278514937032e-05,
+                    0.003798443541291039,
+                    0.0,
+                    0.008019141668475263,
+                    0.004408581476032193,
+                    0.0001996821266539452,
+                    0.0,
+                    0.0,
+                    8.788835666282248e-09,
+                    0.0,
+                    0.0,
+                    1.9987481880797807e-16,
+                    0.0,
+                    0.006030173379725175,
+                    0.005825153291126796,
+                    8.960974194214942e-16,
+                    0.0,
+                    0.0,
+                    0.0032791331786476046,
+                    0.0007690427748392202,
+                    0.0,
+                    0.0,
+                    0.9650003470106099,
+                    0.0005966195676808447,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "importance_pairs": [
+                    [
+                      "N_IN_Conn_P_DstIP",
+                      0.965
+                    ],
+                    [
+                      "stddev",
+                      0.008019
+                    ],
+                    [
+                      "drate",
+                      0.00603
+                    ],
+                    [
+                      "TnBPSrcIP",
+                      0.005825
+                    ],
+                    [
+                      "sum",
+                      0.004409
+                    ],
+                    [
+                      "dur",
+                      0.003798
+                    ],
+                    [
+                      "TnP_PerProto",
+                      0.003279
+                    ],
+                    [
+                      "flgs_number",
+                      0.002008
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 0.9999944368149335,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 5,
+                    "tp": 52423,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 9.536888685435264e-05,
+                    "mcc": 0.9597538627269131,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.2509538969789937,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.26355372437914454,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.26355372437914454,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.005526183457626781,
+                    0.006851716111388462,
+                    0.027331400840993243,
+                    0.008931486725413416,
+                    0.0036559247588680522,
+                    0.010899109093621417,
+                    0.005892051643653843,
+                    0.04000668776484471,
+                    0.002195658862796065,
+                    0.0004180283018274156,
+                    0.011929007461896209,
+                    0.03438537811479827,
+                    0.0009525611455607546,
+                    0.044730951164746235,
+                    0.01040621161341312,
+                    0.005653889882298821,
+                    0.0003795286588887924,
+                    0.0003233859261555523,
+                    0.011128883028001602,
+                    0.0914678078113316,
+                    0.01226905895447633,
+                    0.17288271457670032,
+                    0.029564427343414044,
+                    0.060295323777684796,
+                    0.0002831618961196033,
+                    0.0019137847011232781,
+                    0.17773044755784512,
+                    0.07550832562288781,
+                    0.0076536990881806485,
+                    0.0009477954512140694,
+                    0.12177126179241,
+                    0.016114146869819546
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 0.9999859595805465,
+                  "threshold_0.5": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 5,
+                    "tp": 52423,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 9.536888685435264e-05,
+                    "mcc": 0.9597538627269131,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.2106586288460211,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.2315691369597269,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 71,
+                    "fp": 1,
+                    "fn": 4,
+                    "tp": 52424,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.013888888888888888,
+                    "fnr": 7.629510948348211e-05,
+                    "mcc": 0.9661405094481517,
+                    "threshold": 0.2315691369597269,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9999192013597484,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 181,
+                    "tp": 52247,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0034523537041275653,
+                    "mcc": 0.5325434181608982,
+                    "threshold": 0.5,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 132,
+                    "tp": 52296,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.0025177386129549098,
+                    "mcc": 0.5933401746405569,
+                    "threshold": 0.06233092769980431,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 154,
+                    "tp": 52274,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.002937361715114061,
+                    "mcc": 0.5636029401483437,
+                    "threshold": 0.2696818278560638,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 154,
+                    "tp": 52274,
+                    "benign": 72,
+                    "attack": 52428,
+                    "far": 0.0,
+                    "fnr": 0.002937361715114061,
+                    "mcc": 0.5636029401483437,
+                    "threshold": 0.2696818278560638,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ddos_dos_normal": {
+      "rows": 341380,
+      "configs": {
+        "audited_flow": {
+          "features": [
+            "flgs_number",
+            "proto_number",
+            "pkts",
+            "bytes",
+            "state_number",
+            "dur",
+            "mean",
+            "stddev",
+            "sum",
+            "min",
+            "max",
+            "spkts",
+            "dpkts",
+            "sbytes",
+            "dbytes",
+            "rate",
+            "srate",
+            "drate"
+          ],
+          "seeds": {
+            "42": {
+              "models": {
+                "Decision Tree": {
+                  "roc_auc": 1.0,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 11,
+                    "tp": 51124,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0002151168475603794,
+                    "mcc": 0.9312804476269416,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 7,
+                    "tp": 51128,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.00013689253935660506,
+                    "mcc": 0.9546033952603623,
+                    "threshold": 0.003069765731922725,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 51135,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 51135,
+                    "tp": 0,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 1.0,
+                    "mcc": 0.0,
+                    "threshold": 1.000001,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.0,
+                    0.04545687076287281,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.21429363805151375,
+                    7.807418603963894e-17,
+                    0.0,
+                    0.0,
+                    0.0012962283560547451,
+                    2.4740759699023187e-16,
+                    0.0,
+                    0.0,
+                    0.6773436352305455,
+                    0.05629310734126831,
+                    0.005316520257744521,
+                    0.0,
+                    0.0
+                  ],
+                  "importance_pairs": [
+                    [
+                      "sbytes",
+                      0.677344
+                    ],
+                    [
+                      "dur",
+                      0.214294
+                    ],
+                    [
+                      "dbytes",
+                      0.056293
+                    ],
+                    [
+                      "proto_number",
+                      0.045457
+                    ],
+                    [
+                      "rate",
+                      0.005317
+                    ],
+                    [
+                      "min",
+                      0.001296
+                    ],
+                    [
+                      "max",
+                      0.0
+                    ],
+                    [
+                      "mean",
+                      0.0
+                    ]
+                  ]
+                },
+                "Random Forest": {
+                  "roc_auc": 1.0,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 0,
+                    "tp": 51135,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0,
+                    "mcc": 1.0,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 0,
+                    "tp": 51135,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0,
+                    "mcc": 1.0,
+                    "threshold": 0.2750995743605833,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 2,
+                    "tp": 51133,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 3.911215410188716e-05,
+                    "mcc": 0.9863746336479446,
+                    "threshold": 0.7752222313137552,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 2,
+                    "tp": 51133,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 3.911215410188716e-05,
+                    "mcc": 0.9863746336479446,
+                    "threshold": 0.7752222313137552,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "importances": [
+                    0.024036398884098246,
+                    0.04497263558030232,
+                    0.16443883231714462,
+                    0.03499665061944446,
+                    0.02067321722561217,
+                    0.1936466240598937,
+                    0.03219624158848257,
+                    0.043334363072359564,
+                    0.04679755501668208,
+                    0.003356781998726883,
+                    0.021798400935483412,
+                    0.08080326693752263,
+                    0.016260069305076487,
+                    0.19167276791755894,
+                    0.024621398815025168,
+                    0.031570561029480124,
+                    0.01878132917479316,
+                    0.006042905522313485
+                  ]
+                },
+                "HistGradientBoosting": {
+                  "roc_auc": 1.0,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 0,
+                    "tp": 51135,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0,
+                    "mcc": 1.0,
+                    "threshold": 0.5,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 0,
+                    "tp": 51135,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0,
+                    "mcc": 1.0,
+                    "threshold": 0.00018586445755638018,
+                    "validation_far": 0.014084507042253521,
+                    "validation_fp": 1,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 111,
+                    "tp": 51024,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0021707245526547373,
+                    "mcc": 0.6265688847917038,
+                    "threshold": 0.9998801915577713,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 111,
+                    "tp": 51024,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0021707245526547373,
+                    "mcc": 0.6265688847917038,
+                    "threshold": 0.9998801915577713,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                },
+                "Logistic Regression": {
+                  "roc_auc": 0.9999807155351302,
+                  "threshold_0.5": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 21,
+                    "tp": 51114,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.0004106776180698152,
+                    "mcc": 0.8797019975109299,
+                    "threshold": 0.5,
+                    "validation_far": 0.07042253521126761,
+                    "validation_fp": 5,
+                    "validation_benign": 71
+                  },
+                  "at_most_one_validation_fp": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 29002,
+                    "tp": 22133,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.5671653466314658,
+                    "mcc": 0.03273971292564351,
+                    "threshold": 0.9989851117134095,
+                    "validation_far": 0.028169014084507043,
+                    "validation_fp": 2,
+                    "validation_benign": 71
+                  },
+                  "far_0.1pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 34732,
+                    "tp": 16403,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.6792216681333725,
+                    "mcc": 0.025760493611338132,
+                    "threshold": 0.9997552500495911,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  },
+                  "far_0.02pct": {
+                    "tn": 72,
+                    "fp": 0,
+                    "fn": 34732,
+                    "tp": 16403,
+                    "benign": 72,
+                    "attack": 51135,
+                    "far": 0.0,
+                    "fnr": 0.6792216681333725,
+                    "mcc": 0.025760493611338132,
+                    "threshold": 0.9997552500495911,
+                    "validation_far": 0.0,
+                    "validation_fp": 0,
+                    "validation_benign": 71
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

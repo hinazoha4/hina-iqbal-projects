@@ -1,0 +1,5 @@
+Model,Seed_42_FP,Seed_42_FN,Seed_7_FP,Seed_7_FN,Seed_123_FP,Seed_123_FN,Seed42_tuned_FP,Seed42_tuned_FN
+Decision tree,0,639,1,610,0,611,1,43
+Random forest,8,636,20,582,10,28,1,"1,792"
+Histogram boosting,0,601,1,574,2,583,1,6
+Logistic regression,2,"3,161",3,"3,066",3,"3,060",1,"20,958"

@@ -1,0 +1,292 @@
+FILE: cgra2526-4.pdf
+PAGES: 4
+
+
+===== PAGE 1 =====
+4
+Transformations and GLM
+4.1 Transformations
+Models are composed of vertices and the operations like moving, or changing
+the scale of the represented objects may be achieved by applying the same
+operation to everyone of these vertices. For instance we know that a 2D
+rotation can be expressed as
+[
+x→
+y→
+]
+
+p→
+=
+[
+cos ω → sin ω
+sin ω cos ω
+]
+  
+R
+[
+x
+y
+]
+
+p
+=
+[
+x cos ω → y sin ω
+x sin ω + y cos ω
+]
+.
+One of the advantages of this matricial representation based on matrix-
+vector multiplications is that a single operation may be used encode the
+application of the same transformation to a set of points. For the case of
+2D the rotation on a set of N points it is su !cient to glue them together
+as columns of a matrix and apply the transformation as follows:
+[
+x→
+0 x→
+1 ... x →
+N
+y→
+0 y→
+1 ... y →
+N
+]
+=
+[
+cos ω → sin ω
+sin ω cos ω
+][
+x0 x1 ... x N
+y0 y1 ... y N
+]
+or
+[
+p→
+0 p→
+1 ... p→
+N
+]
+(2↑N )
+= R(2↑2)
+[
+p0 p1 ... pN
+]
+(2↑N )
+.
+Unfortunately this is not the case of translations, as we will need to
+create a second matrix with the same number of columns by repeating the
+translation vector as[
+p→
+0 p→
+1 ... p→
+N
+]
+(2↑N )
+=
+[
+tt ... t
+]
+(2↑N )
++
+[
+p0 p1 ... pN
+]
+(2↑N )
+.
+29
+
+===== PAGE 2 =====
+4. TRANSFORMATIONS
+4.2 Homogeneous transformations
+It is common to embed a transformation in an nD space in a (n +1 )D one
+to linearise or take advantage otherwise. This is what we can do with the
+concept of homogeneous coordinates. In fact it simply consists in adding
+an additional component to the coordinates of points or vectors. So a
+2D point [x, y] becomes [x, y, 1] in homogeneous coordinates. Additionally
+any point [εx, εy, ε] represents the same point as the homogenisation of
+the coordinates can be done always by multiplying the whole vector by
+the scale factor 1/ε. This means that the additional coordinate can never
+be zero in this representation, although this restriction does not apply in
+projective geometry often used in computer vision.
+Now we can describe a translation by a matrix multiplication as
+
+
+x→
+y→
+1
+
+ =
+
+
+10 tx
+01 ty
+00 1
+
+
+
+
+x
+y
+1
+
+ =
+
+
+x + tx
+y + ty
+1
+
+
+It is easy to understand that the rotation is
+
+
+x→
+y→
+1
+
+ =
+
+
+cos(ω) → sin(ω)0
+sin(ω)c o s ( ω)0
+00 1
+
+
+
+
+x
+y
+1
+
+
+The composition of a rotation followed by a translation becomes
+
+
+x→
+y→
+1
+
+ =
+
+
+10 tx
+01 ty
+00 1
+
+
+
+
+cos(ω) → sin(ω)0
+sin(ω)c o s ( ω)0
+00 1
+
+
+
+
+x
+y
+1
+
+ =
+
+
+cos(ω) → sin(ω) tx
+sin(ω)c o s ( ω) ty
+00 1
+
+
+
+
+x
+y
+1
+
+
+Or writing as the transformation as a block matrix,
+
+
+x→
+y→
+1
+
+ =
+[
+R(2↑2) t(2↑1)
+00 1
+] 
+
+x
+y
+1
+
+
+4.3 Using GLM
+To support matrix creation and basic linear algebra operations we can use
+the GLM library in C++, PyGLM equivalent for Python, or the glm-js
+equivalent for JavaScript.
+CGRA & VC 30 Paulo Menezes - 2025
+
+===== PAGE 3 =====
+4. TRANSFORMATIONS
+In fact this library also brings in some features that are available in the
+shading GLSL language, that will be discussed later. It supports the cre-
+ation of matrices and vectors commonly needed for OpenGL programming,
+as well as some associated operations.
+In C++ you may use it as:
+— C++ —
+1g l m : : m a t 4 m y M a t r i x = g l m : : m a t 4 ( 1 . 0 ) ;
+2g l m : : v e c 4 m y V e c t o r = g l m : : v e c 4 ( 1 , 2 , 3 , 4 ) ;
+3 // multiply vector by identity matrix
+4g l m : : v e c 4 t r a n s f o r m e d V e c t o r = m y M a t r i x ∗ myVector ;
+In JavaScript it becomes:
+— JavaScript —
+1 var MyMatrix = glm . mat4 (1.0);
+2 var myVactor = glm . vec4 (1 ,2 ,3 ,4);
+3 // I know the following seems quite strange but it works :)
+4 var transformedVector = MyMatrix [ ’* ’ ]( myVector );
+The deﬁnition of quaternions and the equivalent rotation matrices can
+be done as:
+— JavaScript —
+1 // this produces the quaternion
+2 var q = glm . angleAxis ( glm . radians (45) , glm . vec3 (0 , 0 ,1));
+3 // a 4 x4 3 D rotation matrix from this quaternion
+4 var rmat = glm . toMat4 ( q );
+5
+6 var myVactor = glm . vec4 (1 ,2 ,3 ,4);
+7 var transformedVector = MyMatrix [ ’* ’ ]( myVector );
+Important note: GLM, GLSL, and other computing languages such
+as Fortran, store matrices in column-wise order. This is the opposite of
+what happens in C or C++, where the sequence of elements in memory
+correspond to row-after-row. This may be somewhat confusing as the rows
+output by mat.toString() are indeed the columns. By consequence, when
+you specify the elements of a matrix on its declaration (constructor) you
+are supplying them in column order.
+Exercises
+Start with the example Transformations that you can ﬁnd on your exam-
+ples folder. You should try to understand the given code and try to modify
+it, to implement the following exercises. Note that as GLM-JS only provides
+support for 4D vectors and matrices, you should use them to compute the
+CGRA & VC 31 Paulo Menezes - 2025
+
+===== PAGE 4 =====
+4. TRANSFORMATIONS
+rotations and translations in the plane z=0, and then convert the results to
+the 2D vertex structures to be drawn. Don’t use any other library.
+Exercise 4.1
+Make a (very small) blue triangle follow a sinusoid from the left to the
+right and reapear on the left side.
+Exercise 4.2
+Make that triangle rotate while it moves along the sinusoid.
+Exercise 4.3
+Draw a small rectangle that rotates under the moving triangle.
+Exercise 4.4
+Create a functional clock with three handles: hours, minutes, and seconds.
+The handles must be drawn as rectangles of three di "erent sizes of your
+choice. For that you should use the following code to obtain the time
+information:
+— JavaScript —
+1 var today = new Date ();
+2
+3 var hours = today . getHours ();
+4 var minutes = today . getMinutes ();
+5 var secs = today . getSeconds ();
+CGRA & VC 32 Paulo Menezes - 2025

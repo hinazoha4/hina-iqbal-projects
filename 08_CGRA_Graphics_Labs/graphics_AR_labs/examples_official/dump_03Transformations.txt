@@ -1,0 +1,300 @@
+CELL 0 markdown
+# Computação Gráfica e Realidade Aumentada 
+# Visualização Computacional 
+## &copy; 2020 - 202X
+<author>Author: Paulo Menezes</author>
+<h1>GLM  Example</h1>
+
+
+<p>This is an example of how to use some of the functionalities provided by GLM</p>
+
+Although there are other libraties available, we will only use this one as it tries to replicate the original C++ library.
+
+
+
+====
+
+CELL 1 code
+%%html
+<script src='https://git.io/glm-js.min.js'></script>
+<pre id="gversion"></pre>
+<script>
+  console.log('loaded glm-js version: ', glm.version);
+  gversion.innerText = ['loaded glm-js version: ' + glm.version] + '\n';    
+</script>
+
+====
+
+CELL 2 markdown
+Note that as all the geometrical operations of interest are in 4D (homogeneous coordinates) only these are available in glm-js.
+
+Nevertheless you can still declare 2D and 3D vectors and matrices.
+
+====
+
+CELL 3 code
+%%html
+<pre id="mulfield"></pre>
+<script>
+    mulfield.innerText = [' Some examples\n'];
+    
+    var m3 = glm.mat3(1,2,3,4,5,6,7,8,9);
+    var v3 = glm.vec3(1,2,3);
+    
+   
+  
+    mulfield.innerText = 'm3 = ' + m3.toString() + "\n";
+    mulfield.innerText += 'v3 = ' + v3.toString() + "\n\n";
+</script>
+
+The above matrix and vector can be used to initialize a 3D matrix and vector.
+<pre id="mulfield2"></pre>
+
+<script>
+    var m4 = glm.mat4(m3);  
+    var v4 = glm.vec4(v3,1);
+    var v4res = m4['*'](v4); 
+
+    mulfield2.innerText += "m4 = " + m4.toString() + "\n";
+    mulfield2.innerText += "v4 = " + v4.toString() + "\n";
+    mulfield2.innerText += "v4res = m4 * v4 = " + v4res.toString() + "\n";
+    mulfield2.innerText += "m4[2][3] = " + m4[2][3] + "\n";
+
+
+</script>
+
+====
+
+CELL 4 markdown
+### Quaternions
+We can define and use quaternions also.
+
+====
+
+CELL 5 code
+%%html
+
+We may define a quaternion from an angle and axis, and obtain its corresponding (4D) rotation matrix. <br>
+Or by specifying its x,y,z,w components, where the real part is the w component.<br>
+
+
+
+<pre id="qfield"></pre>
+
+
+<script>
+    var q=glm.angleAxis(glm.radians(45.0), glm.vec3(0,1,0));
+    
+     qfield.innerText += 'q = ' + glm.vec4(q) + '\n\n';
+    
+    var rmat=glm.toMat4(q);
+    
+    qfield.innerText += 'rmat = ' + rmat.toString() + '\n\n';
+
+    var q1=glm.quat(1,2,3,4);
+    
+     qfield.innerText += 'q1='+ glm.vec4(q1) + '-> '+q1.x+' '+ q1.y + ' '+ q1.z + ' ' + q1.w + '\n';
+    
+</script>
+   
+
+====
+
+CELL 6 code
+%%html
+<h1>Matrices</h1>
+We may also define matrices<br>
+
+<pre id="qfield2"></pre>
+
+Let's build a 4x4 homonegeous transformation matrix representing a translation<br>
+
+<pre id="qfield3"></pre>
+
+<script>
+    var rmat3x3=glm.mat3(1,2,3,4,5,6,7,8,9);
+    
+     qfield2.innerText += 'rmat3x3=' + rmat3x3 + '\n\n';
+    qfield2.innerText += ' by setting a particular element value with\n rmat3x3[2][2]=10;\n\n'
+    rmat3x3[2][2]=10;
+    qfield2.innerText += 'rmat3x3=' + rmat3x3 + '\n\n';
+    
+    var tmat = glm.mat4(1.0);
+    qfield3.innerText += "tmat=" + tmat + '\n\n';
+    qfield3.innerText += "Now let's assign elements one by one...\n\n";
+    tmat[3][0]=10;
+    tmat[3][1]=5;
+    tmat[3][2]=2;
+    qfield3.innerText += "tmat=" + tmat + '\n\n';
+    
+     qfield3.innerText += "Now let's assign a vector of elements ...\n\n";
+    tmat[3]=glm.vec4(2,3,3,1);
+    qfield3.innerText += "tmat=" + tmat + '\n\n';
+    
+</script>
+   Recall that the above matrices lines are indeed the (usual) columns.
+
+====
+
+CELL 7 markdown
+### Experiments 
+Lets try to use them to rotate the some figure.
+
+====
+
+CELL 8 code
+%%html               
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+<script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+
+attribute  vec2 in_Position;
+attribute  vec3 in_Color;
+
+varying  vec3 ex_Color;
+
+void main(void) {
+    // Since we are using flat lines, our input only had two points: x and y.
+    // Set the Z coordinate to 0 and W coordinate to 1
+
+    gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+
+    // GLSL allows shorthand use of vectors too, the following is also valid:
+    // gl_Position = vec4(in_Position, 0.0, 1.0);
+
+    ex_Color = in_Color;
+}
+</script>
+
+<script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+
+varying  vec3 ex_Color;
+
+
+void main(void) {
+    // Pass through our original color with full opacity.
+    gl_FragColor = vec4(ex_Color,1.0);
+}
+</script>
+
+
+====
+
+CELL 9 code
+%%html
+<pre id="matrix"></pre>
+
+
+<canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;">
+      Error: Your browser does not support the HTML canvas tag.
+</canvas>
+
+<script id="myapp">
+
+class myapp extends DEECapp{
+    counter=0;
+    initialize(){
+        super.initialize();
+        this.gl.clearColor(1.0,1.0,1.0,1.0);
+        
+        this.numvertices = 3;
+        this.vertices =
+            [ -0.90, -0.90 ,
+              0.85, -0.90 ,
+              -0.90,  0.85]; 
+        
+        this.colors = [
+            1.0, 0.0, 0.0, 
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0];
+        
+        this.v1 = glm.vec4(-0.90, -0.90, 0, 1);
+        this.v2 = glm.vec4(0.85, -0.90, 0, 1);
+        this.v3 = glm.vec4(-0.90, 0.85, 0, 1);
+        
+        this.vertexbuffer=this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+    }
+    
+    render(){
+        var grey=Math.sin(this.counter/180*Math.PI);
+        this.gl.clearColor(grey,grey,grey,1.0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+
+        this.counter++;
+        var q = glm.angleAxis(this.counter/180*Math.PI,glm.vec3(0, 0,1));
+        var rmat = glm.toMat4(q);
+        
+       // matrix.innerText = 'rmat = ' + rmat.toString() + '\n\n';
+        
+        var rmat3 = glm.mat3(rmat);
+        matrix.innerText = 'rmat = ' + rmat.toString() + '\n\n' + 'rmat(3x3) = ' + rmat3.toString() + '\n\n---\n';
+        
+        
+        var v1 = rmat['*'](this.v1);
+        var v2 = rmat['*'](this.v2);
+        var v3 = rmat['*'](this.v3);
+        this.vertices[0] = v1[0];
+        this.vertices[1] =  v1[1];
+        this.vertices[2] =  v2[0];
+        this.vertices[3] = v2[1];
+        this.vertices[4] =  v3[0];
+        this.vertices[5] = v3[1];
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.vertexbuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+        
+        
+        this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Position");
+        this.gl.vertexAttribPointer(this.positionLocation, // Attribute location
+                           2, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           2*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.positionLocation);
+
+    
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.colorbuffer);
+        this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Color");
+        this.gl.vertexAttribPointer(this.colorLocation, // Attribute location
+                           3, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           3*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.colorLocation);
+        
+        
+        this.shaderprog.startUsing();
+        this.gl.drawArrays(this.gl.TRIANGLES,0,this.numvertices);
+        this.shaderprog.stopUsing();
+    }
+}
+
+var app = new myapp('myCanvas');
+
+app.run();
+
+</script>
+
+====
+
+CELL 10 code
+%%html
+You may now copy and paste here the above code and by changing the vectors into homogeneous versions apply some translation before the rotation.
+
+====

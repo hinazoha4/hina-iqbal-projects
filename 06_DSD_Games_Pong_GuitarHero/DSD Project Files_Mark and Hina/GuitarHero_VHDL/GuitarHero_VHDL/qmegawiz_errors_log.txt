@@ -1,0 +1,10 @@
+
+
+C:/Users/ryanc/Documents/GitHub/GuitarHero_VHDL/vga_with_hw_test_image_v1_1 (1)_restored/vga_pll.vhd
+
+Nov 07 06PM:20:39>: Error in CNX file format.
+
+Error messages are listed in file
+C:/Users/ryanc/Documents/GitHub/GuitarHero_VHDL/vga_with_hw_test_image_v1_1 (1)_restored/vga_pll.cnxerr.
+
+Can't create the custom megafunction variation file(s)

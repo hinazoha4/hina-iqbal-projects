@@ -1,0 +1,245 @@
+============================================================
+  ASSIGNMENT 1 — SCRATCH SE SAMJHO (DEFENSE READY)
+  File: assignment1_surface\t1a.asm
+  PDF:  2026207-a1a.pdf
+============================================================
+
+0) PROFESSOR KYA CHAHTA HAI? (1 minute)
+---------------------------------------
+Bitmap pe mathematical surface dikhao:
+    z = sin(x) * cos(y)
+
+x,y pixel se aate hain, domain [-pi/2, +pi/2].
+sin/cos LIBRARY SE NAHI — Taylor formula se KHUD.
+RARS + RISC-V32 + floating point (double).
+
+Skeleton (t1a.asm) diya hai — main loop already hai.
+Tumhe fill karna hai:
+  putpixel, init, sin_approx, cos_approx, juliapixval(=surface)
+
+
+1) PROGRAM KE 2 HISSE
+---------------------
+.data  = memory mein data (colors, display buffer, pi, ...)
+.text  = instructions (main, functions)
+
+
+2) INTEGER REGISTERS (dabbe) — YAAD
+-----------------------------------
+  a0,a1,a2  = function arguments / return
+  a7        = syscall number (10 = exit)
+  t0,t1,... = temporary (jal ke baad kho sakte hain)
+  s0,s1,s2  = saved (loop counters — main inhe rakhta hai)
+  ra        = return address (function se wapas)
+  sp        = stack pointer
+  x0        = hamesha 0
+
+MAIN mein skeleton:
+  s0 = column (xpt)   inner loop
+  s1 = row (ypt)      outer loop
+  s2 = resx (128)     loop limit
+
+
+3) FLOATING POINT REGISTERS (decimal numbers)
+---------------------------------------------
+  fa0       = FP argument / return (sin/cos ko x yahi se)
+  ft0..ft11 = FP temporary
+  fld / fsd = memory se double load/store
+  fmul.d, fdiv.d, fadd.d, fsub.d = * / + -
+  fcvt.d.w  = integer -> double
+  fcvt.w.d  = double -> integer
+
+
+4) MAIN — LINE BY LINE (skeleton, change mat karo)
+--------------------------------------------------
+  la sp,stack
+      sp = stack array ka start address
+      (hum init mein sp ko stack END pe fix karte hain)
+
+  li s1,0
+      row = 0
+
+  lw s2,resx
+      s2 = 128 (screen width)
+
+  jal init
+      pehle setup (pi domain, pixcorx...) — EK BAAR
+
+looprow:
+  li s0,0
+      har nayi row pe column 0
+
+loopcol:
+  mv a0,s1
+  mv a1,s0
+      juliapixval(row, col) call ke arguments
+
+  jal juliapixval
+      return a0 = colorIndex
+
+  mv a2,a0
+  mv a0,s1
+  mv a1,s0
+      putpixel(row, col, colorIndex)
+
+  jal putpixel
+      us pixel pe color likho
+
+  addi s0,s0,1
+      col++
+
+  blt s0,s2,loopcol
+      jab tak col < 128, andar loop
+
+  addi s1,s1,1
+      row++
+
+  blt s1,s2,looprow
+      jab tak row < 128
+
+  li a7,10
+  ecall
+      program band
+
+
+5) putpixel — HAR LINE KA PURPOSE (A.1)
+---------------------------------------
+Goal: colors[index] ka RGB word display buffer mein likho.
+
+  lw t0,resx
+      t0 = 128 (columns)
+
+  mul t1,a0,t0
+      t1 = row * 128
+      (kyun? 2D ko 1D array banana: pehle poori rows skip)
+
+  add t1,t1,a1
+      t1 = row*128 + col
+      (ab exact pixel number)
+
+  slli t1,t1,2
+      t1 = t1 * 4
+      (har pixel 4 bytes / 1 word — isliye *4)
+
+  la t0,display
+      t0 = display buffer ka pehla address
+
+  add t0,t0,t1
+      t0 = IS pixel ka memory address
+
+  la t2,colors
+  slli t3,a2,2
+  add t2,t2,t3
+  lw t2,0(t2)
+      colors[colorIndex] load — RGB jaise 0xFF0000 (red)
+
+  sw t2,0(t0)
+      us address pe color store = screen pe pixel
+
+  ret
+      wapas main
+
+DEFENSE LINE: "putpixel 2D (row,col) ko 1D offset banata hai,
+colors table se RGB nikalta hai, display buffer mein likhta hai."
+
+
+6) init — HAR LINE KA PURPOSE (A.2 / Alg 5)
+-------------------------------------------
+Goal: har pixel pe dobara na ho — EK BAAR setup.
+
+  la t0,stack / addi sp,t0,100
+      stack safely use karne ke liye
+
+  fld ft0, pi
+      ft0 = 3.14159...
+
+  fdiv.d ft2, ft0, 2.0
+      ft2 = pi/2
+
+  Minx=-pi/2, Maxx=+pi/2, Miny/Maxy same
+      mathematical window set
+
+  pixcorx = (Maxx-Minx)/cols = pi/cols
+  pixcory = (Maxy-Miny)/rows = pi/rows
+      "ek pixel kitna math-distance cover karta hai"
+
+  displaybase = address of display
+      Bitmap tool ko yeh base dena hai
+
+DEFENSE: "init mein domain aur scale factors isliye hain
+kyunki yeh har pixel pe same rehte hain — speed + clarity."
+
+
+7) sin_approx — TAYLOR (A.3 / Alg 1)
+------------------------------------
+  sin(x) ≈ x - x^3/6 + x^5/120 - x^7/5040
+
+  x2=x*x; x3=x2*x; x5=x3*x2; x7=x5*x2
+  phir formula
+
+KYUN LIBRARY NAHI?
+  Assignment rule: koi sin() syscall/lib nahi.
+  Professor dekhna chahta hai tum FP instructions samajhte ho.
+
+TEST (PDF):
+  sin(0)≈0, sin(pi/2)≈1, sin(-pi/2)≈-1
+
+
+8) cos_approx — TAYLOR (A.4 / Alg 2)
+------------------------------------
+  cos(x) ≈ 1 - x^2/2 + x^4/24 - x^6/720
+
+TEST:
+  cos(0)≈1, cos(pi/2)≈0, cos(-pi/2)≈0
+
+
+9) juliapixval = surfacepixval (A.5 / Alg 3)
+-------------------------------------------
+Skeleton naam "juliapixval" hai — main isi ko call karta hai.
+Andar Algorithm 3 (surface) implement hai. Naam change nahi
+kiya taake "base code modify na ho".
+
+Steps:
+  1) x = col * pixcorx + Minx
+  2) y = Maxy - row * pixcory
+        (y ulta: screen row 0 = top = Maxy)
+  3) sinx = sin_approx(x)
+  4) cosy = cos_approx(y)
+  5) z = sinx * cosy          # height [-1,1]
+  6) color = (z+1)/2          # map to [0,1]
+  7) index = color * 49       # 0..49 for 50 colors
+  8) return index in a0
+
+Registers yahan:
+  s0/s1 save row/col (kyunki jal sin/cos ra aur temps kharab karte)
+  ft8=x, ft9=y, ft10=sinx, ft11=cosy
+  fa0 = argument to sin/cos
+
+
+10) BITMAP DISPLAY SETTINGS
+---------------------------
+  Assemble karo
+  Labels window mein "display" ka address copy
+  Tools -> Bitmap Display
+    Base address = woh address
+    Display size: 128*unit  (e.g. unit 4 => width 512)
+  Connect to Program -> Go
+
+
+11) INCREMENTAL TEST (professor bhi yeh chahega)
+-----------------------------------------------
+  Step1: sirf putpixel — main mein fixed color index=1 (red)
+         poori screen red?
+  Step2: init + mapping — color = f(col) simple
+  Step3: sin/cos alag test (print float syscall 3)
+  Step4: full surface
+
+
+12) ZERO MARKS RULES (PDF A.3) — NA BHOOLNA
+-------------------------------------------
+  - ZIP on inforestudante, deadline
+  - Top pe group members + contributions comment
+  - HAR LINE explain kar sako
+  - RARS RISC-V32 pe chale
+  - Bitmap pe image dikhe
+============================================================

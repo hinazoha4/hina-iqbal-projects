@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Ex 4.4 - WebGL Clock</title>
+</head>
+<body>
+  <h3>Exercise 4.4 - clock</h3>
+  <canvas id="myCanvas" width="400" height="400" style="border:2px solid #000;"></canvas>
+
+  <script src="https://git.io/glm-js.min.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+  <script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+  <script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+attribute vec2 in_Position;
+attribute vec3 in_Color;
+varying vec3 ex_Color;
+void main(void){
+  gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+  ex_Color = in_Color;
+}
+  </script>
+
+  <script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+varying vec3 ex_Color;
+void main(void){
+  gl_FragColor = vec4(ex_Color, 1.0);
+}
+  </script>
+
+  <script>
+class myapp extends DEECapp{
+  initialize(){
+    super.initialize();
+    this.gl.clearColor(1.0,1.0,1.0,1.0);
+    this.gl.disable(this.gl.DEPTH_TEST);
+    this.handLocal = [
+      glm.vec4(-0.02,0,0,1), glm.vec4(0.02,0,0,1), glm.vec4(0.02,1,0,1),
+      glm.vec4(-0.02,0,0,1), glm.vec4(0.02,1,0,1), glm.vec4(-0.02,1,0,1)
+    ];
+    this.hVerts=new Array(12); this.mVerts=new Array(12); this.sVerts=new Array(12);
+    this.hCol=[0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2];
+    this.mCol=[0,0,0.7, 0,0,0.7, 0,0,0.7, 0,0,0.7, 0,0,0.7, 0,0,0.7];
+    this.sCol=[0.8,0,0, 0.8,0,0, 0.8,0,0, 0.8,0,0, 0.8,0,0, 0.8,0,0];
+    this.vbuf=this.gl.createBuffer();
+    this.cbuf=this.gl.createBuffer();
+  }
+  fillHand(outVerts, angleRad, length){
+    var S = glm.scale(glm.mat4(1.0), glm.vec3(1.0, length, 1.0));
+    var R = glm.toMat4(glm.angleAxis(angleRad, glm.vec3(0,0,1)));
+    var M = R['*'](S);
+    for(var i=0;i<6;i++){
+      var p = M['*'](this.handLocal[i]);
+      outVerts[2*i]=p.x; outVerts[2*i+1]=p.y;
+    }
+  }
+  drawHand(verts, colors){
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vbuf);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(verts), this.gl.STATIC_DRAW);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cbuf);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(colors), this.gl.STATIC_DRAW);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vbuf);
+    this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Position");
+    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, this.gl.FALSE, 2*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.positionLocation);
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.cbuf);
+    this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,"in_Color");
+    this.gl.vertexAttribPointer(this.colorLocation, 3, this.gl.FLOAT, this.gl.FALSE, 3*Float32Array.BYTES_PER_ELEMENT, 0);
+    this.gl.enableVertexAttribArray(this.colorLocation);
+    this.shaderprog.startUsing();
+    this.gl.drawArrays(this.gl.TRIANGLES,0,6);
+    this.shaderprog.stopUsing();
+  }
+  render(){
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    var today = new Date();
+    var hours = today.getHours();
+    var minutes = today.getMinutes();
+    var secs = today.getSeconds();
+    var angS = -secs * (2*Math.PI/60);
+    var angM = -(minutes + secs/60.0) * (2*Math.PI/60);
+    var angH = -((hours%12) + minutes/60.0) * (2*Math.PI/12);
+    this.fillHand(this.hVerts, angH, 0.35);
+    this.fillHand(this.mVerts, angM, 0.50);
+    this.fillHand(this.sVerts, angS, 0.65);
+    this.drawHand(this.hVerts, this.hCol);
+    this.drawHand(this.mVerts, this.mCol);
+    this.drawHand(this.sVerts, this.sCol);
+  }
+}
+var app = new myapp('myCanvas');
+app.run();
+  </script>
+</body>
+</html>

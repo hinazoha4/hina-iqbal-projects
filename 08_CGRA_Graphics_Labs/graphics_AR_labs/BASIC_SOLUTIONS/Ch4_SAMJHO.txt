@@ -1,0 +1,20 @@
+Ch4 = Objects example style (basic)
+=====================================
+
+Same as professor 04Objects:
+  - CGRAobject
+  - setModelTransformation(matrix)
+  - drawit()
+  - glm.translate / glm.rotate / glm.scale
+
+Libraries cell:
+  deecshader.js, deecapp.js, cgraobject.js, glm-js
+
+Shader has: uniform mat4 MVP
+
+Ex 4.1  T = translate only, x along sinusoid
+Ex 4.2  M = T * R   (rotate then move)
+Ex 4.3  draw rect under, then triangle
+Ex 4.4  3 hands with Date() hours/minutes/seconds
+
+Upload Ch4_examples.ipynb -> Voila

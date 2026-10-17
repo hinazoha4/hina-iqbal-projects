@@ -1,0 +1,10 @@
+variable,meaning
+FAR,"False-alarm rate, FP/(FP+TN)"
+FNR,"Miss rate, FN/(FN+TP)"
+TPR,"True-positive rate, equal to recall"
+pi,Attack prevalence
+r,Miss cost divided by false-alarm cost
+pi_star,"Crossover prevalence in equation (3)"
+pi_never,"Prevalence below which never alerting costs less than the hybrid"
+pi_always,"Prevalence above which always alerting costs less than random forest"
+threshold,"Reported decision: two-class argmax, equivalent to a softmax probability of one half except on ties"

@@ -1,0 +1,8 @@
+Revision 21 adds a paired multi-attack CICIoT matched-FAR CPU pilot (seeds 42, 7)
+and a CICDDoS RF+CNN–LSTM ablation on the four-file subset. Zenodo Tables 1–11
+still reproduce 11/11 byte-identical in a clean run.
+CNN–LSTM windows are NON-TEMPORAL shuffled records — disclosed in study metadata.
+Author photographs are still missing. Do not cite the interim Zenodo DOI as if it
+contains revision-21 prediction files until a new deposit is published.
+Provisional readiness: 90/100. Recommendation: TARGETED REVISION then SUBMIT.
+Upload 01_Submission_Files for journal files; keep _experiments and this status file internal.

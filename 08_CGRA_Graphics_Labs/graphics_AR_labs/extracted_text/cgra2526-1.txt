@@ -1,0 +1,590 @@
+FILE: cgra2526-1.pdf
+PAGES: 14
+
+
+===== PAGE 1 =====
+1
+Introduction to OpenGL
+1.1 What is OpenGL?
+OpenGL is a graphics rendering API whose version 1.0 was released by
+Silicon Graphics Inc. in July 1994, and currently it is maintained by the
+Khronos Group ( www.khronos.org). It provides the support for generating
+and displaying high-quality color images composed of geometric and image
+primitives. It is windowing system and operating system independent.
+Although the above mentioned independence it needs some basic sup-
+port from them. Di !erent platforms have speciﬁc implementations. These
+implementations are known as WGL, AGL and GLX, respectively for Win-
+dows, Mac OS X and unix-based systems. There are a number of libraries
+that provide extra functionalities:
+• GLU (OpenGL Utility Library) which is part of OpenGL provides
+among other things quadric shapes.
+• GLUT (OpenGL Utility Toolkit), is not an o "cial part of OpenGL,
+provides a portable windowing API.
+• SDL (Simple Direct Media Layer), provides support for 2D graphics,
+OpenGL, windowing, input devices, etc.
+OpenGL ES and WebGL
+The success of OpenGL as a 3D graphics rendering framework attracted the
+interest of the mobile devices developers, as these have reached a computing
+power performance enough to support that. With the advent of portable
+computing, the embedded graphics became a real need for the handheld
+devices to support graphics-based applications, e.g. games, or augmented
+1
+
+===== PAGE 2 =====
+1. INTRODUCTION
+reality. These new platforms have brought new challenges and performance
+concerns. This led to the deﬁnition of a new standard more adequate for the
+lower computing power available. OpenGL ES 1.0 appeared in 2003 as an
+adaptation of OpenGL 1.3 by removing some of the "heavy" functionalities
+from the application programming interface (API). Nevertheless the same
+programming principles were kept, and that led to an easy adaptation to
+many of the already developed applications.
+Thanks to the increasing computing power of the JavaScript support in
+web bowsers, WebGL 1.0 was a natural consequence. In fact it was based
+on the OpenGL ES 2.0 standard and demonstrated to be ﬂexible enough to
+support a large number of graphical applications to run directly on a web
+browser. WebGL 2.0 is based on the OpenGL ES 3.0 API, but it is not yet
+supported but some browsers.
+What will I use on this course?
+The short answer is WebGL!
+Note, that the similarity with OpenGL allows you to explore it as well,
+but you should be aware that the assignments will be primarily on WebGL.
+My recommendation is that you directly jump to section 1.5 now, and return
+later to satisfy your curiosity.
+As the following material about the installation and introduction to the
+SDKs that support the development were already written, the following
+sections were kept for your future reference. This includes three di !erent
+ways of develop OpenGL programs: using SDL, GLUT libraries in C/C++
+or Python.
+1.2 OpenGL with SDL
+In this case, the ﬁrst step is to install the necessary libraries that support the
+development in C/C++ or Python. Taking Linux/Ubuntu as an example,
+you may use the following commands. This is not needed for WebGL.
+Linux $> sudo apt i n s t a l l python − pip freeglut3 − dev libsdl2 − dev
+Linux $> pip install P y O p e n G L PyOpenGL_accelerate
+The following code is a very basic skeleton of an OpenGL program using
+SDL to communicate with the windowing system.
+CGRA & VC 2 Paulo Menezes - 2025
+
+===== PAGE 3 =====
+1. INTRODUCTION
+— C++ —
+1 #include <stdio .h >
+2 #include <stdint .h >
+3 #include <assert .h >
+4 #include <SDL2 /SDL . h>
+5 #include <SDL2 / S D L _ o p e n g l . h>
+6
+7 #ifdef __APPLE__
+8 #include <OpenGL / g l . h>
+9 #include <OpenGL / g l u . h>
+10 #else
+11 #include <GL / g l . h>
+12 #include <GL / g l u . h>
+13 #endif
+14
+15 typedef int32_t i32 ;
+16 typedef uint32_t u32 ;
+17 typedef int32_t b32 ;
+18
+19 #define WinWidth 640
+20 #define WinHeight 480
+21 SDL_Window ∗Window ;
+22
+23 void InitGL ( int Width , int Height ) {
+24 g l C l e a r C o l o r ( 0 . 0 , 0 . 0 , 0 . 0 , 1 . 0 ) ;
+25 g l C l e a r D e p t h ( 1 . 0 ) ;
+26 glDepthFunc (GL_LESS ) ;
+27 g l E n a b l e (G L _ D E P T H _ T E S T) ;
+28 glShadeModel (G L _ S M O O T H) ;
+29
+30 // You must insert here data structures initialization
+31 // namely those that support the models ’ vertices , colors , etc .
+32 // And compute the necessary matrices ( projection , view ) that are
+33 // not going to change ( frequently )
+34 }
+35
+36 void ReSizeGLScene ( int Width , int Height ){
+37 g l V i e w p o r t ( 0 , 0 , Width , H e i g h t ) ;
+38
+39 // You will need to recompute the projection matrix ,
+40 // in particular for accounting for changes on the
+41 // aspect ratio .
+42 }
+43
+44 void DrawGLScene ( void ){
+45 g l C l e a r ( G L _ C O L O R _ B U F F E R _ B I T | G L _ D E P T H _ B U F F E R _ B I T) ;
+46
+47 // YOURSCENE DRAWINGCODEGOES HERE
+48
+49 SDL_GL_SwapWindow( Window ) ;
+50 }
+51
+52 int main ( int ArgCount , char ∗∗Args ) {
+53
+54 u32 WindowFlags = SDL _WI NDOW_RE SI ZABLE | S D L _ W I N D O W _ O P E N G L;
+55 Window = SDL_CreateWindow ( "C G & R A SDL" , 0 , 0 ,
+56 WinWidth , WinHeight , WindowFlags ) ;
+57 SDL_GLContext Context = SDL_GL_CreateContext ( Window ) ;
+58
+59 b32 Running = 1 ;
+60 b32 F u l l S c r e e n = 0 ;
+CGRA & VC 3 Paulo Menezes - 2025
+
+===== PAGE 4 =====
+1. INTRODUCTION
+61
+62 InitGL ( WinWidth , WinHeight ) ;
+63
+64 while (R u n n i n g) { // Main loop
+65 SDL_Event ev ;
+66 while (S D L _ P o l l E v e n t ( &ev)) {
+67 switch (e v.type) {
+68 case SDL_QUIT :
+69 Running= f a l s e ;
+70 break ;
+71 case SDL_WINDOWEVENT :
+72 switch (e v.w i n d o w.event) {
+73 case SDL_WINDOWEVENT_RESIZED :
+74 SDL_Log ( " Window % d r e s i z e d t o %dx% d " ,
+75 ev . window . windowID , ev . window . data1 ,
+76 ev . window . d a t a 2 ) ;
+77 ReSizeGLScene ( ev . window . data1 , ev . window . d a t a 2 ) ;
+78 break ;
+79 } break ;
+80
+81 case SDL_KEYDOWN :
+82 switch (e v.k e y.k e y s y m.s y m){
+83 case SDLK_ESCAPE :
+84 case SDLK_q :
+85 e x i t ( 0 ) ;
+86 case SDLK_f :
+87 F u l l S c r e e n = ! F u l l S c r e e n ;
+88 if (F u l l S c r e e n) {
+89 SDL_SetWindowFullscreen ( Window , WindowFlags |
+90 S D L _ W I N D O W _ F U L L S C R E E N _ D E S K T O P) ;
+91 }
+92 else {
+93 SDL_SetWindowFullscreen ( Window , WindowFlags ) ;
+94 }
+95 break ;
+96 }
+97 }
+98 }
+99
+100 DrawGLScene ( ) ;
+101 } // Main loop
+102 return 0;
+103 }
+The event processing switch clauses can be extended, as there are many
+di!erent events that are supported by SDL. Hereafter follows an example
+piece of code that could be used to extend the events supported by the
+application.
+— C++ —
+1. . .
+2 case SDL_WINDOWEVENT :
+3 switch (e v.w i n d o w.event) {
+4 case SDL_WINDOWEVENT_SHOWN :
+5S D L _ L o g ( " W i n d o w % d s h o w n " , e v . w i n d o w . w i n d o w I D ) ;
+6 break ;
+7 case SDL_WINDOWEVENT_HIDDEN :
+8S D L _ L o g ( " W i n d o w % d h i d d e n " , e v . w i n d o w . w i n d o w I D ) ;
+9 break ;
+CGRA & VC 4 Paulo Menezes - 2025
+
+===== PAGE 5 =====
+1. INTRODUCTION
+10 case SDL_WINDOWEVENT_EXPOSED :
+11 SDL_Log ( " Window % d e x p o s e d " , ev . window . windowID ) ;
+12 break ;
+13 case SDL_WINDOWEVENT_MOVED :
+14 SDL_Log ( " Window % d moved t o % d,%d " ,
+15 ev . window . windowID , ev . window . data1 ,
+16 ev . window . d a t a 2 ) ;
+17 break ;
+18 case SDL_WINDOWEVENT_RESIZED :
+19 SDL_Log ( " Window % d r e s i z e d t o %dx% d " ,
+20 ev . window . windowID , ev . window . data1 ,
+21 ev . window . d a t a 2 ) ;
+22 ReSizeGLScene ( ev . window . data1 , ev . window . d a t a 2 ) ;
+23 break ;
+24 case SDL_WINDOWEVENT_MINIMIZED :
+25 SDL_Log ( " Window % d m i n i m i z e d " , ev . window . windowID ) ;
+26 break ;
+27 case SDL_WINDOWEVENT_MAXIMIZED :
+28 SDL_Log ( " Window % d maximized " , ev . window . windowID ) ;
+29 break ;
+30 case SDL_WINDOWEVENT_RESTORED :
+31 SDL_Log ( " Window % d r e s t o r e d " , ev . window . windowID ) ;
+32 break ;
+33 case SDL_WINDOWEVENT_ENTER :
+34 SDL_Log ( " Mouse e n t e r e d window % d " ,
+35 ev . window . windowID ) ;
+36 break ;
+37 case SDL_WINDOWEVENT_LEAVE :
+38 SDL_Log ( " Mouse l e f t window % d " , ev . window . windowID ) ;
+39 break ;
+40 case SDL_WINDOWEVENT_FOCUS_GAINED :
+41 SDL_Log ( " Window % d g a i n e d keyboa rd f o c u s " ,
+42 ev . window . windowID ) ;
+43 break ;
+44 case SDL_WINDOWEVENT_FOCUS_LOST :
+45 SDL_Log ( " Window % d l o s t keyboa rd f o c u s " ,
+46 ev . window . windowID ) ;
+47 break ;
+48 case SDL_WINDOWEVENT_CLOSE :
+49 SDL_Log ( " Window % d c l o s e d " , ev . window . windowID ) ;
+50 break ;
+51 default :
+52 SDL_Log ( " Window % d g o t unknown e v e n t % d " ,
+53 ev . window . windowID , ev . window . e v e n t ) ;
+54 break ;
+55 } break ;
+56
+57 case SDL_MOUSEBUTTONDOWN :
+58 switch (e v.button.button){
+59 case SDL_BUTTON_LEFT :
+60 SDL_Log ( " L e f t mouse b u t t o n down " ) ;
+61 break ;
+62 case SDL_BUTTON_RIGHT :
+63 break ;
+64 }
+65 break ;
+66
+67 case SDL_MOUSEBUTTONUP :
+68 switch (e v.button.button){
+69 case SDL_BUTTON_LEFT :
+70 SDL_Log ( " L e f t mouse b u t t o n up " ) ;
+71 break ;
+CGRA & VC 5 Paulo Menezes - 2025
+
+===== PAGE 6 =====
+1. INTRODUCTION
+72 case SDL_BUTTON_RIGHT :
+73 break ;
+74 }
+75 break ;
+76
+77 case SDL_MOUSEMOTION :
+78 break ;
+79 . . .
+The above code can be compiled on Ubuntu with
+Linux $> g++ o p e n g l _ s d l . c p p− lSDL2 −lGLU − lGL
+On Windows with msvc
+C:\me > cl sdl2_opengl .c p p /I C :\sdl2\include /link C :\sdl\ S D L 2. lib
+C:\me > C:\ sdl \SDL2main . l i b / S U B S Y S T E M : C O N S O L E
+C:\me > /NODEFAULTLIB:libcmtd . l i b o p e n g l 3 2 . l i b
+and on Mac OS X with gcc and SDL2 installed via macports
+Mac $> gcc − I/opt/local/include sdl2_opengl .c p p −L/ opt / l o c a l / l i b
+− lSDL2 − framework O p e n G L
+1.3 GLUT
+The same can be implemented using GLUT as follows
+— C++ —
+1 #ifdef __APPLE__
+2 #include <OpenGL / g l . h>
+3 #include <OpenGL / g l u . h>
+4 #else
+5 #include <GL / g l . h>
+6 #include <GL / g l u . h>
+7 #endif
+8
+9 #include <GL / g l u t . h>
+10 #include <stdio .h >
+11
+12 void InitGL ( int Width , int Height ) {
+13 g l C l e a r C o l o r ( 0 . 0 , 0 . 0 , 0 . 0 , 1 . 0 ) ;
+14 g l C l e a r D e p t h ( 1 . 0 ) ;
+15 glDepthFunc (GL_LESS ) ;
+16 g l E n a b l e (G L _ D E P T H _ T E S T) ;
+17 glShadeModel (G L _ S M O O T H) ;
+18 // You must insert here data structures initialization
+CGRA & VC 6 Paulo Menezes - 2025
+
+===== PAGE 7 =====
+1. INTRODUCTION
+19 // namely those that support the models ’ vertices , colors , etc .
+20 // And compute the necessary matrices ( projection , view ) that are
+21 // not going to change ( frequently )
+22 }
+23
+24 void ReSizeGLScene ( int Width , int Height ){
+25 g l V i e w p o r t ( 0 , 0 , Width , H e i g h t ) ;
+26 // You will need to recompute the projection matrix ,
+27 // in particular for accounting for changes on the
+28 // aspect ratio .
+29 }
+30
+31 void DrawGLScene ( void ){
+32 g l C l e a r ( G L _ C O L O R _ B U F F E R _ B I T | G L _ D E P T H _ B U F F E R _ B I T) ;
+33
+34 // YOURSCENE DRAWINGCODEGOES HERE
+35
+36 g l u t S w a p B u f f e r s ( ) ;
+37 }
+38 void keyPressed ( unsigned char key , int x, int y){
+39 switch (k e y){
+40 case 27:
+41 case ’q ’ :
+42 case ’Q ’ :
+43 e x i t ( EXIT_SUCCESS ) ;
+44 break ;
+45 }
+46 }
+47
+48 void idle ( void ){
+49 g l u t P o s t R e d i s p l a y ( ) ;
+50 }
+51
+52 int main ( int argc , char ∗∗ argv ) {
+53 g l u t I n i t (& a r g c , a r g v ) ;
+54
+55 g l u t I n i t D i s p l a y M o d e ( G L U T _ R G B A|G L U T _ D O U B L E|G L U T _ D E P T H ) ;
+56 g l u t I n i t W i n d o w S i z e ( 6 4 0 , 4 8 0 ) ;
+57 g l u t I n i t W i n d o w P o s i t i o n ( 0 , 0 ) ;
+58 glutCreateWindow ( "C G & R A G L U T" ) ;
+59 g l u t D i s p l a y F u n c ( DrawGLScene ) ; // register callback routines
+60 g l u t R e s h a p e F u n c ( ReSizeGLScene ) ;
+61 glutKeyboardFunc ( k e y P r e s s e d ) ;
+62 g l u t I d l e F u n c ( i d l e ) ;
+63 InitGL ( 6 4 0 , 4 8 0 ) ; // initiate OpenGL states , program variables
+64 glutMainLoop ( ) ; // enter the event − driven loop
+65 }
+The above code can be compiled on Ubuntu with
+Linux $> g++ o p e n g l _ g l u t . c p p−lGLUT −lGLU − lGL
+For better dealing with the build-edit process it is advised to write a
+Makeﬁle as follows, and then use the make command on a terminal.
+— C++ —
+1a l l : o p e n g l _ s d l o p e n g l _ g l u t
+CGRA & VC 7 Paulo Menezes - 2025
+
+===== PAGE 8 =====
+1. INTRODUCTION
+2
+3o p e n g l _ s d l : o p e n g l _ s d l . c p p
+4g + + o p e n g l _ s d l . c p p − lSDL2 −lGLU − lGL − oo p e n g l _ s d l
+5
+6o p e n g l _ g l u t : o p e n g l _ g l u t . c p p
+7g + + − oo p e n g l _ g l u to p e n g l _ g l u t . c p p −lGLU − lglut − lGL
+8
+9c l e a n :
+10 rm − ro p e n g l _ s d lo p e n g l _ g l u t ∗~
+1.4 Python with PyOpenGL
+PyOpenGL is available as a module installable via pip command and re-
+quires GLUT or other supported windowing library to be installed.
+For other operating systems check http://pyopengl.sourceforge.net/ web-
+site.
+The following code is similar to the previous versions in C, but this time
+in python using GLUT.
+— C++ —
+1 from OpenGL . GL import ∗
+2 from OpenGL .GLUT import ∗
+3 from OpenGL . GLUimport ∗
+4 import sys
+5
+6E S C A P E = ’ \ 0 3 3 ’
+7w i n d o w = 0
+8
+9 def InitGL (Width , Height ) :
+10 g l C l e a r C o l o r ( 0 . 0 , 0 . 0 , 0 . 0 , 0 . 0 )
+11 g l C l e a r D e p t h ( 1 . 0 )
+12 glDepthFunc (GL_LESS)
+13 g l E n a b l e (G L _ D E P T H _ T E S T)
+14 glShadeModel (G L _ S M O O T H)
+15
+16 # You must insert here data structures initialization
+17 # namely those that support the models ’ vertices , colors , etc .
+18 # And compute the necessary matrices ( projection , view ) that are
+19 # not going to change ( frequently )
+20
+21
+22 def ReSizeGLScene (Width , Height ) :
+23 g l V i e w p o r t ( 0 , 0 , Width , H e i g h t )
+24
+25 # You will need to recompute the projection matrix ,
+26 # in particular for accounting for changes on the
+27 # aspect ratio .
+28
+29
+30 def DrawGLScene ( ) :
+31 g l C l e a r (G L _ C O L O R _ B U F F E R _ B I T | G L _ D E P T H _ B U F F E R _ B I T)
+32
+33 # You must insert here data structures initialization
+34 # namely those that support the models ’ vertices , colors , etc .
+35 # And compute the necessary matrices ( projection , view ) that are
+CGRA & VC 8 Paulo Menezes - 2025
+
+===== PAGE 9 =====
+1. INTRODUCTION
+36 # not going to change ( frequently )
+37
+38 g l u t S w a p B u f f e r s ( )
+39
+40 def keyPressed ( ∗args ):
+41 global window
+42 if args [0] = = E S C A P E:
+43 s y s . e x i t ( )
+44
+45 def idle ():
+46 g l u t P o s t R e d i s p l a y ( )
+47
+48 def main ( ) :
+49 global window
+50 g l u t I n i t ( s y s . a r g v )
+51
+52 g l u t I n i t D i s p l a y M o d e (G L U T _ R G B A | G L U T _ D O U B L E | G L U T _ D E P T H)
+53 g l u t I n i t W i n d o w S i z e ( 6 4 0 , 4 8 0 )
+54 g l u t I n i t W i n d o w P o s i t i o n ( 0 , 0 )
+55 window = glutCreateWindow ( "C G & R A Python " )
+56
+57 g l u t D i s p l a y F u n c ( DrawGLScene )
+58
+59 g l u t I d l e F u n c ( DrawGLScene )
+60 g l u t R e s h a p e F u n c ( ReSizeGLScene )
+61 glutKeyboardFunc ( k e y P r e s s e d )
+62 InitGL ( 6 4 0 , 4 8 0 )
+63 glutMainLoop ( )
+64
+65 # Print message to console , and kick off the main to get it rolling .
+66 print "H i t E S C k e y t o quit."
+67 main ( )
+It can be executed by typing on the terminal
+Linux $> python opengl_py . py
+CGRA & VC 9 Paulo Menezes - 2025
+
+===== PAGE 10 =====
+1. INTRODUCTION
+1.5 WebGL
+WebGL is an adaptation of OpenGL to be used on web pages. But as we
+are going to use Jupyter Notebooks to support the development you will
+need to pay attention to the following:
+1. Contrary to normal Jupyter Notebook use, the results will not be seen
+directly bellow the cells, but instead using Voilà.
+2. All the cells need to include %%html in the ﬁrst line
+3. You may use HTML tags along with JavaScript
+The WebGL canvas
+GL needs a dedicated space to draw the scene, and above there were exam-
+ples on how to open specialised windows for OpenGL in a C++ or Python
+application. Here we will do the same inside a browser, but we will call it
+ac a n v a s .
+— HTML —
+1< c a n v a s i d = " m y C a n v a s " w i d t h = " 4 0 0 " h e i g h t = " 4 0 0 " s t y l e = " b o r d e r : 2 p x s o l i d # 0 0 0 0 0 0 ; " >
+2E r r o r : Y o u r b r o w s e r d o e s n o t s u p p o r t t h e H T M L c a n v a s t a g .
+3< / c a n v a s >
+4< s c r i p t i d = " m y a p p " >
+5/ / Y o u r J a v a S c r i p t c o d e g o e s h e r e
+6< / s c r i p t >
+The above HTML code instructs the browser to create a canvas with
+400 by 400 pixels and give it an identiﬁcation id="myCanvas". It is through
+this "id" that we will refer to it latter in our code. The script element will
+contain your JavaScript code that will support your GL scene rendering.
+To simplify your learning task and make a parallel with the Python and
+C++ versions, you are going to use a library of classes already available.
+One is responsible for "shader" management, and the other supports the
+"application" itself. As you can see on the example notebook, there is a cell
+responsible for preloading those classes, with:
+— HTML —
+1< s c r i p t s r c = " h t t p s : / / i s 3 l . i s r . u c . p t / ~ p m / C G R A / J S / d e e c s h a d e r . j s " > < / s c r i p t >
+2< s c r i p t s r c = " h t t p s : / / i s 3 l . i s r . u c . p t / ~ p m / C G R A / J S / d e e c a p p . j s " > < / s c r i p t >
+There are also two cells, one with the Vertex Shader code, and the other
+with the "Fragment Shader" code, but we will discuss them later.
+CGRA & VC 10 Paulo Menezes - 2025
+
+===== PAGE 11 =====
+1. INTRODUCTION
+— JavaScript —
+1 class myapp extends DEECapp{
+2 counter =0 ;
+3 initialize (){
+4 super . initialize ();
+5 this . gl . clearColor (1.0 ,1.0 ,1.0 ,1.0);
+6
+7 // You must insert here data structures initialization
+8 // namely those that support the models ’ vertices , colors , etc .
+9 // And compute the necessary matrices ( projection , view ) that are
+10 // not going to change ( frequently )
+11 }
+12
+13 render (){
+14 console . log ( ’ draw ’ + counter );
+15 counter ++;
+16 this . gl . clear ( this . gl .COLOR_BUFFER_BIT| this . gl .DEPTH_BUFFER_BIT);
+17
+18 // YOUR SCENE DRAWING CODE GOES HERE
+19 }
+20 }
+21
+22 var app = new myapp ( ’ myCanvas ’ );
+23 app . run ();
+Now you just have to pay attention to this class in the given example.
+There are two main methods: initialize(), for setting the necessary data
+up, and render() that will be called whenevet we need to update the view.
+Note that the underlying class guarantees that this render method is being
+called about 50 times per second, as you will understand later. Another
+important issue is that every "GL" related function or constant is to be used
+in this case as this.gl.functionname(..) or this.gl.CONSTANTNAME.
+1.6 Development of exercises and
+assignments
+A computer cluster was conﬁgured to support the lab exercises and as-
+signments. For accessing it you must conﬁgure and use OpenVPN as in-
+dicated on the following address https://helpdesk.deec.uc.pt/help/
+pt-pt/19-vpn.
+After conﬁguring this access you should be able to access the Jupyter-
+Hub at https://seeds.deec.uc.pt/CGRA/ where you should authenticate
+yourself using the Inforestudante 1 credentials (mail and password). Upon
+successful authentication you should see the listing of your workspace as
+shown in the image bellow.
+1For students from degrees other than MEEC, you should receive a mail soon from
+DEEC network support services. Pay attention to your o !cial email inbox.
+CGRA & VC 11 Paulo Menezes - 2025
+
+===== PAGE 12 =====
+1. INTRODUCTION
+Currently you will have an examples folder, where you will always ﬁnd
+the latest examples. As its contents will be updated each time you log in,
+you should copy the example that you are going to work on to another
+folder, otherwise your changes will be lost.
+After copying the ﬁrst example, you may now open it read it carefully.
+Important notice: Do not try to click the run button as you will get
+unpredictable results. Instead of that, click on the Voilà button, and a new
+tab or window should pop up. Eventually you may need to authorise your
+browser to display it.
+Now, scrolling the new page to its bottom, you should see the following.
+CGRA & VC 12 Paulo Menezes - 2025
+
+===== PAGE 13 =====
+1. INTRODUCTION
+This is the output of the ﬁrst GL program that you are going to explore.
+1.7 Exercises
+Exercise 1.1
+Explore the Lines example notebook that you will ﬁnd on the examples
+folder on your workspace. Read it carefully and in particular try to un-
+derstand where are the coordinates of the triangle vertices, and respective
+colours.
+1. Change the colours and see what happens. For that you should click
+the "save" button and if you have already opened the "voilà" tab, just
+reload it.
+2. Change the coordinates of one vertex and if you succeed change other
+ones. Note that the coordinates must be in the range [→1..1].
+Exercise 1.2
+Discover the javascript console on your web browser. You may notice that
+there is a message being output there. How does it relate with the changing
+background?
+Exercise 1.3
+CGRA & VC 13 Paulo Menezes - 2025
+
+===== PAGE 14 =====
+1. INTRODUCTION
+Add one more point to the ﬁgure. If you don’t get a picture, check on the
+web/javascript console what is happening. You may discover and explore
+the debugging tools there.
+Exercise 1.4
+On the call to the drawArrays function, change the graphics primitive to
+render from gl.LINE_LOOP to each of the following and observe the results,
+if any: gl.POINTS, gl.LINE_STRIP, gl.LINES, gl.TRIANGLE_STRIP,
+gl.TRIANGLE_F AN, gl.TRIANGLES.
+Note that in one of the main di !erences between WebGL and OpenGL
+is that the functions name in the C/C++ API are of the form glXxxxXxxx
+(e.g. glDrawArrays) and constants are deﬁned as GL_XXX_XXX, where
+in WebGL we will deﬁne a context variable (gl or this.gl) and then the
+functions will be used as gl.xxxXxxx or this.gl.xxxXxxx (in our case).
+CGRA & VC 14 Paulo Menezes - 2025

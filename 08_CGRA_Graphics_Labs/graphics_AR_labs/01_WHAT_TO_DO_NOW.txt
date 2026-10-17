@@ -1,0 +1,54 @@
+============================================================
+AB KYA KARNA HAI — STEP BY STEP
+============================================================
+
+PART 1 — ABHI (VPN se pehle) local practice
+------------------------------------------------------------
+1. Folder kholo:
+   computer architecture\graphics_AR_labs\local_practice\
+
+2. Double-click:
+   01_triangle_basic.html
+   (Chrome / Edge mein khulega — triangle dikhega)
+
+3. File Notepad / VS Code / Cursor mein edit karo:
+   - colors[] change → save → browser Ctrl+R
+   - vertices[] change (sirf -1 se 1 tak)
+   - drawMode = this.gl.TRIANGLES  (filled)
+   - drawMode = this.gl.POINTS     (dots)
+
+4. F12 → Console → "draw 0, draw 1..." dikhega
+   (yeh Exercise 1.2 ka idea hai)
+
+
+PART 2 — VPN + Jupyter (tum connect karo)
+------------------------------------------------------------
+Detail: 00_SETUP_VPN_JUPYTER.txt
+
+Short:
+  A) OpenVPN install + DEEC .ovpn → Connect
+     Guide: https://helpdesk.deec.uc.pt/help/pt-pt/19-vpn
+  B) https://seeds.deec.uc.pt/CGRA/  → Inforestudante login
+  C) examples → Lines notebook COPY → my_labs/
+  D) Open notebook → Voilà (Run mat dabao)
+  E) Same changes: colours, vertices, drawArrays mode
+
+
+PART 3 — Jab connect ho jao, mujhe batao
+------------------------------------------------------------
+Likho: "connected" ya screenshot / error
+Phir Jupyter pe Ex 1.1–1.4 saath karenge.
+
+
+CODE BANANE KA LOGIC (yaad rakhna)
+------------------------------------------------------------
+canvas  = drawing paper
+vertices = corners (x,y) in [-1,1]
+colors   = RGB per corner
+shader   = GPU mini-program (position + colour)
+VBO      = GPU memory for those arrays
+drawArrays(mode, 0, n) = draw
+
+Jupyter cell = same HTML/JS but pehli line:
+  %%html
+============================================================

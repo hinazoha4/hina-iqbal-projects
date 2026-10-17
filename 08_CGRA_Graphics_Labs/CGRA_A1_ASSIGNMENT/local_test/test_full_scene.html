@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>CGRA A1 - Full Scene</title></head>
+<body>
+<h2>CGRA A1 - Full Scene</h2>
+<p>Keys: r wheels | wasd walk | qe turn | v ride. Click canvas first.</p>
+
+<script src="../js/deecshader.js"></script>
+<script src="../js/deecapp.js"></script>
+<script src="../js/cgraobject.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/stephengold/glm-js@master/build/glm-js.min.js"></script>
+
+
+<script id="my-vertex-shader" type="x-shader/x-vertex">
+precision mediump float;
+attribute vec3 in_Position;
+attribute vec3 in_Color;
+uniform mat4 MVP;
+varying vec3 ex_Color;
+void main(void){
+  gl_Position = MVP * vec4(in_Position, 1.0);
+  ex_Color = in_Color;
+}
+</script>
+
+
+<script id="my-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+varying vec3 ex_Color;
+void main(void){ gl_FragColor = vec4(ex_Color,1.0); }
+</script>
+
+<canvas id="myCanvas" width="800" height="560" style="border:2px solid #000"></canvas>
+<script>
+// ============================================================
+// CGRA A1 — BASIC shapes (all extend CGRAobject)
+// Keep this simple for oral defense.
+// Color: smooth gradient from color1 to color2 along X.
+// ============================================================
+
+function mixColor(c1, c2, t) {
+    // t from 0 to 1
+    return [
+        c1[0] * (1 - t) + c2[0] * t,
+        c1[1] * (1 - t) + c2[1] * t,
+        c1[2] * (1 - t) + c2[2] * t
+    ];
+}
+
+function pushTri(verts, cols, ax, ay, az, bx, by, bz, cx, cy, cz, c1, c2) {
+    // one triangle = 3 vertices
+    var pts = [[ax, ay, az], [bx, by, bz], [cx, cy, cz]];
+    for (var i = 0; i < 3; i++) {
+        verts.push(pts[i][0], pts[i][1], pts[i][2]);
+        // gradient by X: -1..1 mapped to 0..1
+        var t = (pts[i][0] + 1.0) * 0.5;
+        if (t < 0) t = 0;
+        if (t > 1) t = 1;
+        var col = mixColor(c1, c2, t);
+        cols.push(col[0], col[1], col[2]);
+    }
+}
+
+function uploadBuffers(obj, verts, cols) {
+    obj.numvertices = verts.length / 3;
+    obj.vertexbuffer = obj.gl.createBuffer();
+    obj.gl.bindBuffer(obj.gl.ARRAY_BUFFER, obj.vertexbuffer);
+    obj.gl.bufferData(obj.gl.ARRAY_BUFFER, new Float32Array(verts), obj.gl.STATIC_DRAW);
+
+    obj.colorbuffer = obj.gl.createBuffer();
+    obj.gl.bindBuffer(obj.gl.ARRAY_BUFFER, obj.colorbuffer);
+    obj.gl.bufferData(obj.gl.ARRAY_BUFFER, new Float32Array(cols), obj.gl.STATIC_DRAW);
+}
+
+// ---------- CUBE: 6 faces * 2 triangles * 3 verts = 36 ----------
+class Cube extends CGRAobject {
+    constructor(glcontext, color1, color2) {
+        super(glcontext);
+        var c1 = color1 || [1, 0, 0];
+        var c2 = color2 || [0, 0, 1];
+        var verts = [];
+        var cols = [];
+
+        // unit cube corners from -1 to 1
+        // faces: front, back, left, right, top, bottom
+        // each face = 2 triangles
+        var f = [
+            // front z=+1
+            [-1, -1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, -1, 1, 1],
+            // back z=-1
+            [1, -1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1],
+            // left x=-1
+            [-1, -1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, 1, -1],
+            // right x=+1
+            [1, -1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1],
+            // top y=+1
+            [-1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1],
+            // bottom y=-1
+            [-1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, 1]
+        ];
+
+        for (var fi = 0; fi < f.length; fi++) {
+            var a = f[fi];
+            // two triangles already listed as 6 verts
+            pushTri(verts, cols, a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], c1, c2);
+            pushTri(verts, cols, a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16], a[17], c1, c2);
+        }
+        uploadBuffers(this, verts, cols);
+    }
+}
+
+// ---------- DISC: center + ring (>=10) ----------
+class Disc extends CGRAobject {
+    constructor(glcontext, color1, color2, n) {
+        super(glcontext);
+        var c1 = color1 || [1, 1, 0];
+        var c2 = color2 || [1, 0.5, 0];
+        n = n || 12; // at least 10
+        var verts = [];
+        var cols = [];
+        var r = 1.0;
+        for (var i = 0; i < n; i++) {
+            var a0 = (i / n) * 2 * Math.PI;
+            var a1 = ((i + 1) / n) * 2 * Math.PI;
+            var x0 = r * Math.cos(a0), z0 = r * Math.sin(a0);
+            var x1 = r * Math.cos(a1), z1 = r * Math.sin(a1);
+            // triangle: center, p0, p1  (in XZ plane, y=0)
+            pushTri(verts, cols, 0, 0, 0, x0, 0, z0, x1, 0, z1, c1, c2);
+        }
+        uploadBuffers(this, verts, cols);
+    }
+}
+
+// ---------- CONE: apex + base circle (>=10) ----------
+class Cone extends CGRAobject {
+    constructor(glcontext, color1, color2, n) {
+        super(glcontext);
+        var c1 = color1 || [0.8, 0.4, 0.1];
+        var c2 = color2 || [0.3, 0.15, 0.05];
+        n = n || 12;
+        var verts = [];
+        var cols = [];
+        var r = 1.0;
+        var apexY = 1.0;
+        var baseY = -1.0;
+        for (var i = 0; i < n; i++) {
+            var a0 = (i / n) * 2 * Math.PI;
+            var a1 = ((i + 1) / n) * 2 * Math.PI;
+            var x0 = r * Math.cos(a0), z0 = r * Math.sin(a0);
+            var x1 = r * Math.cos(a1), z1 = r * Math.sin(a1);
+            // side triangle
+            pushTri(verts, cols, 0, apexY, 0, x0, baseY, z0, x1, baseY, z1, c1, c2);
+            // base triangle (optional close)
+            pushTri(verts, cols, 0, baseY, 0, x1, baseY, z1, x0, baseY, z0, c1, c2);
+        }
+        uploadBuffers(this, verts, cols);
+    }
+}
+
+// ---------- CYLINDER: two circles (>=10), quads -> 2 tris ----------
+class Cylinder extends CGRAobject {
+    constructor(glcontext, color1, color2, n) {
+        super(glcontext);
+        var c1 = color1 || [0.6, 0.6, 0.6];
+        var c2 = color2 || [0.2, 0.2, 0.2];
+        n = n || 12;
+        var verts = [];
+        var cols = [];
+        var r = 1.0;
+        var yTop = 1.0, yBot = -1.0;
+        for (var i = 0; i < n; i++) {
+            var a0 = (i / n) * 2 * Math.PI;
+            var a1 = ((i + 1) / n) * 2 * Math.PI;
+            var x0 = r * Math.cos(a0), z0 = r * Math.sin(a0);
+            var x1 = r * Math.cos(a1), z1 = r * Math.sin(a1);
+            // side: two triangles
+            pushTri(verts, cols, x0, yBot, z0, x1, yBot, z1, x1, yTop, z1, c1, c2);
+            pushTri(verts, cols, x0, yBot, z0, x1, yTop, z1, x0, yTop, z0, c1, c2);
+            // top cap
+            pushTri(verts, cols, 0, yTop, 0, x0, yTop, z0, x1, yTop, z1, c1, c2);
+            // bottom cap
+            pushTri(verts, cols, 0, yBot, 0, x1, yBot, z1, x0, yBot, z0, c1, c2);
+        }
+        uploadBuffers(this, verts, cols);
+    }
+}
+
+// ---------- SPHERE: latitude strips (>=10) * rings (>=10) ----------
+class Sphere extends CGRAobject {
+    constructor(glcontext, color1, color2, stacks, slices) {
+        super(glcontext);
+        var c1 = color1 || [0.2, 0.6, 1.0];
+        var c2 = color2 || [1.0, 0.2, 0.4];
+        stacks = stacks || 12; // latitude strips
+        slices = slices || 12; // vertices per ring
+        var verts = [];
+        var cols = [];
+        var R = 1.0;
+
+        for (var i = 0; i < stacks; i++) {
+            // elevation from -PI/2 to +PI/2
+            var lat0 = -Math.PI / 2 + (i / stacks) * Math.PI;
+            var lat1 = -Math.PI / 2 + ((i + 1) / stacks) * Math.PI;
+            var y0 = R * Math.sin(lat0);
+            var y1 = R * Math.sin(lat1);
+            var r0 = R * Math.cos(lat0);
+            var r1 = R * Math.cos(lat1);
+
+            for (var j = 0; j < slices; j++) {
+                var a0 = (j / slices) * 2 * Math.PI;
+                var a1 = ((j + 1) / slices) * 2 * Math.PI;
+
+                var x00 = r0 * Math.cos(a0), z00 = r0 * Math.sin(a0);
+                var x01 = r0 * Math.cos(a1), z01 = r0 * Math.sin(a1);
+                var x10 = r1 * Math.cos(a0), z10 = r1 * Math.sin(a0);
+                var x11 = r1 * Math.cos(a1), z11 = r1 * Math.sin(a1);
+
+                // two triangles between rings
+                pushTri(verts, cols, x00, y0, z00, x01, y0, z01, x11, y1, z11, c1, c2);
+                pushTri(verts, cols, x00, y0, z00, x11, y1, z11, x10, y1, z10, c1, c2);
+            }
+        }
+        uploadBuffers(this, verts, cols);
+    }
+}
+
+// ============================================================
+// CGRA A1 — FULL SCENE (basic, for defense)
+// Keys:
+//   r     = cycle wheels: cube -> cylinder -> sphere
+//   w a s d = walk camera
+//   v     = toggle ride-along camera on last wagon
+// ============================================================
+
+// ---- path: Lemniscate of Bernoulli (from assignment PDF) ----
+function lemniPos(omega, a, b) {
+    var s = Math.sin(omega);
+    var c = Math.cos(omega);
+    var den = 1.0 + s * s;
+    return {
+        x: a * c / den,
+        z: b * s * c / den
+    };
+}
+
+// tangent from analytic derivatives (see report markdown)
+function lemniDeriv(omega, a, b, eps) {
+    var s = Math.sin(omega);
+    var c = Math.cos(omega);
+    var den = 1.0 + s * s;
+    var den2 = den * den;
+    // dx/dt = -a * eps * sin(w) * (2 + cos^2(w)) / (1+sin^2)^2
+    var dx = -a * eps * s * (2.0 + c * c) / den2;
+    // dy/dt (here z) from quotient rule on y = b*sin*cos/den
+    var numer = b * (Math.cos(2.0 * omega) * den - (s * c) * (2.0 * s * c));
+    var dz = eps * numer / den2;
+    return { dx: dx, dz: dz };
+}
+
+function headingFromTangent(dx, dz) {
+    // yaw around Y so vehicle faces movement direction
+    return Math.atan2(dx, dz);
+}
+
+function T(x, y, z) {
+    return glm.translate(glm.mat4(1.0), glm.vec3(x, y, z));
+}
+function R(axisX, axisY, axisZ, deg) {
+    return glm.rotate(glm.mat4(1.0), glm.radians(deg), glm.vec3(axisX, axisY, axisZ));
+}
+function S(sx, sy, sz) {
+    return glm.scale(glm.mat4(1.0), glm.vec3(sx, sy, sz));
+}
+function mul() {
+    // multiply matrices left to right: mul(A,B,C) = A*B*C
+    var m = arguments[0];
+    for (var i = 1; i < arguments.length; i++) {
+        m = m['*'](arguments[i]);
+    }
+    return m;
+}
+
+class myapp extends DEECapp {
+    counter = 0;
+    wheelMode = 0; // 0 cube, 1 cylinder, 2 sphere
+    camMode = 0;   // 0 free walk, 1 ride wagon
+    eye = { x: 0, y: 3, z: 14 };
+    yaw = 0;       // degrees, look left/right
+    keys = {};
+
+    initialize() {
+        var fragsrc = document.getElementById("my-fragment-shader").text;
+        var vertsrc = document.getElementById("my-vertex-shader").text;
+        this.shaderprog = new DEECshader(this.gl);
+        this.shaderprog.srcShaders(vertsrc, fragsrc);
+
+        this.gl.enable(this.gl.DEPTH_TEST);
+        this.gl.clearColor(0.55, 0.75, 0.95, 1.0); // sky blue
+
+        // shared primitives (two colors = gradient)
+        this.cubeWood = new Cube(this.gl, [0.55, 0.32, 0.12], [0.25, 0.12, 0.05]);
+        this.cubeStone = new Cube(this.gl, [0.55, 0.55, 0.55], [0.25, 0.25, 0.28]);
+        this.cubeDark = new Cube(this.gl, [0.15, 0.12, 0.1], [0.05, 0.05, 0.05]);
+        this.cubeGreen = new Cube(this.gl, [0.2, 0.55, 0.15], [0.1, 0.3, 0.08]);
+        this.cyl = new Cylinder(this.gl, [0.4, 0.4, 0.4], [0.15, 0.15, 0.15], 12);
+        this.cone = new Cone(this.gl, [0.7, 0.35, 0.1], [0.35, 0.15, 0.05], 12);
+        this.coneLeaf = new Cone(this.gl, [0.15, 0.55, 0.15], [0.05, 0.25, 0.05], 12);
+        this.disc = new Disc(this.gl, [0.9, 0.7, 0.2], [0.7, 0.3, 0.05], 12);
+        this.sphere = new Sphere(this.gl, [0.3, 0.3, 0.35], [0.1, 0.1, 0.12], 12, 12);
+        this.sphereFire = new Sphere(this.gl, [1.0, 0.5, 0.0], [1.0, 0.1, 0.0], 10, 10);
+
+        var objs = [this.cubeWood, this.cubeStone, this.cubeDark, this.cubeGreen,
+                    this.cyl, this.cone, this.coneLeaf, this.disc, this.sphere, this.sphereFire];
+        for (var i = 0; i < objs.length; i++) {
+            objs[i].setShader(this.shaderprog);
+        }
+
+        // path params
+        this.pathA = 6.0;
+        this.pathB = 4.0;
+        this.pathEps = 0.35;
+        // wagon spacing offsets theta_i
+        this.theta = [0.0, -0.55, -1.1, -1.65];
+
+        this.start = Date.now();
+
+        window.addEventListener("keydown", (e) => {
+            this.keys[e.key.toLowerCase()] = true;
+            if (e.key.toLowerCase() === "r") {
+                this.wheelMode = (this.wheelMode + 1) % 3;
+                console.log("wheel mode = " + this.wheelMode + " (0=cube,1=cyl,2=sphere)");
+            }
+            if (e.key.toLowerCase() === "v") {
+                this.camMode = 1 - this.camMode;
+                console.log("camera mode = " + (this.camMode === 0 ? "walk" : "ride"));
+            }
+        }, false);
+        window.addEventListener("keyup", (e) => {
+            this.keys[e.key.toLowerCase()] = false;
+        }, false);
+    }
+
+    drawObj(obj, M, view, proj) {
+        obj.setModelTransformation(M);
+        obj.drawit(view, proj);
+    }
+
+    // one wheel at local offset
+    drawWheel(parentM, lx, ly, lz, view, proj) {
+        var local = mul(T(lx, ly, lz), S(0.25, 0.25, 0.12));
+        var M = parentM['*'](local);
+        if (this.wheelMode === 0) this.drawObj(this.cubeDark, M, view, proj);
+        else if (this.wheelMode === 1) this.drawObj(this.cyl, mul(parentM, T(lx, ly, lz), R(0, 0, 1, 90), S(0.25, 0.12, 0.25)), view, proj);
+        else this.drawObj(this.sphere, mul(parentM, T(lx, ly, lz), S(0.25, 0.25, 0.25)), view, proj);
+    }
+
+    // vehicle i=0 ram, i=1..3 wagons
+    drawVehicle(i, worldM, view, proj) {
+        if (i === 0) {
+            // battering ram body
+            this.drawObj(this.cubeWood, mul(worldM, S(0.6, 0.35, 1.2)), view, proj);
+            // ram head (cone in front)
+            this.drawObj(this.cone, mul(worldM, T(0, 0.1, 1.5), R(1, 0, 0, 90), S(0.25, 0.7, 0.25)), view, proj);
+            // roof
+            this.drawObj(this.cubeDark, mul(worldM, T(0, 0.55, 0), S(0.65, 0.12, 1.1)), view, proj);
+        } else {
+            // supply wagon — different sizes
+            var sx = 0.45 + 0.08 * i;
+            var sy = 0.30 + 0.05 * ((i % 2));
+            var sz = 0.7 + 0.1 * i;
+            this.drawObj(this.cubeWood, mul(worldM, S(sx, sy, sz)), view, proj);
+            // load on top
+            if (i === 1) this.drawObj(this.cubeDark, mul(worldM, T(0, sy + 0.2, 0), S(0.25, 0.2, 0.25)), view, proj);
+            if (i === 2) this.drawObj(this.cyl, mul(worldM, T(0, sy + 0.25, 0), S(0.2, 0.2, 0.2)), view, proj);
+            if (i === 3) this.drawObj(this.sphere, mul(worldM, T(0, sy + 0.25, 0), S(0.22, 0.22, 0.22)), view, proj);
+        }
+        // 4 wheels
+        this.drawWheel(worldM, -0.55, -0.35, 0.7, view, proj);
+        this.drawWheel(worldM, 0.55, -0.35, 0.7, view, proj);
+        this.drawWheel(worldM, -0.55, -0.35, -0.7, view, proj);
+        this.drawWheel(worldM, 0.55, -0.35, -0.7, view, proj);
+    }
+
+    drawTree(x, z, view, proj) {
+        this.drawObj(this.cyl, mul(T(x, 0.6, z), S(0.12, 0.6, 0.12)), view, proj);
+        this.drawObj(this.coneLeaf, mul(T(x, 1.6, z), S(0.55, 0.7, 0.55)), view, proj);
+    }
+
+    drawTorch(x, z, view, proj, t) {
+        this.drawObj(this.cyl, mul(T(x, 0.5, z), S(0.08, 0.5, 0.08)), view, proj);
+        var flicker = 0.15 + 0.05 * Math.sin(t * 8.0 + x);
+        this.drawObj(this.sphereFire, mul(T(x, 1.1, z), S(flicker, flicker * 1.3, flicker)), view, proj);
+    }
+
+    drawCastle(view, proj) {
+        // floor
+        this.drawObj(this.cubeStone, mul(T(0, -0.2, -10), S(8, 0.2, 6)), view, proj);
+        // back wall
+        this.drawObj(this.cubeStone, mul(T(0, 1.5, -15), S(8, 1.5, 0.4)), view, proj);
+        // side walls
+        this.drawObj(this.cubeStone, mul(T(-7.5, 1.5, -10), S(0.4, 1.5, 5)), view, proj);
+        this.drawObj(this.cubeStone, mul(T(7.5, 1.5, -10), S(0.4, 1.5, 5)), view, proj);
+        // towers
+        this.drawObj(this.cubeStone, mul(T(-6, 2.5, -14.5), S(1.2, 2.5, 1.2)), view, proj);
+        this.drawObj(this.cubeStone, mul(T(6, 2.5, -14.5), S(1.2, 2.5, 1.2)), view, proj);
+        this.drawObj(this.cone, mul(T(-6, 5.5, -14.5), S(1.4, 1.0, 1.4)), view, proj);
+        this.drawObj(this.cone, mul(T(6, 5.5, -14.5), S(1.4, 1.0, 1.4)), view, proj);
+        // gate pillars + arch top (portcullis passage)
+        this.drawObj(this.cubeStone, mul(T(-1.8, 1.2, -5), S(0.5, 1.2, 0.5)), view, proj);
+        this.drawObj(this.cubeStone, mul(T(1.8, 1.2, -5), S(0.5, 1.2, 0.5)), view, proj);
+        this.drawObj(this.cubeStone, mul(T(0, 2.6, -5), S(2.4, 0.4, 0.5)), view, proj);
+        // portcullis bars (dark cubes)
+        for (var i = -2; i <= 2; i++) {
+            this.drawObj(this.cubeDark, mul(T(i * 0.5, 1.0, -4.7), S(0.08, 1.0, 0.08)), view, proj);
+        }
+        // windows on back wall
+        this.drawObj(this.cubeDark, mul(T(-3, 2.0, -14.5), S(0.5, 0.6, 0.2)), view, proj);
+        this.drawObj(this.cubeDark, mul(T(3, 2.0, -14.5), S(0.5, 0.6, 0.2)), view, proj);
+        this.drawObj(this.cubeDark, mul(T(0, 2.2, -14.5), S(0.5, 0.6, 0.2)), view, proj);
+    }
+
+    drawProps(view, proj, t) {
+        // trees around path
+        this.drawTree(-8, 2, view, proj);
+        this.drawTree(8, 2, view, proj);
+        this.drawTree(-7, -2, view, proj);
+        this.drawTree(7, -3, view, proj);
+        this.drawTree(-5, 6, view, proj);
+        this.drawTree(5, 6, view, proj);
+
+        // torches / braziers
+        this.drawTorch(-4, -4, view, proj, t);
+        this.drawTorch(4, -4, view, proj, t);
+        this.drawTorch(-3, 5, view, proj, t);
+        this.drawTorch(3, 5, view, proj, t);
+
+        // crates
+        this.drawObj(this.cubeWood, mul(T(-6, 0.25, -6), S(0.35, 0.25, 0.35)), view, proj);
+        this.drawObj(this.cubeWood, mul(T(-5.4, 0.25, -6.3), S(0.3, 0.25, 0.3)), view, proj);
+        this.drawObj(this.cubeWood, mul(T(6, 0.25, -7), S(0.4, 0.3, 0.4)), view, proj);
+
+        // barricade
+        for (var i = 0; i < 5; i++) {
+            this.drawObj(this.cubeWood, mul(T(-2 + i * 1.0, 0.35, 7), R(0, 1, 0, 15), S(0.15, 0.35, 0.5)), view, proj);
+        }
+
+        // ground grass disc markers near camp
+        this.drawObj(this.disc, mul(T(0, -0.05, 0), S(12, 1, 12)), view, proj);
+    }
+
+    // animated trebuchet
+    drawTrebuchet(view, proj, t) {
+        var base = T(-8, 0, -8);
+        this.drawObj(this.cubeWood, mul(base, S(0.8, 0.2, 0.4)), view, proj);
+        this.drawObj(this.cyl, mul(base, T(0, 1.0, 0), S(0.12, 1.0, 0.12)), view, proj);
+        // swinging arm (pendulum)
+        var ang = 40 * Math.sin(t * 1.5);
+        var arm = mul(base, T(0, 1.8, 0), R(0, 0, 1, ang));
+        this.drawObj(this.cubeWood, mul(arm, T(0.9, 0, 0), S(1.0, 0.1, 0.1)), view, proj);
+        this.drawObj(this.sphere, mul(arm, T(1.9, 0, 0), S(0.25, 0.25, 0.25)), view, proj);
+    }
+
+    // animated mill / well bucket
+    drawMill(view, proj, t) {
+        var base = T(8, 0, -8);
+        this.drawObj(this.cubeStone, mul(base, S(0.6, 0.15, 0.6)), view, proj);
+        this.drawObj(this.cyl, mul(base, T(0, 1.0, 0), S(0.5, 1.0, 0.5)), view, proj);
+        // rotating wheel
+        var spin = t * 80.0;
+        var wheel = mul(base, T(0.7, 1.2, 0), R(0, 0, 1, spin), S(0.15, 0.8, 0.8));
+        this.drawObj(this.cyl, wheel, view, proj);
+        // bucket going up/down
+        var by = 0.4 + 0.35 * Math.sin(t * 2.0);
+        this.drawObj(this.cubeDark, mul(base, T(0, by, 0), S(0.2, 0.2, 0.2)), view, proj);
+    }
+
+    updateWalkCamera() {
+        var speed = 0.12;
+        var rad = this.yaw * Math.PI / 180.0;
+        var fx = Math.sin(rad);
+        var fz = -Math.cos(rad);
+        var rx = Math.cos(rad);
+        var rz = Math.sin(rad);
+        if (this.keys["w"]) { this.eye.x += fx * speed; this.eye.z += fz * speed; }
+        if (this.keys["s"]) { this.eye.x -= fx * speed; this.eye.z -= fz * speed; }
+        if (this.keys["a"]) { this.eye.x -= rx * speed; this.eye.z -= rz * speed; }
+        if (this.keys["d"]) { this.eye.x += rx * speed; this.eye.z += rz * speed; }
+        // turn with q/e also (extra, easy)
+        if (this.keys["q"]) this.yaw -= 1.5;
+        if (this.keys["e"]) this.yaw += 1.5;
+    }
+
+    render() {
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        this.counter++;
+        var t = (Date.now() - this.start) * 0.001;
+
+        // projection
+        var aspect = this.canvas.width / this.canvas.height;
+        var proj = glm.perspective(glm.radians(50.0), aspect, 0.1, 100.0);
+
+        // convoy positions (needed also for ride camera)
+        var wagons = [];
+        for (var i = 0; i < 4; i++) {
+            var omega = this.pathEps * t + this.theta[i];
+            var p = lemniPos(omega, this.pathA, this.pathB);
+            var d = lemniDeriv(omega, this.pathA, this.pathB, this.pathEps);
+            var yaw = headingFromTangent(d.dx, d.dz);
+            wagons.push({ x: p.x, z: p.z, yaw: yaw });
+        }
+
+        var view;
+        if (this.camMode === 0) {
+            this.updateWalkCamera();
+            var rad = this.yaw * Math.PI / 180.0;
+            var cx = this.eye.x + Math.sin(rad);
+            var cz = this.eye.z - Math.cos(rad);
+            view = glm.lookAt(
+                glm.vec3(this.eye.x, this.eye.y, this.eye.z),
+                glm.vec3(cx, this.eye.y, cz),
+                glm.vec3(0, 1, 0)
+            );
+        } else {
+            // ride on last wagon (i=3), look forward a bit
+            var w = wagons[3];
+            var fx = Math.sin(w.yaw);
+            var fz = Math.cos(w.yaw);
+            var ex = w.x - fx * 0.5;
+            var ey = 1.2;
+            var ez = w.z - fz * 0.5;
+            view = glm.lookAt(
+                glm.vec3(ex, ey, ez),
+                glm.vec3(w.x + fx * 2.0, 1.0, w.z + fz * 2.0),
+                glm.vec3(0, 1, 0)
+            );
+        }
+
+        // scene
+        this.drawProps(view, proj, t);
+        this.drawCastle(view, proj);
+        this.drawTrebuchet(view, proj, t);
+        this.drawMill(view, proj, t);
+
+        // convoy
+        for (var i = 0; i < 4; i++) {
+            var w = wagons[i];
+            var world = mul(
+                T(w.x, 0.5, w.z),
+                R(0, 1, 0, w.yaw * 180.0 / Math.PI)
+            );
+            this.drawVehicle(i, world, view, proj);
+        }
+    }
+}
+
+var app = new myapp("myCanvas");
+app.run();
+
+</script>
+</body></html>

@@ -1,0 +1,5 @@
+Features,Tree_FP,Tree_FN,Forest_FP,Forest_FN,Boosting_FP,Boosting_FN,Logistic_FP,Logistic_FN
+"Flow only, 0.5 cut",0,175,0,168,1,48,0,288
+"Flow only, tuned cut",0,175,1,49,1,47,0,"34,380"
+"Flow plus ports, 0.5 cut",0,135,0,126,2,8,0,358
+"Flow plus IP aggregates, 0.5 cut",0,38,1,5,1,5,0,181

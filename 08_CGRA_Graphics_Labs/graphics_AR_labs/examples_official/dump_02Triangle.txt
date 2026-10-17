@@ -1,0 +1,253 @@
+CELL 0 markdown
+# Computação Gráfica e Realidade Aumentada 
+# Visualização Computacional 
+## &copy; 2020-202X
+<author>Author: Paulo Menezes</author>
+<h1>Triangle Drawing Example</h1>
+
+
+<p>This is an example of Drawing a triangle using webgl on a Jupyter Notebook</p>
+
+You should review the Lines example as if you do not understand some of the scripts included here. 
+
+
+====
+
+CELL 1 code
+%%html               
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+====
+
+CELL 2 code
+%%html
+<script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+
+attribute  vec2 in_Position;
+attribute  vec3 in_Color;
+
+varying  vec3 ex_Color;
+
+void main(void) {
+    // Since we are using flat lines, our input only had two points: x and y.
+    // Set the Z coordinate to 0 and W coordinate to 1
+
+    gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+
+    // GLSL allows shorthand use of vectors too, the following is also valid:
+    // gl_Position = vec4(in_Position, 0.0, 1.0);
+
+    ex_Color = in_Color;
+}
+</script>
+
+====
+
+CELL 3 code
+%%html
+<script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+
+varying  vec3 ex_Color;
+
+
+void main(void) {
+    // Pass through our original color with full opacity.
+    gl_FragColor = vec4(ex_Color,1.0);
+}
+</script>
+
+====
+
+CELL 4 markdown
+<h2>Do not touch the code below</h2>
+
+As before you have a simple code to draw a triangle. Do not change it, just see it working in the voilà window. 
+
+Then continue bellow.
+
+====
+
+CELL 5 code
+%%html
+<hr>
+<code id="appCode"></code>
+<hr>
+
+
+<canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;">
+      Error: Your browser does not support the HTML canvas tag.
+</canvas>
+    
+<script id="myapp">
+
+class myapp extends DEECapp{
+    counter=0;
+    initialize(){
+        super.initialize();
+        this.gl.clearColor(1.0,1.0,1.0,1.0);
+        
+        this.numvertices = 3;
+        this.vertices =
+            [ -0.90, -0.90 ,
+              0.85, -0.90 ,
+              -0.90,  0.85]; 
+        
+        this.colors = [
+            1.0, 0.0, 0.0, 
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0];
+        
+        this.vertexbuffer=this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+
+       
+
+    }
+    
+    render(){
+        var grey=Math.sin(this.counter/180*Math.PI);
+        this.gl.clearColor(grey,grey,grey,1.0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+
+        this.counter++;
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.vertexbuffer);
+       
+        this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Position");
+        this.gl.vertexAttribPointer(this.positionLocation, // Attribute location
+                           2, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           2*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.positionLocation);
+
+    
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.colorbuffer);
+        this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Color");
+        this.gl.vertexAttribPointer(this.colorLocation, // Attribute location
+                           3, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           3*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.colorLocation);
+        
+        
+        this.shaderprog.startUsing();
+        this.gl.drawArrays(this.gl.TRIANGLES,0,this.numvertices);
+        this.shaderprog.stopUsing();
+    }
+}
+
+var app = new myapp('myCanvas');
+
+app.run();
+
+</script>
+
+====
+
+CELL 6 markdown
+## Experiment here bellow
+The following code is similar to the above. Note the differences before you begin to play with it.
+
+====
+
+CELL 7 code
+%%html
+
+<canvas id="mySecondCanvas" width="400" height="400" style="border:2px solid #000000;">
+      Error: Your browser does not support the HTML canvas tag.
+</canvas>
+    
+<script id="myapp">
+
+class myapp2 extends DEECapp{
+    initialize(){
+        super.initialize();
+        this.gl.clearColor(1.0,1.0,1.0,1.0);
+        
+        this.numvertices = 3;
+        this.vertices =
+            [ -0.90, -0.90 ,
+              1.85, -0.90 ,
+              -1.90,  0.85];
+        
+        this.colors = [
+            1.0, 0.0, 0.0, 
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0];
+        
+        this.vertexbuffer=this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);    
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+        
+        
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+
+       
+
+    }
+    
+    render(){
+       
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.vertexbuffer);
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        
+        this.positionLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Position");
+        this.gl.vertexAttribPointer(this.positionLocation, // Attribute location
+                           2, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           2*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.positionLocation);
+
+    
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.colorbuffer);
+        this.colorLocation = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Color");
+        this.gl.vertexAttribPointer(this.colorLocation, // Attribute location
+                           3, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           3*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(this.colorLocation);
+        
+        
+        this.shaderprog.startUsing();
+        this.gl.drawArrays(this.gl.TRIANGLES,0,this.numvertices);
+        this.shaderprog.stopUsing();
+    }
+}
+
+var app2 = new myapp2('mySecondCanvas');
+
+app2.run();
+</script>
+
+====

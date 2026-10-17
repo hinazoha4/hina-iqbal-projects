@@ -1,0 +1,122 @@
+============================================================
+CGRA A1 — STEP BY STEP (kaise ready + run)
+Professor layout = Objects.ipynb style + Voilà
+============================================================
+
+PDF:  C:\Users\Lenovo\Downloads\cgra-a1.pdf
+Folder: computer architecture\CGRA_A1_ASSIGNMENT\
+
+
+------------------------------------------------------------
+STEP 0 — Pehle samajh lo kya submit karna hai
+------------------------------------------------------------
+Submit: 1 Jupyter Notebook (FULL) to Inforestudante
+HTML standalone = NOT accepted
+Report = markdown cells ke andar (FULL notebook mein pehle se hai)
+
+
+------------------------------------------------------------
+STEP 1 — VPN + Jupyter (tumne kaha connected hai)
+------------------------------------------------------------
+1) OpenVPN DEEC ON
+2) Browser: https://seeds.deec.uc.pt/CGRA/
+3) Login: Inforestudante email + password
+4) Workspace khulega
+
+
+------------------------------------------------------------
+STEP 2 — examples folder (IMPORTANT)
+------------------------------------------------------------
+examples/ har login pe refresh hota hai → wahan EDIT MAT karo.
+
+1) examples → Objects (ya 04Objects) COPY karo
+2) Apni folder banao:  my_a1/
+3) Paste karo (reference ke liye)
+4) Neeche STEP 3 se apni notebooks UPLOAD karo
+
+
+------------------------------------------------------------
+STEP 3 — Apni solution upload
+------------------------------------------------------------
+Local folder:
+  CGRA_A1_ASSIGNMENT\notebooks\
+
+Upload these to Jupyter my_a1/ :
+
+  1) ExA1_Shapes.ipynb              ← sirf shapes (practice + defense)
+  2) ExA2A3_Convoy_Path.ipynb       ← convoy + figure-8 path
+  3) ExA6A7_Camera_Notes.ipynb      ← camera theory (study)
+  4) CGRA_A1_FULL_SUBMISSION.ipynb  ← *** YE SUBMIT KARNA ***
+
+Jupyter: Upload button → choose files.
+
+
+------------------------------------------------------------
+STEP 4 — RUN kaise (Voilà)  ★ sab se important
+------------------------------------------------------------
+1) Notebook open karo
+2) RUN button MAT dabao
+3) Toolbar pe Voilà click
+4) Naya tab → neeche scroll → canvas
+5) Code change → Save notebook → Voilà tab RELOAD (F5)
+
+Canvas pe click karo pehle, phir keys chalengi.
+
+
+------------------------------------------------------------
+STEP 5 — Keys (FULL scene)
+------------------------------------------------------------
+  r     = wheels: cube → cylinder → sphere
+  w a s d = walk camera
+  q e   = turn left / right
+  v     = visitor camera  ↔  ride on last wagon
+
+F12 → Console → messages dekho (wheel mode / camera mode)
+
+
+------------------------------------------------------------
+STEP 6 — Local practice (optional, bina Jupyter)
+------------------------------------------------------------
+Folder:
+  CGRA_A1_ASSIGNMENT\local_test\
+
+Double-click:
+  test_shapes.html
+  test_full_scene.html
+
+Internet chahiye (professor JS CDN + glm-js).
+
+
+------------------------------------------------------------
+STEP 7 — Alag-alag questions (tumhari request)
+------------------------------------------------------------
+| File                         | Questions      |
+|------------------------------|----------------|
+| ExA1_Shapes.ipynb            | A.1            |
+| ExA2A3_Convoy_Path.ipynb     | A.2 + A.3      |
+| ExA6A7_Camera_Notes.ipynb    | A.6 + A.7 notes|
+| CGRA_A1_FULL_SUBMISSION.ipynb| A.1 … A.7 ALL  |
+
+Scene props + castle + animations (A.4 A.5) FULL mein hain.
+
+
+------------------------------------------------------------
+STEP 8 — Submit
+------------------------------------------------------------
+Inforestudante pe upload:
+  CGRA_A1_FULL_SUBMISSION.ipynb
+
+Pehle Voilà se khud test: convoy move, r wheels, wasd, v camera.
+
+
+------------------------------------------------------------
+Libraries (already in notebook first cell)
+------------------------------------------------------------
+deecshader.js
+deecapp.js
+cgraobject.js
+glm-js.min.js
+
+Shapes sab CGRAobject se extend hote hain (professor rule).
+
+============================================================

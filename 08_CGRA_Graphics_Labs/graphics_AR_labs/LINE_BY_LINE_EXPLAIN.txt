@@ -1,0 +1,155 @@
+CGRA Ex1 — CLEAN CODE + LINE BY LINE
+====================================
+
+Notebook (extra text hata diya):
+  graphics_AR_labs\CGRA_Ex1_Triangle.ipynb
+
+Jupyter mein: purani file delete / overwrite → naya upload → Voilà
+
+
+CELL 1 — libraries load
+-----------------------
+%%html
+  = Jupyter ko batao: yeh cell HTML/JS hai (Python nahi)
+
+<script src="...deecshader.js"></script>
+  = professor ki shader helper library load
+
+<script src="...deecapp.js"></script>
+  = professor ki app helper (canvas, loop, WebGL context)
+
+
+CELL 2 — vertex shader (har CORNER pe chalta hai)
+-------------------------------------------------
+precision highp float;
+  = float calculations accurate rakho
+
+attribute vec2 in_Position;
+  = input: har vertex ka (x,y) — CPU se aata hai
+
+attribute vec3 in_Color;
+  = input: har vertex ka (r,g,b)
+
+varying vec3 ex_Color;
+  = output: colour fragment shader ko bhejo (GPU interpolate karegi)
+
+void main(void){
+  = shader ka main function (har vertex pe 1 baar)
+
+  gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+  = screen position: x,y from us, z=0, w=1 (2D)
+
+  ex_Color = in_Color;
+  = colour aage pass
+}
+
+
+CELL 3 — fragment shader (har PIXEL pe chalta hai)
+--------------------------------------------------
+varying vec3 ex_Color;
+  = vertex shader se aaya colour (beech mein mix bhi ho sakta)
+
+gl_FragColor = vec4(ex_Color, 1.0);
+  = final pixel colour + alpha 1 (opaque)
+
+
+CELL 4 — canvas + app
+---------------------
+<canvas id="myCanvas" width="400" height="400" ...>
+  = drawing box 400x400, id se JS milta hai
+
+class myapp extends DEECapp
+  = professor ke DEECapp se inherit (ready loop + gl)
+
+counter = 0;
+  = frame count (console ke liye)
+
+vertices = [0.0, 0.8, -0.7, -0.6, 0.7, -0.6];
+  = 3 corners: (0,0.8), (-0.7,-0.6), (0.7,-0.6)
+  = har do numbers = ek point (x,y)
+  = MUST be between -1 and 1
+
+colors = [1,0,0,  0,1,0,  0,0,1];
+  = 3 colours: red, green, blue (har teen = R,G,B)
+
+nverts = 3;
+  = kitne vertices draw karne hain
+
+initialize()
+  = ek baar setup (buffers, clear colour)
+
+  super.initialize();
+    = parent: shaders compile + program link
+
+  clearColor(1,1,1,1);
+    = background white
+
+  drawMode = LINE_LOOP;
+    = outline triangle (corners connect, last→first)
+
+  createBuffer / bindBuffer / bufferData
+    = GPU memory banao, select karo, vertices/colors copy karo
+
+  Float32Array(...)
+    = JS numbers → WebGL float format
+
+  STATIC_DRAW
+    = data rarely change → GPU optimize
+
+render()
+  = ~50 times per second (Voilà animation)
+
+  console.log('draw ' + counter);
+    = Ex 1.2: F12 Console mein messages
+
+  clear(...);
+    = purani frame mitao
+
+  shaderprog.startUsing();
+    = ab yeh shaders use karo
+
+  getAttribLocation(..., 'in_Position')
+    = shader ke input ka address
+
+  enableVertexAttribArray / vertexAttribPointer
+    = batao: buffer se 2 floats = position, 3 floats = colour
+
+  drawArrays(drawMode, 0, nverts);
+    = 0 se start, nverts points draw
+
+var app = new myapp('myCanvas');
+  = canvas se app banao
+
+app.run();
+  = initialize + animation start
+
+
+PROFESSOR FOLDER (cgra2526 PDFs) — KYA LIKHA / AGLA KYA
+=======================================================
+Course: CGRA & VC — Paulo Menezes
+Tool: WebGL + JupyterHub + Voilà
+
+PDF 1 (cgra2526-1) — DONE / abhi karo
+  Ex 1.1 change colours + vertices
+  Ex 1.2 Console messages
+  Ex 1.3 add one more point
+  Ex 1.4 change drawArrays mode
+        (POINTS, LINE_STRIP, LINES, TRIANGLE_STRIP,
+         TRIANGLE_FAN, TRIANGLES)
+
+PDF 2 (cgra2526-2) — NEXT
+  Ex 2.1 vertical isosceles triangle
+  Ex 2.2 red rectangle side 0.8 (depth test)
+  Ex 2.3 triangle top moves sin 0.5Hz
+  Ex 2.4 rotate triangle
+  Ex 2.5 rotate over rectangle
+  Ex 2.6 translate up/down
+  Ex 2.7 same on Z
+
+PDF 3 (cgra2526-3)
+  pipeline, VBO, shaders theory (read + examples)
+
+PDF 4 (cgra2526-4)
+  Ex 4.1–4.4 transformations + GLM + clock
+
+Abhi focus: Ex 1.1 → 1.4 complete, phir PDF 2.

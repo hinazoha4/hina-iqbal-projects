@@ -1,0 +1,16 @@
+BLANK CANVAS FIX
+================
+Problem: Voilà showed empty white canvas.
+Cause: JS classes ran BEFORE deecapp/cgraobject/glm finished loading.
+
+Fix in new notebooks:
+1) libraries + shaders + app in ONE cell
+2) cgraBoot() waits until glm + CGRAobject exist
+3) A.1 draws like professor Objects (drawit without camera)
+
+RE-UPLOAD these files to seeds Jupyter:
+  notebooks/ExA1_Shapes.ipynb
+  notebooks/ExA2A3_Convoy_Path.ipynb
+  notebooks/CGRA_A1_FULL_SUBMISSION.ipynb
+
+Then Voilà again (hard refresh Ctrl+F5).

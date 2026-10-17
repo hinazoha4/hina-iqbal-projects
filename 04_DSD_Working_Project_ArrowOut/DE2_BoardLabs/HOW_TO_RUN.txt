@@ -1,0 +1,37 @@
+DE2 Board Labs — how to compile and program
+============================================
+
+Folder layout (keep as-is):
+  DE2_BoardLabs/
+    de2_board_ip/          ← Terasic-style DE2 support VHDL (VGA_SYNC, keyboard, PLL, …)
+    de2_text_editor_lab/   ← Project 1: PS/2 keyboard + VGA text
+    de2_graphic_editor_lab/← Project 2: mouse + VGA paint / graphic editor
+    DE2_pin_assignments.csv
+
+Quartus (Cyclone II EP2C35F672C6, DE2 board)
+---------------------------------------------
+1) Text editor (keyboard + VGA terminal)
+   - Open: de2_text_editor_lab\de2_text_editor_lab.qpf
+   - Top-level schematic (BDF): de2_text_editor_top.bdf
+   - Processing → Start Compilation
+   - Tools → Programmer → select USB-Blaster → load generated .sof onto the FPGA
+
+2) Graphic editor (mouse + VGA drawing)
+   - Open: de2_graphic_editor_lab\de2_graphic_editor_lab.qpf
+   - Top-level schematic (BDF): de2_graphic_editor_top.bdf
+   - Compile and program the same way.
+
+Hardware
+--------
+- PS/2 keyboard (project 1) or PS/2 mouse (project 2) in the DE2 PS/2 port(s) as in your original wiring.
+- VGA monitor on the DE2 VGA connector.
+- Power and USB cable for programming.
+
+If Analysis & Synthesis cannot find DE2 entities (VGA_SYNC, MOUSE, …), check Assignment Editor / Project Settings that
+SEARCH_PATH includes ../de2_board_ip relative to the project .qpf folder.
+
+Note: Same RTL with new project names is still the same design. For graded work, follow your course rules on attribution and what counts as original work.
+
+Documentation (English, for defence and report):
+  MODULES_AND_FILES_REFERENCE_EN.md   — every module type, BDF vs VHDL, file roles, Portuguese report explained.
+  LAB_REPORT_10_PAGES_SOURCE_EN.md    — ~10-page report skeleton: paste Quartus + board screenshots where marked, then export to PDF.

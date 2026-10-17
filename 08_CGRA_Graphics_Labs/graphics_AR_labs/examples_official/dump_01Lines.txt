@@ -1,0 +1,233 @@
+CELL 0 markdown
+# Computação Gráfica e Realidade Aumentada 
+# Visualização Computacional 
+## &copy; 2020 - 202X
+<author>Author: Paulo Menezes</author>
+<h1>Lines Drawing Example</h1>
+
+
+<p>This is an example of Drawing lines using webgl on a Jupyter Notebook</p>
+
+
+
+====
+
+CELL 1 code
+%%html               
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js"></script>
+<script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js"></script>
+
+====
+
+CELL 2 markdown
+## Using Jupyter Notebook for webgl
+Jupyter notebooks are primarily for supporting python development. Unfortunately this model does not support adequately OpenGL or WebGL.
+As such, we will still take advantage of it by adding the %%html tag to the cells for its contents to be interpreted as HTML.
+
+Unlike normal jupyter usage, we will not run this code directely. <br>
+Instead of that we will use the above button "Voilà" for opening a new tab where this will run.<br>
+Then you may modify this code at will and reload the other tab to rerun.
+
+We will use auxiliary precoded scripts for the purpose of this course for shader and application support. These scripts try to replicate similar code provided for C++ and Python.
+So every NB should have an inicial cell with<br>
+<pre>
+
+%%html               
+&lt;script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecshader.js" &gt;&lt;/script&gt;
+&lt;script src="https://is3l.isr.uc.pt/~pm/CGRA/JS/deecapp.js" &gt;&lt;/script&gt;
+
+</pre>
+
+Although you may be tempted to copy these files, this is discouraged as they will probably evolve along time.
+
+====
+
+CELL 3 markdown
+<h2>Vertex Shader</h2>
+ Now the vertex shader code, i.e. the program that will be run for each vertex of the shape.
+ 
+ <b>Note</b> that by default &lt;script&gt; or &lt;script type="javascript"&gt; are interpreted the same way, but making type equal to something else, the browser no longer tries to use it as javascript.
+
+====
+
+CELL 4 code
+%%html
+<script id="my-vertex-shader" type="x-shader/x-vertex">
+precision highp float;
+
+attribute  vec2 in_Position;
+attribute  vec3 in_Color;
+
+varying  vec3 ex_Color;
+
+void main(void) {
+    // Since we are using flat lines, our input only had two points: x and y.
+    // Set the Z coordinate to 0 and W coordinate to 1
+
+    gl_Position = vec4(in_Position.x, in_Position.y, 0.0, 1.0);
+
+    // GLSL allows shorthand use of vectors too, the following is also valid:
+    // gl_Position = vec4(in_Position, 0.0, 1.0);
+
+    ex_Color = in_Color;
+}
+</script>
+
+<!-- Below is just some HTML/JavaScript code to display the above on the "Voilà" page. Forget it by now. -->
+
+<hr>
+<pre id="vertCode"></pre>
+<hr>
+<script>
+vertCode.innerText = document.getElementById("my-vertex-shader").text; 
+</script>
+
+
+====
+
+CELL 5 markdown
+<h2>Fragment Shader</h2>
+Below we will write the GLSL code for the fragment shader, i.e. the program that will be run for each output pixel. <br>
+
+
+====
+
+CELL 6 code
+%%html
+<script id="my-fragment-shader" type="x-shader/x-fragment">
+precision highp float;
+
+varying  vec3 ex_Color;
+
+
+void main(void) {
+    // Pass through our original color with full opacity.
+    gl_FragColor = vec4(ex_Color,1.0);
+}
+</script>
+
+<hr>
+<pre id="fragCode"></pre>
+<hr>
+<script>
+fragCode.innerText = document.getElementById("my-fragment-shader").text; 
+</script>
+
+====
+
+CELL 7 markdown
+<h2>Code</h2>
+Now you just need to extend the DEECapp class and write the code for two methods<br>
+<b>initialize()</b> and <b>render()</b><br>
+<br>
+<b>Note</b> that although javascript supports inheritance and if on a derived class you have written a method that overloads a base class method, and you still want to call the overloaded one you have to callit explicitly with the "super." prefix. See the usage example in myapp.initialize().
+<br>
+Finally you must just create a myapp object that receives the id of the canvas, and call its run method.<br>
+<pre>
+var app = new myapp('myCanvas');
+
+app.run();
+</pre>
+
+====
+
+CELL 8 code
+%%html
+<hr>
+<code id="appCode"></code>
+<hr>
+
+
+<canvas id="myCanvas" width="400" height="400" style="border:2px solid #000000;">
+      Error: Your browser does not support the HTML canvas tag.
+</canvas>
+    
+<script id="myapp">
+
+class myapp extends DEECapp{
+    counter=0;
+    initialize(){
+        super.initialize();
+        this.gl.clearColor(1.0,1.0,1.0,1.0);
+        
+        this.numvertices = 4;
+        this.vertices =
+            [ 0.0, 0.90 ,
+              0.9, 0.0 ,
+              0.0, -0.9,
+              -0.9, 0.0]; 
+        
+        this.colors = [
+            1.0, 0.0, 0.0, 
+            0.0, 1.0, 0.0,
+            0.0, 0.0, 1.0,
+            1.0, 1.0, 1.0];
+        
+        this.vertexbuffer=this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertexbuffer);    
+        
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.vertices), this.gl.STATIC_DRAW);
+
+        
+        this.colorbuffer = this.gl.createBuffer();
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.colorbuffer);    
+        // as JS stores everything in 64 bit format and GL expects 32bits...
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.colors), this.gl.STATIC_DRAW);
+
+
+    }
+    
+    render(){
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        var grey=0.5+0.5*Math.sin(this.counter/180*Math.PI);
+        this.gl.clearColor(grey,grey,grey,1.0);
+        console.log('draw call nr: ' + this.counter);
+        this.counter++;
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.vertexbuffer);
+        
+        var Location = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Position");
+        this.gl.vertexAttribPointer(Location, // Attribute location
+                           2, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           2*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(Location);
+        
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER,this.colorbuffer);
+      
+        Location = this.gl.getAttribLocation(this.shaderprog.shaderProgram,
+                                                          "in_Color");
+        this.gl.vertexAttribPointer(Location, // Attribute location
+                           3, // number of elements per attribute
+                           this.gl.FLOAT,  // Type of elements
+                           this.gl.FALSE,  // 
+                           3*Float32Array.BYTES_PER_ELEMENT, // size of a vertex in bytes 
+                           0); // Offset from the beginint of a singles vertex to this attribute
+
+        this.gl.enableVertexAttribArray(Location);
+        
+        this.shaderprog.startUsing();
+        this.gl.drawArrays(this.gl.LINE_LOOP,0,this.numvertices);
+        this.shaderprog.stopUsing();
+    }
+}
+
+var app = new myapp('myCanvas');
+
+app.run();
+
+</script>
+
+====
+
+CELL 9 code
+%%html
+<script>
+appCode.innerText = document.getElementById("myapp").text; 
+</script>
+
+====

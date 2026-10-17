@@ -1,0 +1,30 @@
+{
+  "gate": "Gate 2 — CICDDoS2019 leakage and shortcut ablation",
+  "status": "PASS",
+  "evidence": {
+    "all_data_csv": "data/cicddos2019/all-data.csv",
+    "all_data_bytes": 61295129,
+    "all_data_rows": 120444,
+    "leakage_report": "_experiments/new_results/cicddos2019/leakage_shortcut_report.json",
+    "predictions": "_experiments/new_results/cicddos2019/predictions.csv"
+  },
+  "protocol": {
+    "imputation": "training-only median (SimpleImputer fit on train split)",
+    "contaminated_comparator": "pre-split imputation fit on all rows",
+    "ablations": [
+      "full_numeric",
+      "no_timestamp",
+      "no_timestamp_inbound",
+      "no_timestamp_inbound_ports"
+    ],
+    "seed": 42
+  },
+  "key_findings": {
+    "exact_duplicate_rows": 0,
+    "flow_id_train_test_overlap": 1869,
+    "src_dst_pair_train_test_overlap": 605,
+    "shortcut_ablation": "Removing Timestamp alone left FAR/FNR essentially unchanged; removing Inbound increased FN; removing ports increased FAR from ~0.00033 to ~0.00166 and FNR from ~0.00020 to ~0.00120 on the Random Forest threshold-0.5 operating point."
+  },
+  "html_rejected": "Earlier Google Drive download of all-data.csv was a 2460-byte virus-scan HTML page and was deleted.",
+  "caveat": "all-data.csv rebuilt from HF day-01-12 files UDPLag/Syn/NTP/LDAP only (TFTP and other multi-GB files deferred for memory). Thesis MULT=5 downsample retained."
+}

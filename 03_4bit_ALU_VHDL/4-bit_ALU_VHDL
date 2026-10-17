@@ -1,0 +1,64 @@
+-- ===============================================================
+-- 4-bit ALU for Altera DE2 Board
+-- Author: [Your Name]
+-- Description: Simple 4-bit ALU supporting arithmetic and logic ops
+-- VHDL Version: 2002
+-- ===============================================================
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ALU_4bit is
+    Port (
+        A        : in  STD_LOGIC_VECTOR (3 downto 0);
+        B        : in  STD_LOGIC_VECTOR (3 downto 0);
+        ALU_Sel  : in  STD_LOGIC_VECTOR (2 downto 0);
+        Result   : out STD_LOGIC_VECTOR (7 downto 0);
+        Overflow : out STD_LOGIC
+    );
+end ALU_4bit;
+
+architecture RTL of ALU_4bit is
+    signal A_signed, B_signed : signed(3 downto 0);
+    signal Sum                : signed(4 downto 0);
+    signal Mult               : signed(7 downto 0);
+begin
+
+    A_signed <= signed(A);
+    B_signed <= signed(B);
+
+    process(A, B, ALU_Sel)
+    begin
+        Overflow <= '0';
+        case ALU_Sel is
+            when "000" => -- ADD
+                Sum <= resize(A_signed,5) + resize(B_signed,5);
+                Result <= std_logic_vector(resize(Sum,8));
+                if (Sum > "01111") or (Sum < "10000") then
+                    Overflow <= '1';
+                end if;
+            when "001" => -- SUBTRACT
+                Sum <= resize(A_signed,5) - resize(B_signed,5);
+                Result <= std_logic_vector(resize(Sum,8));
+                if (Sum > "01111") or (Sum < "10000") then
+                    Overflow <= '1';
+                end if;
+            when "010" => -- AND
+                Result <= "0000" & (A and B);
+            when "011" => -- OR
+                Result <= "0000" & (A or B);
+            when "100" => -- XOR
+                Result <= "0000" & (A xor B);
+            when "101" => -- XNOR
+                Result <= "0000" & not (A xor B);
+            when "110" => -- MULTIPLY
+                Mult <= resize(A_signed,8) * resize(B_signed,8);
+                Result <= std_logic_vector(Mult);
+            when others => -- PASS A
+                Result <= "0000" & A;
+        end case;
+    end process;
+
+end RTL;
+

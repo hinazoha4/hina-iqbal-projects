@@ -1,0 +1,3 @@
+Upload ALL files from notebooks/QUESTIONS/ to seeds.
+Open Q1 first with Voilà — shapes dikhne chahiye.
+Phir Q2, Q3, ... Q7 ek ek karke.

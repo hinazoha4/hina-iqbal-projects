@@ -1,0 +1,24 @@
+{
+  "gate": "Gate 3 — BoT-IoT repair and validation",
+  "status": "PASS",
+  "evidence": {
+    "results": "_experiments/new_results/botiot/botiot_results.json",
+    "complete_file3_bytes": 285316035,
+    "truncated_refused_bytes": 268435456,
+    "official_published_file3_bytes": 282131555,
+    "benign_total": 477,
+    "test_benign_typical": "71-72"
+  },
+  "protocol": {
+    "source": "Kaggle mirror of 5% all-features Full5pc CSVs (complete, not truncated)",
+    "sampling": "every benign row retained; attacks subsampled to max_rows=350000",
+    "seeds": [42, 7, 123],
+    "configs": ["audited_flow", "audited_plus_ports", "flow_plus_ip_aggregates", "ddos_dos_normal/audited_flow"]
+  },
+  "key_findings": {
+    "file3": "Replaced truncated 256 MiB copy with complete 285,316,035-byte mirror file that parses to 1,000,000 rows.",
+    "far_resolution": "With only ~71-72 test benign observations, FAR estimates remain coarse (one FP ≈ 1.4%). Do not interpret sub-0.1% FAR claims beyond this resolution.",
+    "feature_effects": "Ports and IP-aggregate features change error trade-offs; audited_flow remains the leakage-aware baseline."
+  },
+  "caveat": "Byte sizes differ from CloudStor published lengths; schema and completeness verified. Official CloudStor host DNS failed from this machine."
+}

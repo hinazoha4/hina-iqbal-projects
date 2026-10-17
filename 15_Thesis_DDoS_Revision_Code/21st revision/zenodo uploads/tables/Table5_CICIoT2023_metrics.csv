@@ -1,0 +1,9 @@
+Model,Accuracy_pct,Precision_pct,Recall_pct,F1_pct,FAR_pct,FNR_pct,ROC_AUC_pct,PR_AUC_pct
+CNN Only,98.41,100.00,98.37,99.18,0.08,1.63,99.62,99.99
+LSTM Only,98.52,100.00,98.49,99.24,0.13,1.51,99.68,99.99
+TPE-tuned CNN–LSTM,98.51,100.00,98.47,99.23,0.02,1.53,99.63,99.99
+Logistic Regression,97.51,99.99,97.46,98.71,0.33,2.54,99.38,99.99
+Gaussian Naive Bayes,77.37,100.00,76.83,86.89,0.14,23.17,99.22,99.98
+Decision Tree,99.57,99.76,99.80,99.78,9.90,0.20,94.95,99.76
+Random Forest,99.69,99.85,99.83,99.84,6.10,0.17,99.96,100.00
+Hist. Gradient Boosting,99.60,99.85,99.73,99.79,6.04,0.27,99.94,100.00
